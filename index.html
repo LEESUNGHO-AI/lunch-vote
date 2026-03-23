@@ -1742,13 +1742,11 @@ function renderCctvCards(cctvs) {
       const bg = hasThumb ? `background-image:url(${poster});background-size:cover;background-position:center;` : 'background:#0a0f1a;';
       cell.innerHTML = `
         <div style="position:absolute;inset:0;${bg}border-radius:3px;"></div>
-        <div style="position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75));border-radius:3px;pointer-events:none;"></div>
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
-          <div style="width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,.85);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(239,68,68,.4);"><i class="fas fa-play" style="font-size:10px;color:#fff;margin-left:2px;"></i></div>
-        </div>
+        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.65));border-radius:3px;pointer-events:none;"></div>
         <span class="cctv-label">${name}</span>
         <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:${hasThumb?'var(--green)':'var(--amber)'};animation:pulse 2s infinite;"></span><span style="font-size:7px;color:${hasThumb?'var(--green)':'var(--amber)'};">${hasThumb?'LIVE':'URL'}</span></span>
-        <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.8);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} ${c.distance||''}km</span>`;
+        <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.8);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} ${c.distance||''}km</span>
+        <span style="position:absolute;bottom:3px;right:5px;font-size:6px;color:rgba(255,255,255,.5);font-family:var(--mono);">${c.id||''}</span>`;
     }
   });
 }
