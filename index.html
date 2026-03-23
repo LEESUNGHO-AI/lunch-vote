@@ -1626,13 +1626,33 @@ async function autoRefreshData() {
 setInterval(autoRefreshData, 30000);
 setTimeout(autoRefreshData, 5000); // 첫 로드 5초 후
 
-// ══════════════ ITS CCTV (cctv_live.json 또는 cctv.json fallback) ══════════════
+// ══════════════ ITS CCTV ══════════════
+// localhost → cctv_server.py 프록시로 실시간 영상 (2초 갱신)
+// GitHub Pages → cctv_live.json (30초 MP4 클립) 또는 cctv.json 메타데이터
+const IS_LOCAL = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 let allCctvData = [];
+let cctvRefreshTimer = null;
 
 async function loadCCTV() {
-  console.log('📹 CCTV 로드');
-  
-  // 1차: cctv_live.json (맥북 refresh_cctv.py가 push)
+  if (IS_LOCAL) {
+    // ── 로컬 모드: 프록시 서버 → 실시간 영상 ──
+    try {
+      const res = await fetch('/api/cctv');
+      if (!res.ok) throw new Error('API 실패');
+      const data = await res.json();
+      document.getElementById('cctvCount').textContent = `${data.total}대 LIVE | ${data.updated?.split(' ')[1]||''}`;
+      renderCctvLive(data.cctvs || []);
+      if (!cctvRefreshTimer) {
+        cctvRefreshTimer = setInterval(refreshCctvImages, 2000);
+      }
+    } catch(e) {
+      renderCctvFallback('cctv_server.py 실행 필요');
+    }
+    return;
+  }
+
+  // ── GitHub Pages 모드 ──
+  // 1차: cctv_live.json (refresh_cctv.py가 push한 MP4 클립/썸네일)
   try {
     const resp = await fetch('./data/cctv_live.json?t=' + Date.now());
     const text = await resp.text();
@@ -1642,87 +1662,106 @@ async function loadCCTV() {
         allCctvData = data.cctvs;
         document.getElementById('cctvCount').textContent = `${allCctvData.length}대 | ${(data.updated||'').split(' ')[1]||''}`;
         renderCctvCards(allCctvData);
-        console.log(`📹 cctv_live.json: ${allCctvData.length}대`);
         return;
       }
     }
-  } catch(e) { console.log('📹 cctv_live.json 실패'); }
-  
-  // 2차: cctv.json (ITS API 원본 — 구조 다름)
+  } catch(e) {}
+
+  // 2차: cctv.json 메타데이터
   try {
     const resp2 = await fetch('./data/cctv.json?t=' + Date.now());
     const text2 = await resp2.text();
     if (text2.startsWith('{')) {
       const d2 = JSON.parse(text2);
       const cctvs = (d2.cctvs || []);
-      // 도고 인근 6대 선택 (거리순)
       const pLat = 36.763, pLng = 126.887;
       cctvs.forEach(c => { c.dist = Math.sqrt(Math.pow((c.lat-pLat)*111,2) + Math.pow((c.lng-pLng)*88,2)); });
       cctvs.sort((a,b) => a.dist - b.dist);
       allCctvData = cctvs.slice(0, 6).map((c, i) => ({
-        id: `ITS-${String(i+1).padStart(2,'0')}`,
-        name: c.name || '',
-        url: c.url || '',
-        lat: c.lat, lng: c.lng,
-        distance: Math.round(c.dist * 10) / 10,
-        status: c.url ? 'live' : 'offline',
-        type: c.typeLabel || '국도',
+        id: `ITS-${String(i+1).padStart(2,'0')}`, name: c.name||'', url: c.url||'',
+        lat: c.lat, lng: c.lng, distance: Math.round(c.dist*10)/10,
+        status: 'meta', type: c.typeLabel||'국도', video: '', thumbnail: ''
       }));
       document.getElementById('cctvCount').textContent = `${allCctvData.length}대 | ${(d2.updated||'').split(' ')[1]||''}`;
       renderCctvCards(allCctvData);
-      console.log(`📹 cctv.json fallback: ${allCctvData.length}대`);
       return;
     }
-  } catch(e) { console.log('📹 cctv.json 실패'); }
-  
-  // 3차: 정적 fallback
-  renderCctvFallback('CCTV 데이터 로딩 실패');
+  } catch(e) {}
+
+  renderCctvFallback('CCTV 데이터 없음');
 }
 
+// ── 로컬 프록시 모드: 2초마다 실시간 이미지 갱신 ──
+function renderCctvLive(cctvs) {
+  cctvs.slice(0,6).forEach((c,i) => {
+    const cell = document.getElementById('cctv-'+i);
+    if(!cell) return;
+    const name = c.name.replace(/\[.*?\]\s*/,'');
+    cell.innerHTML = `
+      <video class="cctv-live-vid" data-idx="${i}" src="${c.proxyUrl}?t=${Date.now()}"
+             autoplay loop muted playsinline
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px;">
+      </video>
+      <span class="cctv-label">${name}</span>
+      <span class="cctv-status"><span class="live-dot" style="width:6px;height:6px;background:#ef4444;animation:pulse 1s infinite;"></span><span style="font-size:7px;color:#ef4444;font-weight:700;">● REC</span></span>
+      <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.7);font-family:var(--mono);text-shadow:0 1px 2px #000;">${c.typeLabel} | ${c.dist_km}km</span>`;
+  });
+}
+
+function refreshCctvImages() {
+  document.querySelectorAll('.cctv-live-vid').forEach(vid => {
+    vid.src = `/proxy/cctv/${vid.dataset.idx}?t=${Date.now()}`;
+    vid.load(); vid.play().catch(()=>{});
+  });
+}
+
+// ── GitHub Pages 모드: base64 MP4 클립 또는 썸네일 ──
 function renderCctvCards(cctvs) {
-  const area = document.getElementById('cctvArea');
-  if (!area) return;
   cctvs.forEach((c, i) => {
     const cell = document.getElementById('cctv-' + i);
     if (!cell) return;
-    const hasThumb = c.thumbnail && c.thumbnail.startsWith('data:');
+    const hasVideo = c.video && c.video.startsWith('data:video');
+    const hasThumb = c.thumbnail && c.thumbnail.startsWith('data:image');
     const hasUrl = c.url && c.url.length > 10;
     const name = (c.name || '').replace(/\[.*?\]\s*/g, '');
     const road = (c.name || '').match(/\[(.*?)\]/)?.[1] || '';
     cell.style.cursor = hasUrl ? 'pointer' : 'default';
     cell.onclick = hasUrl ? function() { window.open(c.url, '_blank'); } : null;
 
-    if (hasThumb) {
-      // ── 썸네일 있음: 실시간 이미지 표시 ──
+    if (hasVideo) {
+      cell.innerHTML = `
+        <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px;">
+          <source src="${c.video}" type="video/mp4">
+        </video>
+        <div style="position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.7));border-radius:3px;pointer-events:none;"></div>
+        <span class="cctv-label">${name}</span>
+        <span class="cctv-status"><span class="live-dot" style="width:6px;height:6px;background:#ef4444;animation:pulse 1s infinite;"></span><span style="font-size:7px;color:#ef4444;font-weight:700;">● REC</span></span>
+        <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.85);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} ${c.distance||''}km</span>`;
+      const vid = cell.querySelector('video');
+      if (vid) vid.play().catch(()=>{});
+    } else if (hasThumb) {
       cell.innerHTML = `
         <img src="${c.thumbnail}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px;opacity:.9;">
-        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.7));border-radius:3px;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.7));border-radius:3px;pointer-events:none;"></div>
         <span class="cctv-label">${name}</span>
         <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:var(--green);animation:pulse 2s infinite;"></span><span style="font-size:7px;color:var(--green);">LIVE</span></span>
-        <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.8);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} | ${c.distance||''}km</span>
-        <span style="position:absolute;bottom:3px;right:5px;font-size:6px;color:rgba(255,255,255,.5);font-family:var(--mono);">${c.id||''}</span>`;
+        <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.8);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} ${c.distance||''}km</span>`;
     } else {
-      // ── 썸네일 없음: 메타데이터 표시 ──
       cell.innerHTML = `
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6px;text-align:center;">
-          <div style="width:28px;height:28px;border-radius:50%;background:${hasUrl?'rgba(0,229,176,.1)':'rgba(100,116,139,.08)'};display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
-            <i class="fas fa-video" style="font-size:12px;color:${hasUrl?'#00d4aa':'#475569'};"></i>
-          </div>
-          <div style="font-size:9px;font-weight:600;color:var(--t1);line-height:1.2;">${name}</div>
-          <div style="display:flex;gap:3px;align-items:center;margin-top:2px;">
-            ${road?`<span style="font-size:6px;padding:1px 3px;border-radius:2px;background:rgba(249,115,22,.1);color:#f97316;font-family:var(--mono);">${road}</span>`:''}
-            ${c.distance?`<span style="font-size:6px;color:var(--t4);font-family:var(--mono);">${c.distance}km</span>`:''}
-          </div>
-          ${hasUrl?'<div style="font-size:7px;color:var(--teal);margin-top:3px;font-family:var(--mono);">▶ 클릭시 영상</div>':''}
+          <i class="fas fa-video" style="font-size:14px;color:${hasUrl?'#00d4aa':'#475569'};opacity:.4;margin-bottom:4px;"></i>
+          <div style="font-size:9px;font-weight:600;color:var(--t1);">${name}</div>
+          <div style="font-size:6px;color:var(--t4);font-family:var(--mono);margin-top:2px;">${road} ${c.distance||''}km</div>
+          ${hasUrl?'<div style="font-size:7px;color:var(--teal);margin-top:3px;">▶ 클릭시 영상</div>':''}
         </div>
         <span class="cctv-label" style="font-size:7px;">${c.id||'ITS'}</span>
-        <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:${hasUrl?'var(--green)':'var(--amber)'};${hasUrl?'animation:pulse 2s infinite;':''}"></span><span style="font-size:7px;color:${hasUrl?'var(--green)':'var(--amber)'};">${hasUrl?'LIVE':'OFF'}</span></span>`;
+        <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:var(--amber);"></span><span style="font-size:7px;color:var(--amber);">META</span></span>`;
     }
   });
 }
 
 function renderCctvFallback(msg) {
-  const names = ['시전사거리','금산삼거리','와산삼거리','와산리','순천향대','읍내교차로'];
+  const names = ['시전사거리','금산삼거리','향산사거리','금산리교차로','와산삼거리','와산리'];
   for (let i = 0; i < 6; i++) {
     const cell = document.getElementById('cctv-' + i);
     if (!cell) continue;
@@ -1730,8 +1769,7 @@ function renderCctvFallback(msg) {
   }
 }
 
-// CCTV 30초 자동갱신 + 초기 로드
-setInterval(loadCCTV, 30000);
+setInterval(loadCCTV, IS_LOCAL ? 10000 : 30000);
 setTimeout(loadCCTV, 2000);
 
 // ══════════════ 존 전환 (도고 ↔ 배방) ══════════════
