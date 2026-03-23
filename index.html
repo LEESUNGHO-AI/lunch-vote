@@ -968,6 +968,7 @@ function initMap() {
     };
 
     kakaoMap = new kakao.maps.Map(container, options);
+    window.kakaoMap = kakaoMap; // 외부 모듈 (robot-patrol.js 등) 접근용
     console.log('✅ 카카오맵 초기화 성공 — 도고 OASIS 센터:', DOGO_CENTER);
 
     // Map event: center changed
@@ -1684,19 +1685,25 @@ function renderCctvCards(cctvs) {
   cctvs.forEach((c, i) => {
     const cell = document.getElementById('cctv-' + i);
     if (!cell) return;
-    const hasUrl = c.url && c.url.startsWith('http');
+    const hasUrl = c.url && c.url.length > 10;
     const name = (c.name || '').replace(/\[.*?\]\s*/g, '');
+    const road = (c.name || '').match(/\[(.*?)\]/)?.[1] || '';
+    cell.style.cursor = hasUrl ? 'pointer' : 'default';
+    cell.onclick = hasUrl ? function() { window.open(c.url, '_blank'); } : null;
     cell.innerHTML = `
-      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6px;text-align:center;">
-        <i class="fas fa-video" style="font-size:18px;color:${hasUrl?'var(--teal)':'var(--border-hi)'};opacity:${hasUrl?.4:.2};margin-bottom:4px;"></i>
-        <div style="font-size:10px;font-weight:600;color:var(--t1);line-height:1.3;margin-bottom:3px;">${name || 'CCTV'}</div>
-        <div style="display:flex;gap:4px;align-items:center;">
-          <span style="font-size:7px;padding:1px 5px;border-radius:2px;background:${hasUrl?'rgba(0,229,176,.12)':'rgba(100,116,139,.1)'};color:${hasUrl?'var(--teal)':'var(--t4)'};font-family:var(--mono);font-weight:600;">${c.type||'ITS'}</span>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6px;text-align:center;background:${hasUrl?'rgba(0,229,176,.03)':'transparent'};">
+        <div style="width:32px;height:32px;border-radius:50%;background:${hasUrl?'rgba(0,229,176,.1)':'rgba(100,116,139,.08)'};display:flex;align-items:center;justify-content:center;margin-bottom:4px;">
+          <i class="fas fa-video" style="font-size:13px;color:${hasUrl?'#00d4aa':'#475569'};"></i>
+        </div>
+        <div style="font-size:9px;font-weight:600;color:var(--t1);line-height:1.3;margin-bottom:3px;">${name || 'CCTV'}</div>
+        <div style="display:flex;gap:3px;align-items:center;">
+          ${road?`<span style="font-size:7px;padding:1px 4px;border-radius:2px;background:rgba(249,115,22,.1);color:#f97316;font-family:var(--mono);">${road}</span>`:''}
           ${c.distance?`<span style="font-size:7px;color:var(--t4);font-family:var(--mono);">${c.distance}km</span>`:''}
         </div>
+        ${hasUrl?'<div style="font-size:7px;color:var(--teal);margin-top:3px;font-family:var(--mono);">▶ 클릭 → 영상보기</div>':''}
       </div>
       <span class="cctv-label" style="font-size:7px;">${c.id||'ITS'}</span>
-      <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:${hasUrl?'var(--green)':'var(--amber)'};"></span><span style="font-size:7px;color:${hasUrl?'var(--green)':'var(--amber)'};">${hasUrl?'LIVE':'META'}</span></span>`;
+      <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:${hasUrl?'var(--green)':'var(--amber)'};${hasUrl?'animation:pulse 2s infinite;':''}"></span><span style="font-size:7px;color:${hasUrl?'var(--green)':'var(--amber)'};">${hasUrl?'LIVE':'OFF'}</span></span>`;
     // 클릭 이벤트
     cell.style.cursor = 'pointer';
     cell.onclick = function() { if (c.url) window.open(c.url, '_blank'); };
