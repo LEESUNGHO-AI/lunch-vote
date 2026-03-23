@@ -1,0 +1,74 @@
+{
+  "updated": "2026-03-23 11:35:55 KST",
+  "refreshInterval": "10분",
+  "source": "ITS API (한국 IP)",
+  "center": {
+    "lat": 36.763,
+    "lng": 126.887,
+    "name": "도고 디지털 OASIS"
+  },
+  "total": 142,
+  "displayed": 6,
+  "cctvs": [
+    {
+      "id": "CCTV-01",
+      "name": "[국도 21호선] 아산 시전사거리",
+      "url": "http://cctvsec.ktict.co.kr/4588/xYXriNGwgqwkoJHE2E7q6htmPoLh6TfS+5oBBK9anLP6c2GEpyhYjCGizaeOscbvGQRl+6E12xw+f9GULQ230YuPgzHkLTlSTKFdogBhGTg=",
+      "lat": 36.749568,
+      "lng": 126.887502,
+      "distance": 1.5,
+      "status": "live",
+      "type": "ITS 국도"
+    },
+    {
+      "id": "CCTV-02",
+      "name": "[국도21] 아산 금산삼거리",
+      "url": "http://cctvsec.ktict.co.kr/71822/kaA3feY+qqom1A9Bkhx98wxBn8r6Vx1AtEZWJp0B1ixRKtNEBDxL5HU6BtO1KrjV/md2fZRmLXoNy8/pojL6cTvmUkaS3nm+lOJ/SyHO2u8=",
+      "lat": 36.74882,
+      "lng": 126.88243,
+      "distance": 1.6,
+      "status": "live",
+      "type": "ITS 국도"
+    },
+    {
+      "id": "CCTV-03",
+      "name": "[국도21] 아산 향산사거리",
+      "url": "http://cctvsec.ktict.co.kr/71824/q/fQO2OdHFjh0DXtttLR3teQC3Ndoy9PbM+3mkLrpEOK2CPPqVAuGcD+mScN2DSkGdGPYANBYl9q1U/6x6wDWGKBM+81TCfu9D0YL7oWXpQ=",
+      "lat": 36.75875,
+      "lng": 126.91179,
+      "distance": 2.2,
+      "status": "live",
+      "type": "ITS 국도"
+    },
+    {
+      "id": "CCTV-04",
+      "name": "[국도21] 아산 금산리교차로",
+      "url": "http://cctvsec.ktict.co.kr/71821/xxD5y6wwOC5UFIG8KoZ60Ms6nXJrs5uG3MnpT7RXNlf/mXRFN3KmuqWYR93iSNnDWvLH+U4s5RcLLFibzoznXAaQgpK0Z1e2OL+L4NU3DRs=",
+      "lat": 36.74708575,
+      "lng": 126.8675985,
+      "distance": 2.5,
+      "status": "live",
+      "type": "ITS 국도"
+    },
+    {
+      "id": "CCTV-05",
+      "name": "[국도21] 아산 와산삼거리",
+      "url": "http://cctvsec.ktict.co.kr/71823/NJrUpEucEUYy8fgTdsamGMtvuRHt1VSBbGYcIm4Vhk3HB0LURvnSBD6/AsK0Ts3bWbVWs1feonmH39El3zY665MQclqJXh/Jx8q/ZnNxN/k=",
+      "lat": 36.76128231,
+      "lng": 126.915047,
+      "distance": 2.5,
+      "status": "live",
+      "type": "ITS 국도"
+    },
+    {
+      "id": "CCTV-06",
+      "name": "[국도 21호선] 아산 와산리",
+      "url": "http://cctvsec.ktict.co.kr/4597/tv7tsHYNXjj7nfbuQ+Icqcs4NPZJ248JweSgJsMhctHF/qa76TmNzL1YV0FN9IPZyeMeYw0WyThtDfmky843g7xZ2k8blJ/hOGZaGQxSIHc=",
+      "lat": 36.763591,
+      "lng": 126.922575,
+      "distance": 3.1,
+      "status": "live",
+      "type": "ITS 국도"
+    }
+  ]
+}
