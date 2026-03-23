@@ -1,10 +1,79 @@
 {
-  "updated": "2026-03-23 02:22:53 KST",
+  "updated": "2026-03-23 05:21:42 KST",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v1",
-  "dataPoints": 6,
+  "dataPoints": 12,
+  "current": {
+    "ess_kwh": 344,
+    "solar_kw": 180,
+    "re100_pct": 76,
+    "traffic_vol": 210,
+    "traffic_speed": 42,
+    "wifi_users": 73,
+    "crowd_density": "보통",
+    "caravan_occupied": 22,
+    "caravan_revenue": 167000
+  },
   "prediction": {
     "analysis": "도고 OASIS 전 구간 정상 운영 중입니다. 오후 시간대 관광객 증가에 따른 교통량 소폭 증가가 예상됩니다.",
+    "power": {
+      "risk": "정상",
+      "forecast_6h": {
+        "ess_kwh": 380,
+        "re100_pct": 82,
+        "trend": "충전",
+        "solar_output": "양호"
+      },
+      "forecast_24h": {
+        "ess_kwh": 310,
+        "re100_pct": 68,
+        "trend": "방전"
+      }
+    },
+    "traffic": {
+      "risk": "정상",
+      "forecast_6h": {
+        "volume": 245,
+        "speed": 38,
+        "congestion": "보통",
+        "trend": "증가"
+      },
+      "forecast_24h": {
+        "volume": 180,
+        "speed": 45,
+        "congestion": "원활",
+        "trend": "감소"
+      }
+    },
+    "crowd": {
+      "risk": "정상",
+      "forecast_6h": {
+        "wifi_users": 85,
+        "density": "보통",
+        "hotspot": "이마트24",
+        "trend": "증가"
+      },
+      "forecast_24h": {
+        "wifi_users": 45,
+        "density": "여유",
+        "trend": "감소"
+      }
+    },
+    "caravan": {
+      "risk": "정상",
+      "forecast_6h": {
+        "occupied": 24,
+        "total": 30,
+        "revenue": 185000,
+        "trend": "증가"
+      },
+      "forecast_24h": {
+        "occupied": 22,
+        "total": 30,
+        "revenue": 167000,
+        "trend": "유지"
+      }
+    },
     "alerts": []
   }
 }
