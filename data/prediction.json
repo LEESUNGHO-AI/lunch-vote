@@ -1,5 +1,5 @@
 {
-  "updated": "2026-03-23 05:21:42 KST",
+  "updated": "2026-03-23 05:37:15 KST",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v1",
   "dataPoints": 12,
@@ -11,8 +11,11 @@
     "traffic_speed": 42,
     "wifi_users": 73,
     "crowd_density": "보통",
-    "caravan_occupied": 22,
-    "caravan_revenue": 167000
+    "caravan": {
+      "total": 30,
+      "occupied": 22,
+      "revenue": 167000
+    }
   },
   "prediction": {
     "analysis": "도고 OASIS 전 구간 정상 운영 중입니다. 오후 시간대 관광객 증가에 따른 교통량 소폭 증가가 예상됩니다.",
@@ -61,14 +64,17 @@
     },
     "caravan": {
       "risk": "정상",
+      "revenue_trend": "증가",
       "forecast_6h": {
-        "occupied": 24,
+        "occupancy": 24,
+        "occupancy_rate": 80,
         "total": 30,
         "revenue": 185000,
         "trend": "증가"
       },
       "forecast_24h": {
-        "occupied": 22,
+        "occupancy": 22,
+        "occupancy_rate": 73,
         "total": 30,
         "revenue": 167000,
         "trend": "유지"
