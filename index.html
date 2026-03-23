@@ -1725,40 +1725,62 @@ function renderCctvCards(cctvs) {
     const hasUrl = c.url && c.url.length > 10;
     const name = (c.name || '').replace(/\[.*?\]\s*/g, '');
     const road = (c.name || '').match(/\[(.*?)\]/)?.[1] || '';
-    cell.style.cursor = hasUrl ? 'pointer' : 'default';
-    cell.onclick = hasUrl ? function() { window.open(c.url, '_blank'); } : null;
+    const poster = hasThumb ? c.thumbnail : '';
+
+    cell.style.cursor = 'pointer';
+    cell.onclick = function(){ openCctvInline(c, name, road); };
 
     if (hasVideo) {
       cell.innerHTML = `
-        <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px;">
-          <source src="${c.video}" type="video/mp4">
-        </video>
+        <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px;" poster="${poster}"><source src="${c.video}" type="video/mp4"></video>
         <div style="position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.7));border-radius:3px;pointer-events:none;"></div>
         <span class="cctv-label">${name}</span>
         <span class="cctv-status"><span class="live-dot" style="width:6px;height:6px;background:#ef4444;animation:pulse 1s infinite;"></span><span style="font-size:7px;color:#ef4444;font-weight:700;">● REC</span></span>
         <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.85);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} ${c.distance||''}km</span>`;
-      const vid = cell.querySelector('video');
-      if (vid) vid.play().catch(()=>{});
-    } else if (hasThumb) {
-      cell.innerHTML = `
-        <img src="${c.thumbnail}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px;opacity:.9;">
-        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.7));border-radius:3px;pointer-events:none;"></div>
-        <span class="cctv-label">${name}</span>
-        <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:var(--green);animation:pulse 2s infinite;"></span><span style="font-size:7px;color:var(--green);">LIVE</span></span>
-        <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.8);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} ${c.distance||''}km</span>`;
+      const vid = cell.querySelector('video'); if(vid) vid.play().catch(()=>{});
     } else {
+      const bg = hasThumb ? `background-image:url(${poster});background-size:cover;background-position:center;` : 'background:#0a0f1a;';
       cell.innerHTML = `
-        <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6px;text-align:center;">
-          <i class="fas fa-video" style="font-size:14px;color:${hasUrl?'#00d4aa':'#475569'};opacity:.4;margin-bottom:4px;"></i>
-          <div style="font-size:9px;font-weight:600;color:var(--t1);">${name}</div>
-          <div style="font-size:6px;color:var(--t4);font-family:var(--mono);margin-top:2px;">${road} ${c.distance||''}km</div>
-          ${hasUrl?'<div style="font-size:7px;color:var(--teal);margin-top:3px;">▶ 클릭시 영상</div>':''}
+        <div style="position:absolute;inset:0;${bg}border-radius:3px;"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75));border-radius:3px;pointer-events:none;"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+          <div style="width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,.85);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(239,68,68,.4);"><i class="fas fa-play" style="font-size:10px;color:#fff;margin-left:2px;"></i></div>
         </div>
-        <span class="cctv-label" style="font-size:7px;">${c.id||'ITS'}</span>
-        <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:var(--amber);"></span><span style="font-size:7px;color:var(--amber);">META</span></span>`;
+        <span class="cctv-label">${name}</span>
+        <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:${hasThumb?'var(--green)':'var(--amber)'};animation:pulse 2s infinite;"></span><span style="font-size:7px;color:${hasThumb?'var(--green)':'var(--amber)'};">${hasThumb?'LIVE':'URL'}</span></span>
+        <span style="position:absolute;bottom:3px;left:5px;font-size:6px;color:rgba(255,255,255,.8);font-family:var(--mono);text-shadow:0 1px 2px #000;">${road} ${c.distance||''}km</span>`;
     }
   });
 }
+
+// CCTV 클릭 → 인라인 영상 재생 오버레이
+window.openCctvInline = function(c, name, road) {
+  let ov = document.getElementById('cctvInlineOv');
+  if(ov) ov.remove();
+  ov = document.createElement('div');
+  ov.id = 'cctvInlineOv';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;';
+  ov.onclick = function(e){ if(e.target===ov) ov.remove(); };
+  ov.innerHTML = `
+    <div style="width:90%;max-width:860px;" onclick="event.stopPropagation();">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div style="font-size:14px;font-weight:700;color:#e2e8f0;font-family:monospace;"><span style="color:#ef4444;">●</span> ${name} <span style="font-size:10px;color:#64748b;">${road} ${c.distance||''}km</span></div>
+        <div style="display:flex;gap:6px;">
+          <a href="${c.url}" target="_blank" style="padding:5px 12px;font-size:11px;color:#fb923c;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);border-radius:4px;text-decoration:none;font-family:monospace;">새 탭 ▶</a>
+          <button onclick="document.getElementById('cctvInlineOv').remove()" style="padding:5px 12px;font-size:11px;color:#e2e8f0;background:#1e293b;border:1px solid #334155;border-radius:4px;cursor:pointer;">✕</button>
+        </div>
+      </div>
+      <div style="position:relative;width:100%;padding-top:56.25%;background:#000;border-radius:8px;overflow:hidden;border:2px solid #334155;">
+        <video id="cctvInlineVid" autoplay loop controls style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;" poster="${c.thumbnail||''}">
+          <source src="${c.url}" type="video/mp4">
+        </video>
+      </div>
+      <div style="margin-top:6px;font-size:9px;color:#475569;font-family:monospace;text-align:center;">ITS 국가교통정보센터 | ${c.id||''} | ${c.lat?.toFixed(4)||''}°N ${c.lng?.toFixed(4)||''}°E</div>
+    </div>`;
+  document.body.appendChild(ov);
+  const vid = document.getElementById('cctvInlineVid');
+  if(vid) vid.play().catch(()=>{});
+};
 
 function renderCctvFallback(msg) {
   const names = ['시전사거리','금산삼거리','향산사거리','금산리교차로','와산삼거리','와산리'];
