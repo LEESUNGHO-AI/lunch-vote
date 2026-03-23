@@ -1,223 +1,124 @@
 #!/usr/bin/env python3
 """
-아산 AI 통합관제 — CCTV URL 자동 갱신
-맥북 (한국 IP)에서 실행 → ITS API → cctv_live.json → GitHub push
+아산 AI 통합관제 — CCTV 실시간 스크린샷 + URL 자동 갱신
+맥북 (한국 IP) → ITS API → ffmpeg 캡처 → base64 썸네일 → GitHub push
 
-사용법:
-  python3 refresh_cctv.py
-
-자동화 (10분마다):
-  crontab -e
-  */10 * * * * cd ~/lunch-vote && python3 refresh_cctv.py >> logs/cctv_refresh.log 2>&1
+사전 설치: brew install ffmpeg
+자동화: crontab -e → */10 * * * * cd ~/lunch-vote && python3 refresh_cctv.py >> logs/cctv_refresh.log 2>&1
 """
+import json, urllib.request, ssl, os, base64, datetime, subprocess, tempfile, math
 
-import json, urllib.request, ssl, os, base64, datetime
-
-# ── 설정 ──
 ITS_API_KEY = '60653e75c4064928a18f2fc5813c437b'
-GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN', '')
 GITHUB_OWNER = 'LEESUNGHO-AI'
 GITHUB_REPO = 'lunch-vote'
 GITHUB_BRANCH = 'main'
-
-# 도고 OASIS 중심
-CENTER_LAT = 36.763
-CENTER_LNG = 126.887
-SEARCH_RANGE = 0.15  # 약 17km
+CENTER_LAT, CENTER_LNG = 36.763, 126.887
+SEARCH_RANGE = 0.15
 MAX_CCTVS = 6
-
-# GitHub 토큰 파일 (없으면 환경변수 사용)
 TOKEN_FILE = os.path.expanduser('~/.github_token')
 
-
 def get_token():
-    """GitHub 토큰 가져오기"""
-    if GITHUB_TOKEN:
-        return GITHUB_TOKEN
-    if os.path.exists(TOKEN_FILE):
-        return open(TOKEN_FILE).read().strip()
-    # git config에서 가져오기
-    try:
-        import subprocess
-        result = subprocess.run(['git', 'config', '--get', 'credential.helper'], 
-                              capture_output=True, text=True)
-    except:
-        pass
-    print('❌ GITHUB_TOKEN 미설정. 환경변수 또는 ~/.github_token 파일 필요')
+    t = os.environ.get('GITHUB_TOKEN','')
+    if t: return t
+    if os.path.exists(TOKEN_FILE): return open(TOKEN_FILE).read().strip()
     return ''
 
-
-def fetch_its_cctvs():
-    """ITS API에서 도고 인근 CCTV 목록 가져오기"""
-    min_x = CENTER_LNG - SEARCH_RANGE
-    max_x = CENTER_LNG + SEARCH_RANGE
-    min_y = CENTER_LAT - SEARCH_RANGE
-    max_y = CENTER_LAT + SEARCH_RANGE
-    
-    url = (f'https://openapi.its.go.kr:9443/cctvInfo'
-           f'?apiKey={ITS_API_KEY}'
-           f'&type=its&cctvType=1'
-           f'&minX={min_x}&maxX={max_x}'
-           f'&minY={min_y}&maxY={max_y}'
-           f'&getType=json')
-    
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    
-    req = urllib.request.Request(url)
-    req.add_header('User-Agent', 'AsanSmartCity/1.0')
-    
+def fetch_its():
+    url = (f'https://openapi.its.go.kr:9443/cctvInfo?apiKey={ITS_API_KEY}'
+           f'&type=its&cctvType=1&minX={CENTER_LNG-SEARCH_RANGE}&maxX={CENTER_LNG+SEARCH_RANGE}'
+           f'&minY={CENTER_LAT-SEARCH_RANGE}&maxY={CENTER_LAT+SEARCH_RANGE}&getType=json')
+    ctx = ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
+    req = urllib.request.Request(url, headers={'User-Agent':'AsanSmartCity/1.0'})
     try:
-        with urllib.request.urlopen(req, timeout=15, context=ctx) as resp:
-            data = json.loads(resp.read().decode('utf-8'))
-            cctvs = data.get('response', {}).get('data', [])
-            print(f'  📹 ITS API: {len(cctvs)}대 수신')
+        with urllib.request.urlopen(req, timeout=15, context=ctx) as r:
+            d = json.loads(r.read().decode('utf-8'))
+            cctvs = d.get('response',{}).get('data',[])
+            print(f'  📹 ITS: {len(cctvs)}대')
             return cctvs
     except Exception as e:
-        print(f'  ❌ ITS API 실패: {e}')
-        return []
+        print(f'  ❌ ITS 실패: {e}'); return []
 
-
-def select_nearest(cctvs, max_count=MAX_CCTVS):
-    """도고 OASIS에서 가장 가까운 CCTV 선택"""
-    import math
-    result = []
+def nearest(cctvs):
+    res = []
     for c in cctvs:
-        lat = float(c.get('coordy', 0))
-        lng = float(c.get('coordx', 0))
-        if lat == 0 or lng == 0:
-            continue
-        dist = math.sqrt(
-            ((lat - CENTER_LAT) * 111) ** 2 + 
-            ((lng - CENTER_LNG) * 88) ** 2
-        )
-        result.append({
-            'name': c.get('cctvname', ''),
-            'url': c.get('cctvurl', ''),
-            'lat': lat,
-            'lng': lng,
-            'type': 'ITS 국도',
-            'dist': round(dist, 1)
-        })
-    
-    result.sort(key=lambda x: x['dist'])
-    return result[:max_count]
+        lat,lng = float(c.get('coordy',0)), float(c.get('coordx',0))
+        if lat==0: continue
+        d = math.sqrt(((lat-CENTER_LAT)*111)**2+((lng-CENTER_LNG)*88)**2)
+        res.append({'name':c.get('cctvname',''),'url':c.get('cctvurl',''),'lat':lat,'lng':lng,'dist':round(d,1)})
+    res.sort(key=lambda x:x['dist'])
+    return res[:MAX_CCTVS]
 
-
-def build_json(selected, total_count):
-    """cctv_live.json 생성"""
-    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S KST')
-    return {
-        'updated': now,
-        'refreshInterval': '10분',
-        'source': 'ITS API (한국 IP)',
-        'center': {'lat': CENTER_LAT, 'lng': CENTER_LNG, 'name': '도고 디지털 OASIS'},
-        'total': total_count,
-        'displayed': len(selected),
-        'cctvs': [
-            {
-                'id': f'CCTV-{str(i+1).zfill(2)}',
-                'name': c['name'],
-                'url': c['url'],
-                'lat': c['lat'],
-                'lng': c['lng'],
-                'distance': c['dist'],
-                'status': 'live' if c['url'] else 'offline',
-                'type': c['type'],
-            }
-            for i, c in enumerate(selected)
-        ]
-    }
-
-
-def push_to_github(token, content, path='data/cctv_live.json'):
-    """GitHub에 파일 push"""
-    api_url = f'https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/contents/{path}'
-    headers = {
-        'Authorization': f'Bearer {token}',
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'AsanAI-CCTV',
-        'Content-Type': 'application/json'
-    }
-    
-    # 기존 파일 SHA 조회
-    sha = ''
+def capture(url, timeout=10):
+    if not url: return ''
+    try: subprocess.run(['ffmpeg','-version'],capture_output=True,timeout=3)
+    except: print('    ⚠️ ffmpeg 없음'); return ''
+    tmp = tempfile.mktemp(suffix='.jpg')
     try:
-        req = urllib.request.Request(f'{api_url}?ref={GITHUB_BRANCH}', headers=headers)
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            sha = json.loads(resp.read())['sha']
-    except:
-        pass
-    
-    # Push
-    now = datetime.datetime.now().strftime('%m-%d %H:%M')
-    payload = {
-        'message': f'📹 CCTV {now}',
-        'content': base64.b64encode(content.encode('utf-8')).decode('ascii'),
-        'branch': GITHUB_BRANCH
-    }
-    if sha:
-        payload['sha'] = sha
-    
+        subprocess.run(['ffmpeg','-y','-i',url,'-frames:v','1','-q:v','10',
+                       '-vf','scale=320:-1','-f','image2',tmp],
+                      capture_output=True,timeout=timeout)
+        if os.path.exists(tmp) and os.path.getsize(tmp)>500:
+            with open(tmp,'rb') as f: b=base64.b64encode(f.read()).decode()
+            return f'data:image/jpeg;base64,{b}'
+        return ''
+    except: return ''
+    finally:
+        try: os.unlink(tmp)
+        except: pass
+
+def push(token, content):
+    path='data/cctv_live.json'
+    api=f'https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/contents/{path}'
+    h={'Authorization':f'Bearer {token}','Accept':'application/vnd.github.v3+json',
+       'User-Agent':'AsanAI','Content-Type':'application/json'}
+    sha=''
     try:
-        req = urllib.request.Request(api_url, 
-            data=json.dumps(payload).encode('utf-8'),
-            headers=headers, method='PUT')
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            code = resp.getcode()
-            if code in (200, 201):
-                print(f'  ✅ GitHub push 성공')
-                return True
-            else:
-                print(f'  ❌ GitHub push 실패: HTTP {code}')
-                return False
-    except Exception as e:
-        print(f'  ❌ GitHub push 오류: {e}')
-        return False
-
-
-def save_local(content, path='data/cctv_live.json'):
-    """로컬 파일로도 저장"""
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print(f'  💾 로컬 저장: {path}')
-
+        req=urllib.request.Request(f'{api}?ref={GITHUB_BRANCH}',headers=h)
+        with urllib.request.urlopen(req,timeout=10) as r: sha=json.loads(r.read())['sha']
+    except: pass
+    now=datetime.datetime.now().strftime('%m-%d %H:%M')
+    p={'message':f'📹 {now}','content':base64.b64encode(content.encode()).decode(),'branch':GITHUB_BRANCH}
+    if sha: p['sha']=sha
+    try:
+        req=urllib.request.Request(api,data=json.dumps(p).encode(),headers=h,method='PUT')
+        with urllib.request.urlopen(req,timeout=30) as r: return r.getcode() in (200,201)
+    except Exception as e: print(f'  ❌ push: {e}'); return False
 
 def main():
-    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(f'═══ CCTV URL 갱신: {now} ═══')
+    now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f'═══ CCTV 갱신: {now} ═══')
+    cctvs=fetch_its()
+    if not cctvs: return
+    sel=nearest(cctvs)
+    print(f'  📹 {len(sel)}대 선택')
     
-    # 1. ITS API 호출
-    cctvs = fetch_its_cctvs()
-    if not cctvs:
-        print('  ⚠️ CCTV 데이터 없음 — 종료')
-        return
+    print(f'  📸 캡처...')
+    thumbs=[]
+    for i,c in enumerate(sel):
+        t=capture(c['url'])
+        kb=len(t)*3/4/1024 if t else 0
+        print(f'    {i+1}. {c["name"][:20]} {"✅ "+str(int(kb))+"KB" if t else "⚠️ 실패"}')
+        thumbs.append(t)
     
-    # 2. 가장 가까운 6대 선택
-    selected = select_nearest(cctvs)
-    print(f'  📹 도고 인근 {len(selected)}대 선택:')
-    for i, c in enumerate(selected):
-        status = '✅' if c['url'] else '❌'
-        print(f'    {i+1}. {c["name"]} ({c["dist"]}km) {status}')
+    ts=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S KST')
+    result={'updated':ts,'source':'ITS+ffmpeg','total':len(cctvs),'displayed':len(sel),
+            'center':{'lat':CENTER_LAT,'lng':CENTER_LNG},
+            'cctvs':[{'id':f'CCTV-{i+1:02d}','name':c['name'],'url':c['url'],
+                      'lat':c['lat'],'lng':c['lng'],'distance':c['dist'],
+                      'status':'live' if thumbs[i] else 'url_only',
+                      'thumbnail':thumbs[i]} for i,c in enumerate(sel)]}
     
-    # 3. JSON 생성
-    result = build_json(selected, len(cctvs))
-    content = json.dumps(result, ensure_ascii=False, indent=2)
+    content=json.dumps(result,ensure_ascii=False)
+    print(f'  📦 {len(content)/1024:.0f}KB')
     
-    # 4. 로컬 저장
-    save_local(content)
+    os.makedirs('data',exist_ok=True)
+    with open('data/cctv_live.json','w') as f: f.write(content)
+    print(f'  💾 저장')
     
-    # 5. GitHub push
-    token = get_token()
+    token=get_token()
     if token:
-        push_to_github(token, content)
-    else:
-        print('  ⚠️ GitHub 토큰 없음 — 로컬만 저장')
-    
+        if push(token,content): print(f'  ✅ push 성공')
+        else: print(f'  ❌ push 실패')
     print(f'═══ 완료 ═══\n')
 
-
-if __name__ == '__main__':
-    main()
+if __name__=='__main__': main()
