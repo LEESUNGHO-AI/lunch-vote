@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아산 AI 통합관제시스템 — 도고 파라다이스</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b1361278a86d86da710ca149e76282c4&autoload=false"></script>
+<style>
+/* ══════════════════════════════════════
+   CSS VARIABLES & RESET
+   ══════════════════════════════════════ */
+:root {
+  --bg:#060a12;--bg2:#0b1120;--bg3:#101828;--bg4:#162032;
+  --border:#1a2640;--border-hi:#243656;
+  --teal:#00e5b0;--teal2:#00c49a;--cyan:#00b8e6;--blue:#3b82f6;
+  --purple:#8b5cf6;--amber:#f59e0b;--red:#ef4444;--green:#22c55e;--orange:#f97316;
+  --t1:#e8edf5;--t2:#94a3b8;--t3:#64748b;--t4:#475569;
+  --mono:'JetBrains Mono',monospace;--sans:'Noto Sans KR',-apple-system,sans-serif;--display:'Orbitron',sans-serif;
+  --gap:6px;--r:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-family:var(--sans);}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* ══════════════════════════════════════
+   LAYOUT
+   ══════════════════════════════════════ */
+.dashboard{display:grid;grid-template-rows:44px 1fr;height:100vh;width:100vw;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:linear-gradient(180deg,#0d1528 0%,var(--bg) 100%);border-bottom:1px solid var(--border);z-index:100;}
+.topbar-left{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--teal),var(--cyan));border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--bg);box-shadow:0 0 16px rgba(0,229,176,.3);}
+.topbar-title{font-size:14px;font-weight:700;letter-spacing:-.3px;}
+.topbar-title small{font-size:10px;color:var(--t3);font-family:var(--mono);letter-spacing:1px;margin-left:10px;}
+.topbar-center{display:flex;align-items:center;gap:16px;}
+.tb-tab{padding:6px 14px;font-size:11px;font-family:var(--mono);color:var(--t3);background:0;border:1px solid transparent;border-radius:4px;cursor:pointer;transition:all .2s;}
+.tb-tab:hover{color:var(--t2);border-color:var(--border);}
+.tb-tab.active{color:var(--teal);border-color:var(--teal);background:rgba(0,229,176,.06);}
+.topbar-right{display:flex;align-items:center;gap:14px;}
+.live-badge{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--green);}
+.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.clock{font-family:var(--display);font-size:13px;color:var(--teal);letter-spacing:1px;}
+.tb-btn{width:28px;height:28px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;}
+.tb-btn:hover{border-color:var(--teal);color:var(--teal);}
+
+/* CONTENT GRID */
+.content{display:grid;grid-template-columns:380px 1fr 400px;gap:var(--gap);padding:var(--gap);overflow:hidden;position:relative;}
+.left-panel{display:flex;flex-direction:column;gap:var(--gap);overflow:hidden;}
+.center-panel{display:grid;grid-template-rows:1fr 120px;gap:var(--gap);overflow:hidden;}
+.right-panel{display:flex;flex-direction:column;gap:var(--gap);overflow:hidden;}
+
+/* WIDGET */
+.widget{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;}
+.w-head{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid var(--border);min-height:32px;flex-shrink:0;}
+.w-head-title{font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;}
+.w-head-title i{color:var(--teal);font-size:10px;}
+.w-head-actions{display:flex;gap:4px;}
+.w-head-actions button{padding:2px 8px;background:0;border:1px solid var(--border);border-radius:3px;color:var(--t4);font-size:9px;font-family:var(--mono);cursor:pointer;transition:all .15s;}
+.w-head-actions button:hover,.w-head-actions button.active{border-color:var(--teal);color:var(--teal);}
+.w-body{flex:1;overflow:hidden;position:relative;}
+
+/* ══════════════════════════════════════
+   LEFT — SENSOR SUMMARY
+   ══════════════════════════════════════ */
+.sensor-summary{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:8px;}
+.ss-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 12px;text-align:center;position:relative;overflow:hidden;}
+.ss-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.ss-card:nth-child(1)::before{background:var(--teal);}
+.ss-card:nth-child(2)::before{background:var(--cyan);}
+.ss-card:nth-child(3)::before{background:var(--green);}
+.ss-card:nth-child(4)::before{background:var(--amber);}
+.ss-val{font-family:var(--display);font-size:24px;font-weight:800;line-height:1;}
+.ss-card:nth-child(1) .ss-val{color:var(--teal);text-shadow:0 0 12px rgba(0,229,176,.3);}
+.ss-card:nth-child(2) .ss-val{color:var(--cyan);text-shadow:0 0 12px rgba(0,184,230,.3);}
+.ss-card:nth-child(3) .ss-val{color:var(--green);text-shadow:0 0 12px rgba(34,197,94,.3);}
+.ss-card:nth-child(4) .ss-val{color:var(--amber);text-shadow:0 0 12px rgba(245,158,11,.3);}
+.ss-label{font-size:10px;color:var(--t2);margin-top:4px;font-family:var(--mono);font-weight:500;}
+
+/* LEFT — GAUGES */
+.gauge-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:8px;}
+.gauge-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;transition:border-color .3s;}
+.gauge-card:hover{border-color:var(--border-hi);}
+.gauge-wrap{position:relative;width:96px;height:55px;overflow:hidden;}
+.gauge-svg{width:96px;height:55px;}
+.gauge-val{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-family:var(--display);font-size:16px;font-weight:800;}
+.gauge-label{font-size:10px;color:var(--t2);margin-top:5px;font-family:var(--mono);text-align:center;font-weight:500;}
+.gauge-range{font-size:8px;color:var(--t4);font-family:var(--mono);}
+
+/* LEFT — SENSOR LIST */
+.sensor-list{overflow-y:auto;padding:6px;display:flex;flex-direction:column;gap:5px;}
+.sl-item{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:9px 11px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;}
+.sl-item:hover,.sl-item.selected{border-color:var(--teal);background:var(--bg4);}
+.sl-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.sl-dot.on{background:var(--green);box-shadow:0 0 8px rgba(34,197,94,.5);}
+.sl-dot.warn{background:var(--amber);box-shadow:0 0 8px rgba(245,158,11,.5);}
+.sl-dot.off{background:var(--red);box-shadow:0 0 8px rgba(239,68,68,.5);}
+.sl-name{font-size:11px;font-weight:600;color:var(--t1);}
+.sl-loc{font-size:9px;color:var(--t3);}
+.sl-val{font-family:var(--mono);font-size:14px;font-weight:700;text-align:right;}
+
+/* ══════════════════════════════════════
+   CENTER — KAKAO MAP
+   ══════════════════════════════════════ */
+.map-container{position:relative;width:100%;height:100%;}
+#kakaoMap{width:100%;height:100%;}
+
+/* Map fallback if API key not set */
+.map-fallback{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 40% 40%,rgba(0,229,176,.03) 0%,transparent 60%),var(--bg2);
+  z-index:1;
+}
+.map-fallback.hidden{display:none;}
+.map-fallback-icon{font-size:48px;color:var(--border-hi);margin-bottom:16px;}
+.map-fallback h3{color:var(--t2);font-size:14px;margin-bottom:8px;}
+.map-fallback p{color:var(--t3);font-size:11px;max-width:400px;text-align:center;line-height:1.6;}
+.map-fallback code{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-family:var(--mono);font-size:10px;color:var(--teal);}
+
+/* Map HUD overlays (on top of kakao map) */
+.map-hud{position:absolute;z-index:10;pointer-events:none;}
+.map-hud>*{pointer-events:auto;}
+.map-hud-tl{top:8px;left:8px;}
+.map-hud-tr{top:8px;right:8px;}
+.map-hud-bl{bottom:8px;left:8px;}
+.map-hud-br{bottom:8px;right:8px;}
+.map-info-box{background:rgba(6,10,18,.92);border:1px solid var(--border);border-radius:4px;padding:8px 12px;backdrop-filter:blur(8px);}
+.mib-row{display:flex;justify-content:space-between;gap:16px;padding:2px 0;}
+.mib-label{font-size:9px;color:var(--t3);}
+.mib-val{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--teal);}
+.map-legend{display:flex;gap:10px;background:rgba(6,10,18,.92);border:1px solid var(--border);border-radius:4px;padding:6px 10px;backdrop-filter:blur(8px);}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--t2);font-family:var(--mono);}
+.legend-dot{width:6px;height:6px;border-radius:50%;}
+
+/* Zone label */
+.zone-badge{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:10;
+  background:rgba(6,10,18,.9);border:1px solid var(--teal);border-radius:6px;
+  padding:6px 16px;font-family:var(--display);font-size:12px;font-weight:700;
+  color:var(--teal);letter-spacing:2px;
+  box-shadow:0 0 20px rgba(0,229,176,.2);
+  pointer-events:none;
+}
+
+/* ══════════════════════════════════════
+   CENTER BOTTOM — CHARTS
+   ══════════════════════════════════════ */
+.charts-row{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap);}
+.chart-widget .w-body{padding:6px 8px;}
+.chart-widget canvas{width:100%!important;height:100%!important;}
+.chart-current{position:absolute;top:6px;right:10px;font-family:var(--display);font-size:16px;font-weight:700;}
+
+/* ══════════════════════════════════════
+   RIGHT — CCTV
+   ══════════════════════════════════════ */
+.cctv-area{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:6px;}
+.cctv-cell{background:var(--bg3);border:1px solid var(--border);border-radius:4px;position:relative;overflow:hidden;min-height:88px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;}
+.cctv-cell:hover{border-color:var(--teal);box-shadow:0 0 12px rgba(0,229,176,.15);}
+.cctv-cell::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,176,.01) 2px,rgba(0,229,176,.01) 4px);pointer-events:none;}
+.cctv-label{position:absolute;top:4px;left:6px;font-size:8px;font-family:var(--mono);color:var(--teal);background:rgba(0,0,0,.6);padding:1px 5px;border-radius:2px;z-index:2;}
+.cctv-status{position:absolute;top:4px;right:6px;font-size:8px;font-family:var(--mono);display:flex;align-items:center;gap:3px;z-index:2;}
+.cctv-placeholder{font-size:28px;color:var(--border-hi);}
+.cctv-time{position:absolute;bottom:4px;right:6px;font-size:8px;font-family:var(--mono);color:var(--t4);}
+.cctv-cell video,.cctv-cell img.cctv-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:3px;}
+.cctv-cell img.cctv-img{opacity:.9;}
+.cctv-expanded .cctv-area{grid-template-columns:1fr;grid-template-rows:repeat(4,1fr);}
+.cctv-expanded .cctv-cell{min-height:140px;}
+
+/* CCTV 풀스크린 오버레이 */
+.cctv-overlay{position:fixed;inset:0;z-index:9999;background:rgba(4,6,12,.97);display:none;flex-direction:column;}
+.cctv-overlay.active{display:flex;}
+.cctv-overlay-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.cctv-overlay-head h3{font-size:14px;font-weight:600;color:var(--teal);display:flex;align-items:center;gap:8px;}
+.cctv-overlay-close{background:none;border:1px solid var(--border);color:var(--t2);font-size:12px;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:var(--mono);transition:all .2s;}
+.cctv-overlay-close:hover{border-color:var(--red);color:var(--red);}
+.cctv-overlay-grid{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;padding:10px;overflow:hidden;}
+.cctv-overlay-cell{background:var(--bg3);border:1px solid var(--border);border-radius:6px;position:relative;overflow:hidden;cursor:pointer;transition:all .3s;}
+.cctv-overlay-cell:hover{border-color:var(--teal);}
+.cctv-overlay-cell video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;}
+.cctv-overlay-cell .cctv-label{font-size:10px;padding:2px 8px;}
+.cctv-overlay-cell .cctv-status{font-size:10px;}
+
+/* CCTV 셀 확대 (단일) */
+.cctv-single-overlay{position:fixed;inset:0;z-index:10000;background:rgba(4,6,12,.95);display:none;align-items:center;justify-content:center;padding:30px;}
+.cctv-single-overlay.active{display:flex;}
+.cctv-single-box{position:relative;width:85vw;height:75vh;max-width:1200px;background:var(--bg2);border:1px solid var(--teal);border-radius:8px;overflow:hidden;}
+.cctv-single-box video{width:100%;height:100%;object-fit:contain;background:#000;}
+.cctv-single-info{position:absolute;bottom:0;left:0;right:0;padding:10px 16px;background:linear-gradient(transparent,rgba(4,6,12,.9));display:flex;align-items:center;justify-content:space-between;}
+.cctv-single-close{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);border:1px solid var(--border);color:var(--t1);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .2s;}
+.cctv-single-close:hover{border-color:var(--red);color:var(--red);}
+
+/* RIGHT — DATA GRID */
+.data-grid{overflow:auto;padding:0;}
+.data-grid table{width:100%;border-collapse:collapse;font-size:10px;}
+.data-grid thead{position:sticky;top:0;z-index:2;}
+.data-grid th{background:var(--bg3);padding:6px 8px;text-align:left;font-weight:600;color:var(--t2);font-family:var(--mono);font-size:9px;border-bottom:1px solid var(--border);letter-spacing:.5px;}
+.data-grid td{padding:5px 8px;border-bottom:1px solid rgba(26,38,64,.5);font-family:var(--mono);font-size:10px;color:var(--t2);transition:background .15s;}
+.data-grid tr:hover td{background:rgba(0,229,176,.03);}
+.val-good{color:var(--green);}.val-warn{color:var(--amber);}.val-danger{color:var(--red);}.val-normal{color:var(--teal);}
+
+/* RIGHT — ALERT LOG */
+.alert-log{overflow-y:auto;padding:6px;display:flex;flex-direction:column;gap:3px;}
+.al-item{display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--bg3);border-radius:3px;border-left:3px solid;font-size:10px;}
+.al-critical{border-color:var(--red);}.al-warning{border-color:var(--amber);}.al-info{border-color:var(--teal);}
+.al-time{font-family:var(--mono);font-size:9px;color:var(--t4);min-width:40px;}
+.al-badge{font-family:var(--mono);font-size:8px;font-weight:600;padding:1px 6px;border-radius:2px;min-width:32px;text-align:center;}
+.al-critical .al-badge{background:rgba(239,68,68,.15);color:var(--red);}
+.al-warning .al-badge{background:rgba(245,158,11,.15);color:var(--amber);}
+.al-info .al-badge{background:rgba(0,229,176,.1);color:var(--teal);}
+.al-msg{flex:1;color:var(--t3);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* TICKER */
+.status-ticker{position:fixed;bottom:0;left:0;right:0;height:24px;background:var(--bg2);border-top:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:20px;font-size:9px;font-family:var(--mono);color:var(--t4);z-index:100;}
+.ticker-tag{padding:2px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:2px;}
+.ticker-scroll{flex:1;overflow:hidden;position:relative;}
+.ticker-text{display:inline-block;white-space:nowrap;animation:scroll-left 45s linear infinite;}
+@keyframes scroll-left{0%{transform:translateX(100%);}100%{transform:translateX(-100%);}}
+.ticker-dot{display:inline-block;width:4px;height:4px;border-radius:50%;margin:0 4px;vertical-align:middle;}
+
+/* ══════════════════════════════════════
+   KAKAO MAP CUSTOM OVERLAY STYLES
+   ══════════════════════════════════════ */
+.sensor-overlay{
+  position:relative;cursor:pointer;
+}
+.sensor-marker{
+  width:18px;height:18px;border-radius:50%;border:2.5px solid;
+  position:relative;
+  box-shadow:0 0 8px rgba(0,0,0,.4);
+  transition:transform .2s;
+}
+.sensor-marker:hover{transform:scale(1.4);}
+.sensor-marker::after{
+  content:'';position:absolute;inset:-5px;border-radius:50%;
+  border:1.5px solid;opacity:.4;animation:s-ping 2s infinite;
+}
+@keyframes s-ping{0%{transform:scale(1);opacity:.4;}100%{transform:scale(2.5);opacity:0;}}
+.sm-air{background:var(--teal);border-color:var(--teal);color:var(--teal);}
+.sm-air::after{border-color:var(--teal);}
+.sm-temp{background:var(--cyan);border-color:var(--cyan);color:var(--cyan);}
+.sm-temp::after{border-color:var(--cyan);}
+.sm-water{background:var(--blue);border-color:var(--blue);color:var(--blue);}
+.sm-water::after{border-color:var(--blue);}
+.sm-noise{background:var(--amber);border-color:var(--amber);color:var(--amber);}
+.sm-noise::after{border-color:var(--amber);}
+.sm-traffic{background:var(--purple);border-color:var(--purple);color:var(--purple);}
+.sm-traffic::after{border-color:var(--purple);}
+.sm-cctv{background:var(--orange);border-color:var(--orange);color:var(--orange);}
+.sm-cctv::after{border-color:var(--orange);}
+.sm-alert{background:var(--red);border-color:var(--red);color:var(--red);animation:mk-blink 1s infinite;}
+.sm-alert::after{border-color:var(--red);}
+@keyframes mk-blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* Info bubble */
+.sensor-info-bubble{
+  position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);
+  background:rgba(6,10,18,.95);border:1px solid var(--border-hi);border-radius:6px;
+  padding:10px 14px;min-width:180px;
+  box-shadow:0 8px 24px rgba(0,0,0,.6);
+  pointer-events:none;opacity:0;transition:opacity .2s;
+  z-index:100;
+}
+.sensor-overlay:hover .sensor-info-bubble{opacity:1;}
+.sib-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.sib-id{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--teal);}
+.sib-status{font-size:8px;font-family:var(--mono);padding:1px 6px;border-radius:3px;}
+.sib-status.on{background:rgba(34,197,94,.15);color:var(--green);}
+.sib-status.warn{background:rgba(245,158,11,.15);color:var(--amber);}
+.sib-status.off{background:rgba(239,68,68,.15);color:var(--red);}
+.sib-name{font-size:10px;color:var(--t2);margin-bottom:6px;}
+.sib-metrics{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.sib-metric{background:rgba(16,24,40,.6);border-radius:3px;padding:4px 6px;}
+.sib-metric-label{font-size:8px;color:var(--t4);}
+.sib-metric-value{font-family:var(--mono);font-size:12px;font-weight:600;}
+.sib-coord{font-size:8px;color:var(--t4);font-family:var(--mono);margin-top:6px;border-top:1px solid var(--border);padding-top:4px;}
+/* Arrow */
+.sensor-info-bubble::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:rgba(6,10,18,.95);
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo-icon">AI</div>
+    <div class="topbar-title">
+      아산 AI 통합관제시스템 — 도고 파라다이스
+      <small>ASAN AI CONTROL CENTER v3.1</small>
+    </div>
+  </div>
+  <div class="topbar-center">
+    <button class="tb-tab active" onclick="switchZone('dogo')">도고 OASIS</button>
+    <button class="tb-tab" onclick="switchZone('baebang')">배방존</button>
+    <button class="tb-tab" onclick="openEnvDash('air')">대기질</button>
+    <button class="tb-tab" onclick="openEnvDash('weather')">기상관측</button>
+    <button class="tb-tab" onclick="openEnvDash('water')">수질</button>
+    <button class="tb-tab" onclick="openEnvDash('noise')">소음</button>
+    <button class="tb-tab" onclick="openCctvOverlay()">CCTV</button>
+  </div>
+  <div class="topbar-right">
+    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+    <div class="clock" id="clock">--:--:--</div>
+    <button class="tb-btn" title="새로고침" onclick="location.reload()"><i class="fas fa-sync-alt"></i></button>
+    <button class="tb-btn" title="설정"><i class="fas fa-sliders-h"></i></button>
+    <button class="tb-btn" id="btnFS" title="전체화면"><i class="fas fa-expand"></i></button>
+  </div>
+</div>
+
+<!-- ═══ CONTENT ═══ -->
+<div class="content">
+
+<!-- ▓▓▓ LEFT ▓▓▓ -->
+<div class="left-panel">
+  <div class="widget">
+    <div class="w-head"><div class="w-head-title"><i class="fas fa-microchip"></i> 도고 OASIS 센서 현황</div></div>
+    <div class="w-body">
+      <div class="sensor-summary">
+        <div class="ss-card"><div class="ss-val">17</div><div class="ss-label">전체 센서</div></div>
+        <div class="ss-card"><div class="ss-val">97.6%</div><div class="ss-label">수집률</div></div>
+        <div class="ss-card"><div class="ss-val">16</div><div class="ss-label">정상 가동</div></div>
+        <div class="ss-card"><div class="ss-val">2</div><div class="ss-label">경보</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget">
+    <div class="w-head"><div class="w-head-title"><i class="fas fa-tachometer-alt"></i> 도고 OASIS 주요 지표</div></div>
+    <div class="w-body"><div class="gauge-grid" id="gaugeGrid"></div></div>
+  </div>
+
+  <div class="widget" style="min-height:0;flex:1;overflow:hidden;">
+    <div class="w-head">
+      <div class="w-head-title"><i class="fas fa-list-ul"></i> 센서 목록</div>
+      <div class="w-head-actions"><button class="active">전체</button><button>경보</button></div>
+    </div>
+    <div class="w-body"><div class="sensor-list" id="sensorList"></div></div>
+  </div>
+
+  <div class="widget" style="flex-shrink:0;">
+    <div class="w-head"><div class="w-head-title"><i class="fas fa-lightbulb" style="color:#facc15;"></i> 스마트 인프라</div></div>
+    <div class="w-body" style="flex:none;padding:8px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+        <!-- 스마트가로등 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px;border-top:2px solid #facc15;">
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+            <i class="fas fa-lightbulb" style="color:#facc15;font-size:10px;"></i>
+            <span style="font-size:9px;font-weight:600;color:var(--t1);">스마트가로등</span>
+          </div>
+          <div style="font-family:var(--display);font-size:22px;font-weight:800;color:#facc15;text-shadow:0 0 10px rgba(250,204,21,.3);">15<span style="font-size:10px;color:var(--t3);font-weight:400;">기</span></div>
+          <div style="font-size:8px;color:var(--t3);margin-top:2px;">CCTV·WiFi·환경센서 통합</div>
+        </div>
+        <!-- 공공WiFi -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px;border-top:2px solid #06b6d4;">
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+            <i class="fas fa-wifi" style="color:#06b6d4;font-size:10px;"></i>
+            <span style="font-size:9px;font-weight:600;color:var(--t1);">공공WiFi</span>
+          </div>
+          <div style="font-family:var(--display);font-size:22px;font-weight:800;color:#06b6d4;text-shadow:0 0 10px rgba(6,182,212,.3);" id="wifiUsers">80<span style="font-size:10px;color:var(--t3);font-weight:400;">명</span></div>
+          <div style="font-size:8px;color:var(--t3);margin-top:2px;">AP 3기 · 군집도 수집중</div>
+        </div>
+        <!-- Space-One 워케이션 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px;border-top:2px solid #8b5cf6;">
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+            <i class="fas fa-home" style="color:#8b5cf6;font-size:10px;"></i>
+            <span style="font-size:9px;font-weight:600;color:var(--t1);">워케이션</span>
+          </div>
+          <div style="font-family:var(--display);font-size:22px;font-weight:800;color:#8b5cf6;text-shadow:0 0 10px rgba(139,92,246,.3);" id="spaceOccupancy">22<span style="font-size:10px;color:var(--t3);font-weight:400;">/30동</span></div>
+          <div style="font-size:8px;color:var(--t3);margin-top:2px;">Space-One 디지털노마드</div>
+        </div>
+        <!-- ESS RE100 -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px;border-top:2px solid #22c55e;">
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+            <i class="fas fa-solar-panel" style="color:#22c55e;font-size:10px;"></i>
+            <span style="font-size:9px;font-weight:600;color:var(--t1);">ESS RE100</span>
+          </div>
+          <div style="font-family:var(--display);font-size:22px;font-weight:800;color:#22c55e;text-shadow:0 0 10px rgba(34,197,94,.3);" id="essKwh">340<span style="font-size:10px;color:var(--t3);font-weight:400;">kWh</span></div>
+          <div style="display:flex;align-items:center;gap:4px;margin-top:2px;">
+            <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+              <div style="width:68%;height:100%;background:#22c55e;border-radius:2px;" id="essBar"></div>
+            </div>
+            <span style="font-size:8px;color:#22c55e;font-family:var(--mono);" id="essPct">68%</span>
+          </div>
+        </div>
+      </div>
+      <!-- DRT 운영현황 -->
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px;margin-top:5px;border-left:3px solid #f97316;" id="drtPanel">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <i class="fas fa-shuttle-van" style="color:#f97316;font-size:12px;"></i>
+            <span style="font-size:10px;font-weight:600;color:var(--t1);">DRT 도고↔배방 (현대 CV1)</span>
+          </div>
+          <span style="font-size:9px;color:var(--green);font-family:var(--mono);font-weight:600;" id="drtStatus">● 운행중</span>
+        </div>
+        <!-- 차량 2대 현황 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px;">
+          <div style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);border-radius:4px;padding:5px 7px;" id="drtV1">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:8px;font-weight:600;color:#fb923c;font-family:var(--mono);">CV1-01</span>
+              <span style="font-size:7px;color:var(--green);font-family:var(--mono);">● 운행</span>
+            </div>
+            <div style="font-size:7px;color:var(--t4);margin-top:2px;" id="drtV1Loc">도고온천역 부근</div>
+          </div>
+          <div style="background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.15);border-radius:4px;padding:5px 7px;" id="drtV2">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:8px;font-weight:600;color:#fb923c;font-family:var(--mono);">CV1-02</span>
+              <span style="font-size:7px;color:var(--green);font-family:var(--mono);">● 운행</span>
+            </div>
+            <div style="font-size:7px;color:var(--t4);margin-top:2px;" id="drtV2Loc">아산시청 부근</div>
+          </div>
+        </div>
+        <!-- 수송 통계 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:5px;">
+          <div style="text-align:center;padding:4px;background:rgba(249,115,22,.04);border-radius:3px;">
+            <div style="font-size:7px;color:var(--t4);">금일 수송</div>
+            <div style="font-size:14px;font-weight:700;color:#f97316;font-family:var(--mono);" id="drtToday">48<span style="font-size:8px;color:var(--t4);font-weight:400;">명</span></div>
+          </div>
+          <div style="text-align:center;padding:4px;background:rgba(249,115,22,.04);border-radius:3px;">
+            <div style="font-size:7px;color:var(--t4);">누적 수송</div>
+            <div style="font-size:14px;font-weight:700;color:#fb923c;font-family:var(--mono);" id="drtTotal">1,247<span style="font-size:8px;color:var(--t4);font-weight:400;">명</span></div>
+          </div>
+          <div style="text-align:center;padding:4px;background:rgba(249,115,22,.04);border-radius:3px;">
+            <div style="font-size:7px;color:var(--t4);">운행 횟수</div>
+            <div style="font-size:14px;font-weight:700;color:#fdba74;font-family:var(--mono);" id="drtTrips">12<span style="font-size:8px;color:var(--t4);font-weight:400;">회</span></div>
+          </div>
+        </div>
+        <!-- 노선 정보 -->
+        <div style="display:flex;gap:3px;align-items:center;flex-wrap:wrap;">
+          <span style="font-size:7px;color:#f97316;font-family:var(--mono);background:rgba(249,115,22,.1);padding:1px 4px;border-radius:2px;">도고카라반</span>
+          <span style="color:var(--t4);font-size:7px;">→</span>
+          <span style="font-size:6px;color:var(--t4);font-family:var(--mono);">온천역</span>
+          <span style="color:var(--t4);font-size:7px;">→</span>
+          <span style="font-size:6px;color:var(--t4);font-family:var(--mono);">온양역</span>
+          <span style="color:var(--t4);font-size:7px;">→</span>
+          <span style="font-size:6px;color:var(--t4);font-family:var(--mono);">시청</span>
+          <span style="color:var(--t4);font-size:7px;">→</span>
+          <span style="font-size:6px;color:var(--t4);font-family:var(--mono);">KTX역</span>
+          <span style="color:var(--t4);font-size:7px;">→</span>
+          <span style="font-size:7px;color:#f97316;font-family:var(--mono);background:rgba(249,115,22,.1);padding:1px 4px;border-radius:2px;">호서대</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px;">
+          <span style="font-size:7px;color:var(--t4);font-family:var(--mono);">편도 25km | 약 40분</span>
+          <span style="font-size:7px;color:var(--t4);font-family:var(--mono);">06:00~22:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ▓▓▓ CENTER ▓▓▓ -->
+<div class="center-panel">
+  <div class="widget">
+    <div class="w-head">
+      <div class="w-head-title"><i class="fas fa-map-marked-alt"></i> 도고 OASIS — AI 통합관제 배치도</div>
+      <div class="w-head-actions">
+        <button class="active" onclick="setMapType('roadmap')">일반</button>
+        <button onclick="setMapType('skyview')">위성</button>
+        <button onclick="setMapType('hybrid')">하이브리드</button>
+      </div>
+    </div>
+    <div class="w-body">
+      <div class="map-container">
+        <div id="kakaoMap"></div>
+
+        <!-- Fallback when API fails -->
+        <div class="map-fallback" id="mapFallback">
+          <i class="fas fa-map-location-dot map-fallback-icon"></i>
+          <h3 id="mapMsg">카카오맵 로딩 중...</h3>
+          <p id="mapSubMsg" style="line-height:1.8;">
+            지도가 표시되지 않으면 카카오 개발자 콘솔에서 확인하세요:<br><br>
+            <b style="color:var(--teal);">★ 가장 중요:</b><br>
+            <code>플랫폼 키</code> → Default JS Key 옆 <code>⋮</code> 클릭<br>
+            → <code>JavaScript SDK 도메인</code>에<br>
+            <code style="color:var(--teal);">https://leesungho-ai.github.io</code> 추가<br><br>
+            <span style="color:var(--t4);">※ "제품 링크 관리"의 웹 도메인과는 다른 설정입니다</span>
+          </p>
+        </div>
+
+        <!-- Zone badge -->
+        <div class="zone-badge">도고 파라다이스 스마트 ZONE</div>
+
+        <!-- HUD overlays -->
+        <div class="map-hud map-hud-tl">
+          <div class="map-info-box">
+            <div class="mib-row"><span class="mib-label">관할 면적</span><span class="mib-val">38.4 km²</span></div>
+            <div class="mib-row"><span class="mib-label">센서 밀도</span><span class="mib-val">1.09 /km²</span></div>
+            <div class="mib-row"><span class="mib-label">커버리지</span><span class="mib-val">92.1%</span></div>
+          </div>
+        </div>
+        <div class="map-hud map-hud-tr">
+          <div class="map-info-box" id="hudSelected" style="display:none;">
+            <div class="mib-row"><span class="mib-label">선택 센서</span><span class="mib-val" id="hudSelId">-</span></div>
+            <div class="mib-row"><span class="mib-label">측정값</span><span class="mib-val" id="hudSelVal">-</span></div>
+            <div class="mib-row"><span class="mib-label">좌표</span><span class="mib-val" id="hudSelCoord">-</span></div>
+          </div>
+        </div>
+        <div class="map-hud map-hud-bl">
+          <div class="map-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>대기질</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--cyan)"></div>기상</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>수질</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>소음</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>교통</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>CCTV</div><div class="legend-item"><div class="legend-dot" style="background:#facc15"></div>가로등</div><div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div>WiFi</div><div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>ESS</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>경보</div>
+          </div>
+        </div>
+        <div class="map-hud map-hud-br">
+          <div class="map-info-box" style="font-family:var(--mono);font-size:9px;color:var(--t3);">
+            <span id="mapCenter">36.7830°N 126.8520°E</span><br>
+            <span id="mapLevel">줌: 5 | 레이어: 센서</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="charts-row">
+    <div class="widget chart-widget">
+      <div class="w-head"><div class="w-head-title"><i class="fas fa-smog"></i> PM2.5</div></div>
+      <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--teal);" id="cv-pm">28.4</div><canvas id="cPM25"></canvas></div>
+    </div>
+    <div class="widget chart-widget">
+      <div class="w-head"><div class="w-head-title"><i class="fas fa-temperature-half"></i> 기온</div></div>
+      <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--cyan);" id="cv-temp">17.8°</div><canvas id="cTemp"></canvas></div>
+    </div>
+    <div class="widget chart-widget">
+      <div class="w-head"><div class="w-head-title"><i class="fas fa-droplet"></i> 수질 pH</div></div>
+      <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--blue);" id="cv-ph">7.1</div><canvas id="cPH"></canvas></div>
+    </div>
+    <div class="widget chart-widget">
+      <div class="w-head"><div class="w-head-title"><i class="fas fa-volume-high"></i> 소음</div></div>
+      <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--amber);" id="cv-noise">52 dB</div><canvas id="cNoise"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ▓▓▓ RIGHT ▓▓▓ -->
+<div class="right-panel">
+  <div class="widget" style="flex-shrink:0;">
+    <div class="w-head">
+      <div class="w-head-title"><i class="fas fa-video"></i> ITS 교통 CCTV — 도고 파라다이스 인근</div>
+      <div class="w-head-actions">
+        <span id="cctvCount" style="font-size:8px;color:var(--t4);font-family:var(--mono);margin-right:4px;">--</span>
+        <button class="active" onclick="loadCCTV()" style="font-size:8px;">새로고침</button>
+        <button onclick="openCctvOverlay()" style="font-size:8px;">확대</button>
+      </div>
+    </div>
+    <div class="w-body" style="flex:none;overflow:visible;">
+      <div class="cctv-area" id="cctvArea" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:6px;">
+        <div class="cctv-cell" id="cctv-0"><i class="fas fa-spinner fa-spin cctv-placeholder" style="color:var(--teal);opacity:.3;"></i></div>
+        <div class="cctv-cell" id="cctv-1"><i class="fas fa-spinner fa-spin cctv-placeholder" style="color:var(--teal);opacity:.3;"></i></div>
+        <div class="cctv-cell" id="cctv-2"><i class="fas fa-spinner fa-spin cctv-placeholder" style="color:var(--teal);opacity:.3;"></i></div>
+        <div class="cctv-cell" id="cctv-3"><i class="fas fa-spinner fa-spin cctv-placeholder" style="color:var(--teal);opacity:.3;"></i></div>
+        <div class="cctv-cell" id="cctv-4"><i class="fas fa-spinner fa-spin cctv-placeholder" style="color:var(--teal);opacity:.3;"></i></div>
+        <div class="cctv-cell" id="cctv-5"><i class="fas fa-spinner fa-spin cctv-placeholder" style="color:var(--teal);opacity:.3;"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget" style="min-height:0;flex:1;overflow:hidden;">
+    <div class="w-head">
+      <div class="w-head-title"><i class="fas fa-table"></i> 실시간 센서 데이터</div>
+      <div class="w-head-actions"><button class="active">ALL</button><button>AIR</button><button>ENV</button></div>
+    </div>
+    <div class="w-body data-grid" id="dataGrid"></div>
+  </div>
+
+  <div class="widget" style="max-height:180px;flex-shrink:0;">
+    <div class="w-head">
+      <div class="w-head-title"><i class="fas fa-bell"></i> 경보 로그</div>
+      <div class="w-head-actions"><button class="active">금일</button><button>전체</button></div>
+    </div>
+    <div class="w-body alert-log" id="alertLog"></div>
+  </div>
+</div>
+
+<!-- ▓▓▓ 배방존 오버레이 ▓▓▓ -->
+<div class="baebang-zone" id="baebangZone" style="display:none;position:absolute;inset:0;z-index:100;background:var(--bg);overflow:auto;">
+  <div style="display:grid;grid-template-columns:380px 1fr 400px;gap:var(--gap);padding:var(--gap);height:100%;overflow:hidden;">
+    <!-- 배방 LEFT -->
+    <div class="left-panel">
+      <div class="widget">
+        <div class="w-head"><div class="w-head-title"><i class="fas fa-building" style="color:var(--cyan);"></i> 이노베이션 스퀘어</div></div>
+        <div class="w-body">
+          <div class="sensor-summary">
+            <div class="ss-card"><div class="ss-val" style="color:var(--cyan);">2</div><div class="ss-label">운영 층</div></div>
+            <div class="ss-card"><div class="ss-val" style="color:var(--green);">정상</div><div class="ss-label">운영 상태</div></div>
+            <div class="ss-card"><div class="ss-val" style="color:var(--purple);">4</div><div class="ss-label">공유오피스</div></div>
+            <div class="ss-card"><div class="ss-val" style="color:var(--teal);">24h</div><div class="ss-label">WiFi</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="widget">
+        <div class="w-head"><div class="w-head-title"><i class="fas fa-layer-group"></i> B1 — 운영·행사</div></div>
+        <div class="w-body" style="padding:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--cyan);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">운영사무실</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">37.3㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--amber);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">MAIN HALL</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">89.4㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--purple);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">회의실</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">42.5㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--green);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">무인매장(카페)</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">51.6㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--teal);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">라운지</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">41.0㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--t3);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">로비·장비실</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">87.9㎡</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget" style="flex:1;">
+        <div class="w-head"><div class="w-head-title"><i class="fas fa-layer-group"></i> B2 — 공유오피스</div></div>
+        <div class="w-body" style="padding:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--purple);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">공유오피스 8인</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">39.0㎡ × 1실</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--purple);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">공유오피스 3인</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">~19㎡ × 3실</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--amber);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">오픈스튜디오</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">39.3㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--teal);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">오픈휴게공간</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">120.4㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--cyan);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">대회의실</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">38.9㎡</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:5px;padding:7px 9px;border-left:3px solid var(--t3);border-radius:0;">
+              <div style="font-size:10px;font-weight:600;color:var(--t1);">홀·전관</div>
+              <div style="font-size:8px;color:var(--t3);font-family:var(--mono);">63.1㎡</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 배방 CENTER -->
+    <div class="center-panel">
+      <div class="widget">
+        <div class="w-head">
+          <div class="w-head-title"><i class="fas fa-cube" style="color:var(--teal);"></i> 배방존 — 아산이노베이션 스퀘어 DIGITAL TWIN</div>
+        </div>
+        <div class="w-body" style="padding:0;overflow:hidden;position:relative;">
+            <div id="bbDigitalTwin" style="width:100%;height:100%;min-height:380px;background:#07090f;"></div>
+        </div>
+      </div>
+      <div class="charts-row">
+        <div class="widget chart-widget">
+          <div class="w-head"><div class="w-head-title">오피스 이용률</div></div>
+          <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--purple);" id="bb-occ">75%</div><canvas id="bbOcc"></canvas></div>
+        </div>
+        <div class="widget chart-widget">
+          <div class="w-head"><div class="w-head-title">WiFi 접속자</div></div>
+          <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--cyan);" id="bb-wifi">32</div><canvas id="bbWifi"></canvas></div>
+        </div>
+        <div class="widget chart-widget">
+          <div class="w-head"><div class="w-head-title">무인매장 매출</div></div>
+          <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--green);" id="bb-sales">₩128K</div><canvas id="bbSales"></canvas></div>
+        </div>
+        <div class="widget chart-widget">
+          <div class="w-head"><div class="w-head-title">행사 현황</div></div>
+          <div class="w-body" style="padding:6px 8px;"><div class="chart-current" style="color:var(--amber);" id="bb-event">2건</div><canvas id="bbEvent"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 배방 RIGHT -->
+    <div class="right-panel">
+      <div class="widget" style="flex-shrink:0;">
+        <div class="w-head"><div class="w-head-title"><i class="fas fa-desktop" style="color:var(--purple);"></i> 서비스 플랫폼</div></div>
+        <div class="w-body" style="padding:8px;">
+          <div style="display:grid;gap:5px;" id="bbServices">
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;">
+              <div><div style="font-size:10px;font-weight:600;color:var(--t1);">공유오피스 예약</div><div style="font-size:8px;color:var(--t3);">실시간 좌석 현황</div></div>
+              <span style="font-size:9px;color:var(--green);font-family:var(--mono);font-weight:600;">● 운영중</span>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;">
+              <div><div style="font-size:10px;font-weight:600;color:var(--t1);">무인매장 POS</div><div style="font-size:8px;color:var(--t3);">카페 자동 결제</div></div>
+              <span style="font-size:9px;color:var(--green);font-family:var(--mono);font-weight:600;">● 운영중</span>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;">
+              <div><div style="font-size:10px;font-weight:600;color:var(--t1);">WiFi 인증 시스템</div><div style="font-size:8px;color:var(--t3);">B1/B2 공공 WiFi</div></div>
+              <span style="font-size:9px;color:var(--green);font-family:var(--mono);font-weight:600;">● 정상</span>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;">
+              <div><div style="font-size:10px;font-weight:600;color:var(--t1);">LED 월 시스템</div><div style="font-size:8px;color:var(--t3);">MAIN HALL 대형 디스플레이</div></div>
+              <span style="font-size:9px;color:var(--green);font-family:var(--mono);font-weight:600;">● 가동</span>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;">
+              <div><div style="font-size:10px;font-weight:600;color:var(--t1);">CCTV 보안</div><div style="font-size:8px;color:var(--t3);">AI CCTV 8대</div></div>
+              <span style="font-size:9px;color:var(--green);font-family:var(--mono);font-weight:600;">● 녹화중</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget" style="flex:1;overflow:hidden;">
+        <div class="w-head"><div class="w-head-title"><i class="fas fa-calendar-alt"></i> 오피스 현황</div></div>
+        <div class="w-body" style="padding:8px;" id="bbOffice">
+          <div style="display:grid;gap:5px;">
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:10px;font-weight:600;color:var(--t1);">8인실 (B2)</span>
+                <span style="font-size:9px;font-family:var(--mono);color:var(--red);font-weight:600;">만실</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:4px;">
+                <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--red);border-radius:2px;"></div></div>
+                <span style="font-size:8px;color:var(--t3);font-family:var(--mono);">8/8석</span>
+              </div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:10px;font-weight:600;color:var(--t1);">3인실 A (B2)</span>
+                <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:600;">이용중</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:4px;">
+                <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="width:66%;height:100%;background:var(--amber);border-radius:2px;"></div></div>
+                <span style="font-size:8px;color:var(--t3);font-family:var(--mono);">2/3석</span>
+              </div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:10px;font-weight:600;color:var(--t1);">3인실 B (B2)</span>
+                <span style="font-size:9px;font-family:var(--mono);color:var(--green);font-weight:600;">여유</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:4px;">
+                <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="width:33%;height:100%;background:var(--green);border-radius:2px;"></div></div>
+                <span style="font-size:8px;color:var(--t3);font-family:var(--mono);">1/3석</span>
+              </div>
+            </div>
+            <div style="background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:8px 10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:10px;font-weight:600;color:var(--t1);">3인실 C (B2)</span>
+                <span style="font-size:9px;font-family:var(--mono);color:var(--teal);font-weight:600;">예약가능</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;margin-top:4px;">
+                <div style="flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--teal);border-radius:2px;"></div></div>
+                <span style="font-size:8px;color:var(--t3);font-family:var(--mono);">0/3석</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="widget" style="max-height:120px;flex-shrink:0;">
+        <div class="w-head"><div class="w-head-title"><i class="fas fa-bell"></i> 운영 로그</div></div>
+        <div class="w-body alert-log" id="bbLog">
+          <div class="al-item al-info" style="border-left-color:var(--cyan);"><span class="al-time">09:00</span><span class="al-badge" style="background:rgba(0,184,230,.15);color:var(--cyan);">B1</span><span class="al-msg">운영실 개실</span></div>
+          <div class="al-item al-info" style="border-left-color:var(--purple);"><span class="al-time">09:15</span><span class="al-badge" style="background:rgba(139,92,246,.15);color:var(--purple);">B2</span><span class="al-msg">공유오피스 8인실 만실</span></div>
+          <div class="al-item al-info" style="border-left-color:var(--green);"><span class="al-time">10:00</span><span class="al-badge" style="background:rgba(34,197,94,.15);color:var(--green);">카페</span><span class="al-msg">무인매장 일 매출 ₩128,000</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /dashboard -->
+
+<!-- TICKER -->
+<div class="status-ticker">
+  <span>© 2024-2026 아산시 강소형 스마트시티</span>
+  <span class="ticker-tag">도고 디지털 OASIS</span>
+  <span class="ticker-tag">v3.1</span>
+  <div class="ticker-scroll">
+    <span class="ticker-text">
+      <span class="ticker-dot" style="background:var(--green);"></span> 스마트가로등 15기 정상운영 &nbsp;
+      <span class="ticker-dot" style="background:var(--cyan);"></span> 공공WiFi AP 3기 접속자 80명 &nbsp;
+      <span class="ticker-dot" style="background:var(--green);"></span> ESS 340/500kWh RE100 가동 &nbsp;
+      <span class="ticker-dot" style="background:var(--purple);"></span> Space-One 22/30동 입주 &nbsp;
+      <span class="ticker-dot" style="background:var(--orange);"></span> DRT 도고↔배방 운행중 &nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      수행기관: 아산시 · 직접보조: 제일엔지니어링 · 간접보조: 호서대 · 충남연구원 · KAIST
+    </span>
+  </div>
+</div>
+
+<script>
+// ══════════════ CONFIG ══════════════
+const DOGO_CENTER = { lat: 36.7630, lng: 126.8870 }; // 도고온천로 중심 (한국콘도~이마트24)
+const MAP_LEVEL = 2; // 도고온천로 구간 밀착 줌
+
+// ══════════════ 존 경계 (폴리곤) ══════════════
+// ══════════════ 존 (원형) ══════════════
+const ZONES = {
+  'workation': {
+    name: '디지털노마드 워케이션',
+    color: '#8b5cf6',
+    desc: 'Space-One 30동 · ESS · RE100',
+    center: { lat: 36.7625, lng: 126.8885 },
+    radius: 120, // 미터
+  }
+};
+
+// ══════════════ 스마트 가로등 15기 (일미식당~이마트24 도로 양측) ══════════════
+// 일미식당: 36.7646, 126.8845 / 이마트24: 36.7641, 126.8865
+const SMART_LIGHTS = [];
+const SL_START = { lat: 36.7646, lng: 126.8845 }; // 일미식당
+const SL_END   = { lat: 36.7641, lng: 126.8865 }; // 이마트24
+const SL_OFFSET = 0.00015; // 도로 양측 오프셋
+
+for (let i = 0; i < 15; i++) {
+  const t = i / 14;
+  const baseLat = SL_START.lat + (SL_END.lat - SL_START.lat) * t;
+  const baseLng = SL_START.lng + (SL_END.lng - SL_START.lng) * t;
+  // 홀수 번호는 도로 북측, 짝수는 남측
+  const side = (i % 2 === 0) ? 1 : -1;
+  SMART_LIGHTS.push({
+    id: `SL-${String(i+1).padStart(2,'0')}`,
+    lat: baseLat + SL_OFFSET * side,
+    lng: baseLng,
+    name: `스마트가로등 #${i+1}`,
+    side: side > 0 ? '북측' : '남측',
+    wifi: true, cctv: true, env: true,
+  });
+}
+
+// ══════════════ DRT 노선 ══════════════
+const DRT_ROUTE = {
+  name: '도고↔배방 DRT (현대 CV1 순환)',
+  color: '#f97316',
+  // 실제 도로 경유 경로 (도고 카라반 → 호서대 KTX캠퍼스)
+  path: [
+    { lat:36.7625, lng:126.8885, name:'도고 카라반 Space-One' },
+    { lat:36.7640, lng:126.8860, name:'도고온천로' },
+    { lat:36.7660, lng:126.8840, name:'일미식당' },
+    { lat:36.7680, lng:126.8830, name:'도고면사무소' },
+    { lat:36.7720, lng:126.8880, name:'도고리 삼거리' },
+    { lat:36.7750, lng:126.8950, name:'도고온천역' },
+    { lat:36.7770, lng:126.9050, name:'기산리' },
+    { lat:36.7790, lng:126.9150, name:'신창면 교차로' },
+    { lat:36.7810, lng:126.9300, name:'읍내리' },
+    { lat:36.7830, lng:126.9470, name:'온양온천역' },
+    { lat:36.7850, lng:126.9600, name:'온양시내' },
+    { lat:36.7870, lng:126.9720, name:'아산시청' },
+    { lat:36.7875, lng:126.9900, name:'모종동' },
+    { lat:36.7880, lng:127.0050, name:'풍기동' },
+    { lat:36.7885, lng:127.0200, name:'탕정면' },
+    { lat:36.7890, lng:127.0400, name:'배방읍사무소' },
+    { lat:36.7893, lng:127.0550, name:'장재리' },
+    { lat:36.7895, lng:127.0700, name:'천안아산역(KTX)' },
+    { lat:36.7900, lng:127.0900, name:'아산배방역' },
+    { lat:36.7907, lng:127.1076, name:'호서대 KTX캠퍼스' },
+  ],
+  stops: [
+    { lat:36.7625, lng:126.8885, name:'도고 카라반', type:'start' },
+    { lat:36.7750, lng:126.8950, name:'도고온천역', type:'stop' },
+    { lat:36.7830, lng:126.9470, name:'온양온천역', type:'stop' },
+    { lat:36.7870, lng:126.9720, name:'아산시청', type:'stop' },
+    { lat:36.7895, lng:127.0700, name:'천안아산역', type:'stop' },
+    { lat:36.7907, lng:127.1076, name:'호서대 KTX캠퍼스', type:'end' },
+  ],
+  vehicles: [
+    { id:'CV1-01', name:'현대 CV1 #1', position:0.25 }, // 전체 경로의 25% 지점
+    { id:'CV1-02', name:'현대 CV1 #2', position:0.75 }, // 전체 경로의 75% 지점
+  ]
+};
+
+// ══════════════ 워케이션 Space-One ══════════════
+const WORKATION = {
+  center: { lat:36.7625, lng:126.8885 },
+  name: '디지털노마드 워케이션 ZONE',
+  units: 30,
+  ess: { capacity: '500kWh', solar: '200kW', status: 'active' },
+  occupancy: 22, // 현재 입주
+};
+
+// ══════════════ SENSOR DATA — 도고온천로 + 더자라모텔 구간 ══════════════
+const sensors = [
+  // 대기질 — 도고온천로 구간
+  { id:'DG-AQ01', name:'이마트24 앞 대기질',       type:'air',     status:'on',  lat:36.7641, lng:126.8865, loc:'이마트24 도고온천점',    pm25:28,  pm10:42 },
+  { id:'DG-AQ02', name:'더자라모텔 대기질',        type:'air',     status:'on',  lat:36.7624, lng:126.8882, loc:'더자라 무인텔 앞',       pm25:24,  pm10:38 },
+  { id:'DG-AQ03', name:'한국콘도 앞 대기질',       type:'air',     status:'on',  lat:36.7612, lng:126.8880, loc:'한국콘도 도고점',        pm25:22,  pm10:35 },
+  { id:'DG-AQ04', name:'워케이션 ZONE 대기질',     type:'air',     status:'on',  lat:36.7625, lng:126.8890, loc:'Space-One 단지',        pm25:18,  pm10:30 },
+  // 기상 센서
+  { id:'DG-TH01', name:'도고온천로 기상관측',      type:'temp',    status:'on',  lat:36.7635, lng:126.8870, loc:'도고온천로 중앙',        temp:17.8, humi:64 },
+  { id:'DG-TH02', name:'파라다이스 기상',          type:'temp',    status:'on',  lat:36.7661, lng:126.8862, loc:'파라다이스 스파',        temp:16.9, humi:68 },
+  // 수질 센서
+  { id:'DG-WQ01', name:'도고천 수질',              type:'water',   status:'on',  lat:36.7620, lng:126.8898, loc:'도고천 워케이션 인근',   ph:7.1,   DO:8.2 },
+  { id:'DG-WQ02', name:'온천수 수질',              type:'water',   status:'on',  lat:36.7640, lng:126.8880, loc:'온천 취수정',            ph:7.3,   DO:8.6 },
+  // 소음 센서
+  { id:'DG-NS01', name:'도고온천로 소음',          type:'noise',   status:'on',  lat:36.7630, lng:126.8868, loc:'도고온천로 상가',        db:48.2,  vib:7.4 },
+  { id:'DG-NS02', name:'워케이션 소음',            type:'noise',   status:'on',  lat:36.7625, lng:126.8885, loc:'Space-One 단지',        db:35.1,  vib:3.2 },
+  // 교통
+  { id:'DG-TR01', name:'도고온천로 교통',          type:'traffic', status:'on',  lat:36.7635, lng:126.8860, loc:'도고온천로 입구',        vol:86,   spd:30 },
+  // CCTV
+  { id:'DG-CC01', name:'도고온천로 CCTV',          type:'cctv',    status:'on',  lat:36.7638, lng:126.8865, loc:'스마트가로등 #8' },
+  { id:'DG-CC02', name:'워케이션 AI CCTV',         type:'cctv',    status:'on',  lat:36.7625, lng:126.8888, loc:'Space-One 입구' },
+  // ESS
+  { id:'DG-ES01', name:'ESS 모니터링',             type:'ess',     status:'on',  lat:36.7622, lng:126.8892, loc:'RE100 ESS동', kwh:340, capacity:500 },
+  // WiFi
+  { id:'DG-WF01', name:'공공WiFi AP-1',            type:'wifi',    status:'on',  lat:36.7645, lng:126.8858, loc:'스마트가로등 #1', users:23, crowd:'보통' },
+  { id:'DG-WF02', name:'공공WiFi AP-2',            type:'wifi',    status:'on',  lat:36.7630, lng:126.8870, loc:'스마트가로등 #8', users:45, crowd:'혼잡' },
+  { id:'DG-WF03', name:'공공WiFi AP-3',            type:'wifi',    status:'on',  lat:36.7615, lng:126.8878, loc:'스마트가로등 #14', users:12, crowd:'여유' },
+];
+
+const typeColors = {
+  air:'#00e5b0', temp:'#00b8e6', water:'#3b82f6',
+  noise:'#f59e0b', traffic:'#8b5cf6', cctv:'#f97316',
+  ess:'#22c55e', wifi:'#06b6d4'
+};
+const typeClass = {
+  air:'sm-air', temp:'sm-temp', water:'sm-water',
+  noise:'sm-noise', traffic:'sm-traffic', cctv:'sm-cctv',
+  ess:'sm-air', wifi:'sm-temp'
+};
+const typeKr = {air:'대기질',temp:'기상',water:'수질',noise:'소음',traffic:'교통',cctv:'CCTV',ess:'ESS',wifi:'WiFi'};
+const typeIcon = {air:'🌫️',temp:'🌡️',water:'💧',noise:'🔊',traffic:'🚗',cctv:'📷',ess:'🔋',wifi:'📶'};
+
+// ══════════════ CLOCK ══════════════
+function updateClock(){
+  const n=new Date();
+  const ts=[n.getHours(),n.getMinutes(),n.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':');
+  document.getElementById('clock').textContent=ts;
+  document.querySelectorAll('.cam-time').forEach(el=>el.textContent=ts);
+}
+setInterval(updateClock,1000);updateClock();
+
+// ══════════════ FULLSCREEN ══════════════
+document.getElementById('btnFS').onclick=()=>{
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
+};
+
+// ══════════════ KAKAO MAP INITIALIZATION ══════════════
+let kakaoMap = null;
+let kakaoOverlays = [];
+
+function initMap() {
+  try {
+    const container = document.getElementById('kakaoMap');
+    const options = {
+      center: new kakao.maps.LatLng(DOGO_CENTER.lat, DOGO_CENTER.lng),
+      level: MAP_LEVEL
+    };
+
+    kakaoMap = new kakao.maps.Map(container, options);
+    console.log('✅ 카카오맵 초기화 성공 — 도고 OASIS 센터:', DOGO_CENTER);
+
+    // Map event: center changed
+    kakao.maps.event.addListener(kakaoMap, 'center_changed', function() {
+      const center = kakaoMap.getCenter();
+      document.getElementById('mapCenter').textContent =
+        `${center.getLat().toFixed(4)}°N ${center.getLng().toFixed(4)}°E`;
+    });
+
+    // Map event: zoom changed
+    kakao.maps.event.addListener(kakaoMap, 'zoom_changed', function() {
+      document.getElementById('mapLevel').textContent =
+        `줌: ${kakaoMap.getLevel()} | 레이어: 센서`;
+    });
+
+    // Zoom control
+    kakaoMap.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
+
+    // Place sensor custom overlays
+    placeSensorOverlays();
+
+    // ── 존 경계 (원형) ──
+    Object.entries(ZONES).forEach(([key, zone]) => {
+      const circle = new kakao.maps.Circle({
+        center: new kakao.maps.LatLng(zone.center.lat, zone.center.lng),
+        radius: zone.radius,
+        strokeWeight: 2,
+        strokeColor: zone.color,
+        strokeOpacity: 0.7,
+        strokeStyle: 'solid',
+        fillColor: zone.color,
+        fillOpacity: 0.1
+      });
+      circle.setMap(kakaoMap);
+      // 존 라벨
+      new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(zone.center.lat, zone.center.lng),
+        content: `<div style="padding:3px 10px;background:rgba(0,0,0,.75);border:1px solid ${zone.color};border-radius:20px;font-family:var(--mono);font-size:9px;color:${zone.color};font-weight:600;text-align:center;line-height:1.4;pointer-events:none;">${zone.name}<br><span style="font-size:7px;color:#94a3b8;">${zone.desc}</span></div>`,
+        yAnchor: 0.5
+      }).setMap(kakaoMap);
+    });
+
+    // ── 스마트 가로등 마커 (클릭 시 상세 정보) ──
+    SMART_LIGHTS.forEach((sl, idx) => {
+      new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(sl.lat, sl.lng),
+        content: `<div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;" onclick="showLightInfo('${sl.id}', ${idx})">
+          <div style="width:20px;height:28px;border-radius:3px;overflow:hidden;border:1px solid #facc15;box-shadow:0 0 6px rgba(250,204,21,.5);">
+            <img src="data/smart-light.png" style="width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div style="width:4px;height:4px;background:#facc15;border-radius:50%;margin-top:1px;box-shadow:0 0 4px #facc15;"></div>
+        </div>`,
+        yAnchor: 1, xAnchor: 0.5
+      }).setMap(kakaoMap);
+    });
+
+    // 스마트 가로등 상세 정보 팝업
+    window.showLightInfo = function(id, idx) {
+      const sl = SMART_LIGHTS[idx];
+      if (!sl) return;
+      let ov = document.getElementById('lightInfoOverlay');
+      if (ov) ov.remove();
+
+      const power = (Math.random() * 0.08 + 0.08).toFixed(2);
+      const lux = Math.round(200 + Math.random() * 100);
+      const uptime = Math.round(95 + Math.random() * 5);
+      const wifiUsers = Math.round(Math.random() * 8);
+      const cctvStatus = Math.random() > 0.1 ? '정상 녹화' : '점검중';
+      const envPm25 = (15 + Math.random() * 15).toFixed(1);
+      const temp = (15 + Math.random() * 8).toFixed(1);
+
+      ov = document.createElement('div');
+      ov.id = 'lightInfoOverlay';
+      ov.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;background:rgba(6,10,18,.97);border:1px solid #facc15;border-radius:12px;padding:20px 24px;min-width:340px;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.6);';
+      ov.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#facc15;font-family:var(--mono);">💡 ${sl.name}</div>
+            <div style="font-size:9px;color:var(--t3);margin-top:2px;font-family:var(--mono);">${sl.id} | ${sl.side} | ${sl.lat.toFixed(4)}, ${sl.lng.toFixed(4)}</div>
+          </div>
+          <button onclick="document.getElementById('lightInfoOverlay').remove()" style="background:none;border:1px solid var(--border);border-radius:4px;color:var(--t2);cursor:pointer;padding:4px 10px;font-size:11px;">✕</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="background:var(--bg3);border-radius:6px;padding:10px;border-left:3px solid #facc15;border-radius:0 6px 6px 0;">
+            <div style="font-size:8px;color:var(--t4);">소비전력</div>
+            <div style="font-size:18px;font-weight:700;color:#facc15;font-family:var(--mono);">${power}<span style="font-size:10px;color:var(--t3);">kW</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:10px;border-left:3px solid #00e5b0;border-radius:0 6px 6px 0;">
+            <div style="font-size:8px;color:var(--t4);">조도</div>
+            <div style="font-size:18px;font-weight:700;color:#00e5b0;font-family:var(--mono);">${lux}<span style="font-size:10px;color:var(--t3);">lux</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:10px;border-left:3px solid #00b8e6;border-radius:0 6px 6px 0;">
+            <div style="font-size:8px;color:var(--t4);">가동률</div>
+            <div style="font-size:18px;font-weight:700;color:#00b8e6;font-family:var(--mono);">${uptime}<span style="font-size:10px;color:var(--t3);">%</span></div>
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:10px;border-left:3px solid #8b5cf6;border-radius:0 6px 6px 0;">
+            <div style="font-size:8px;color:var(--t4);">WiFi 접속</div>
+            <div style="font-size:18px;font-weight:700;color:#8b5cf6;font-family:var(--mono);">${wifiUsers}<span style="font-size:10px;color:var(--t3);">명</span></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;display:grid;gap:6px;">
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--bg3);border-radius:4px;">
+            <span style="font-size:9px;color:var(--t3);">통합 센서</span>
+            <span style="font-size:9px;color:var(--t1);font-family:var(--mono);">${sl.wifi?'WiFi':'—'} | ${sl.cctv?'CCTV':'—'} | ${sl.env?'환경':'—'}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--bg3);border-radius:4px;">
+            <span style="font-size:9px;color:var(--t3);">CCTV 상태</span>
+            <span style="font-size:9px;color:${cctvStatus==='정상 녹화'?'var(--green)':'var(--amber)'};font-family:var(--mono);">● ${cctvStatus}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:6px 10px;background:var(--bg3);border-radius:4px;">
+            <span style="font-size:9px;color:var(--t3);">환경 센서</span>
+            <span style="font-size:9px;color:var(--t1);font-family:var(--mono);">PM2.5 ${envPm25}㎍ | ${temp}°C</span>
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:8px;color:var(--t4);text-align:center;font-family:var(--mono);">설치: 도고온천로 | 제조: 제일엔지니어링</div>`;
+      document.body.appendChild(ov);
+    };
+
+    // ── DRT 노선 — 실제 도로 경유 (도고 카라반 → 호서대 KTX) ──
+    const drtPath = DRT_ROUTE.path.map(s => new kakao.maps.LatLng(s.lat, s.lng));
+    // 배경 라인 (두껍고 투명)
+    new kakao.maps.Polyline({
+      path: drtPath, strokeWeight: 8, strokeColor: '#f97316',
+      strokeOpacity: 0.15, strokeStyle: 'solid'
+    }).setMap(kakaoMap);
+    // 전경 라인 (점선)
+    new kakao.maps.Polyline({
+      path: drtPath, strokeWeight: 3, strokeColor: '#f97316',
+      strokeOpacity: 0.7, strokeStyle: 'shortdash'
+    }).setMap(kakaoMap);
+    // 정류장 마커
+    DRT_ROUTE.stops.forEach((s, i) => {
+      const isTerminal = s.type === 'start' || s.type === 'end';
+      new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(s.lat, s.lng),
+        content: `<div style="display:flex;flex-direction:column;align-items:center;">
+          <div style="width:${isTerminal?16:10}px;height:${isTerminal?16:10}px;background:#f97316;border:2px solid #fff;border-radius:50%;box-shadow:0 0 8px rgba(249,115,22,.6);"></div>
+          <div style="margin-top:2px;padding:1px 6px;background:rgba(6,10,18,.85);border:1px solid #f97316;border-radius:3px;font-family:var(--mono);font-size:${isTerminal?9:7}px;color:#fb923c;white-space:nowrap;font-weight:${isTerminal?600:400};">
+            ${isTerminal?'🚐 ':''}${s.name}
+          </div>
+        </div>`,
+        yAnchor: 1, xAnchor: 0.5
+      }).setMap(kakaoMap);
+    });
+
+    // ── 현대 CV1 차량 2대 순환 애니메이션 ──
+    const cv1Overlays = [];
+    DRT_ROUTE.vehicles.forEach(v => {
+      const ov = new kakao.maps.CustomOverlay({
+        position: new kakao.maps.LatLng(DRT_ROUTE.path[0].lat, DRT_ROUTE.path[0].lng),
+        content: `<div style="display:flex;flex-direction:column;align-items:center;" id="cv1-${v.id}">
+          <div style="padding:3px 8px;background:rgba(6,10,18,.92);border:1.5px solid #f97316;border-radius:6px;display:flex;align-items:center;gap:4px;box-shadow:0 2px 10px rgba(249,115,22,.4);">
+            <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="2" width="12" height="8" rx="2" fill="#f97316"/><rect x="12" y="3" width="6" height="6" rx="1" fill="#fb923c"/><circle cx="4" cy="11" r="1.5" fill="#fff"/><circle cx="14" cy="11" r="1.5" fill="#fff"/><text x="6" y="8" font-size="4" fill="#fff" text-anchor="middle" font-family="monospace">CV1</text></svg>
+            <span style="font-size:8px;font-family:var(--mono);color:#fb923c;font-weight:600;">${v.id}</span>
+          </div>
+        </div>`,
+        yAnchor: 0.5, xAnchor: 0.5
+      });
+      ov.setMap(kakaoMap);
+      cv1Overlays.push({ overlay: ov, pos: v.position, dir: 1 });
+    });
+
+    // CV1 이동 애니메이션 (3초마다)
+    setInterval(() => {
+      cv1Overlays.forEach(bus => {
+        bus.pos += 0.015 * bus.dir;
+        if (bus.pos >= 1) { bus.pos = 1; bus.dir = -1; }
+        if (bus.pos <= 0) { bus.pos = 0; bus.dir = 1; }
+        const pathLen = DRT_ROUTE.path.length - 1;
+        const idx = Math.floor(bus.pos * pathLen);
+        const frac = (bus.pos * pathLen) - idx;
+        const p1 = DRT_ROUTE.path[Math.min(idx, pathLen)];
+        const p2 = DRT_ROUTE.path[Math.min(idx + 1, pathLen)];
+        const lat = p1.lat + (p2.lat - p1.lat) * frac;
+        const lng = p1.lng + (p2.lng - p1.lng) * frac;
+        bus.overlay.setPosition(new kakao.maps.LatLng(lat, lng));
+      });
+    }, 3000);
+
+    // ── 워케이션 마커 (Space-One 카라반 이미지) ──
+    new kakao.maps.CustomOverlay({
+      position: new kakao.maps.LatLng(WORKATION.center.lat, WORKATION.center.lng),
+      content: `<div style="display:flex;flex-direction:column;align-items:center;cursor:pointer;" onclick="openWorkationInfo()">
+        <div style="width:80px;height:50px;border-radius:6px;overflow:hidden;border:2px solid #8b5cf6;box-shadow:0 2px 12px rgba(139,92,246,.5);">
+          <img src="data/space-one.png" style="width:100%;height:100%;object-fit:cover;" alt="Space-One">
+        </div>
+        <div style="margin-top:3px;padding:2px 8px;background:rgba(6,10,18,.9);border:1px solid #8b5cf6;border-radius:10px;font-family:var(--mono);font-size:8px;color:#c4b5fd;white-space:nowrap;text-align:center;">Space-One ${WORKATION.units}동 | ESS ${WORKATION.ess.capacity}</div>
+      </div>`,
+      yAnchor: 1
+    }).setMap(kakaoMap);
+
+    // 워케이션 정보 팝업
+    window.openWorkationInfo = function() {
+      let ov = document.getElementById('workationOverlay');
+      if (!ov) {
+        ov = document.createElement('div');
+        ov.id = 'workationOverlay';
+        ov.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(4,6,12,.92);display:flex;align-items:center;justify-content:center;padding:30px;';
+        ov.onclick = function(e) { if(e.target===this) this.style.display='none'; };
+        ov.innerHTML = `
+          <div style="max-width:600px;background:var(--bg2);border:1px solid #8b5cf6;border-radius:12px;overflow:hidden;">
+            <img src="data/space-one.png" style="width:100%;height:250px;object-fit:cover;">
+            <div style="padding:16px;">
+              <h3 style="font-size:16px;color:#c4b5fd;margin:0 0 8px;">🏠 디지털노마드 워케이션 — Space-One</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
+                <div style="background:var(--bg3);border-radius:6px;padding:10px;border-top:2px solid #8b5cf6;">
+                  <div style="font-size:9px;color:var(--t3);">모듈형 캐빈</div>
+                  <div style="font-family:var(--display);font-size:20px;font-weight:700;color:#8b5cf6;">${WORKATION.units}<span style="font-size:10px;color:var(--t3);">동</span></div>
+                </div>
+                <div style="background:var(--bg3);border-radius:6px;padding:10px;border-top:2px solid #22c55e;">
+                  <div style="font-size:9px;color:var(--t3);">ESS (RE100)</div>
+                  <div style="font-family:var(--display);font-size:20px;font-weight:700;color:#22c55e;">${WORKATION.ess.capacity}<span style="font-size:10px;color:var(--t3);">kWh</span></div>
+                </div>
+                <div style="background:var(--bg3);border-radius:6px;padding:10px;border-top:2px solid #06b6d4;">
+                  <div style="font-size:9px;color:var(--t3);">태양광</div>
+                  <div style="font-family:var(--display);font-size:20px;font-weight:700;color:#06b6d4;">${WORKATION.ess.solar}<span style="font-size:10px;color:var(--t3);">kW</span></div>
+                </div>
+                <div style="background:var(--bg3);border-radius:6px;padding:10px;border-top:2px solid #f59e0b;">
+                  <div style="font-size:9px;color:var(--t3);">현재 입주</div>
+                  <div style="font-family:var(--display);font-size:20px;font-weight:700;color:#f59e0b;" id="wkOcc">${WORKATION.occupancy}<span style="font-size:10px;color:var(--t3);">/${WORKATION.units}동</span></div>
+                </div>
+              </div>
+              <div style="margin-top:12px;padding:8px 10px;background:rgba(139,92,246,.06);border-radius:6px;border-left:3px solid #8b5cf6;font-size:10px;color:var(--t2);line-height:1.6;">
+                신재생에너지 RE100 달성을 위한 ESS + 태양광 시스템 운영<br>
+                디지털노마드를 위한 프리미엄 워케이션 공간
+              </div>
+              <button onclick="this.closest('[id=workationOverlay]').style.display='none'" style="margin-top:12px;width:100%;padding:8px;background:rgba(139,92,246,.15);border:1px solid #8b5cf6;border-radius:6px;color:#c4b5fd;font-size:11px;cursor:pointer;">닫기</button>
+            </div>
+          </div>`;
+        document.body.appendChild(ov);
+      }
+      ov.style.display = 'flex';
+    };
+
+    // Hide fallback
+    document.getElementById('mapFallback').classList.add('hidden');
+
+  } catch (err) {
+    console.error('❌ 카카오맵 초기화 실패:', err);
+    document.getElementById('mapMsg').textContent = '카카오맵 로드 실패';
+    document.getElementById('mapSubMsg').innerHTML =
+      `에러: <code>${err.message}</code><br><br>` +
+      `카카오 개발자 콘솔 확인사항:<br>` +
+      `1. <code>제품 설정 → 카카오맵 → 활성화: ON</code><br>` +
+      `2. <code>플랫폼 → Web → 사이트 도메인: https://leesungho-ai.github.io</code>`;
+  }
+}
+
+// ★ 카카오맵 SDK 초기화 — window.onload로 모든 스크립트 로드 보장
+window.addEventListener('load', function() {
+  console.log('📄 window.onload 실행');
+  console.log('📄 kakao 객체:', typeof kakao);
+  console.log('📄 kakao.maps:', typeof kakao !== 'undefined' ? typeof kakao.maps : 'N/A');
+
+  if (typeof kakao === 'undefined') {
+    console.error('❌ kakao 전역 객체 없음 — SDK 스크립트 로드 실패');
+    document.getElementById('mapMsg').textContent = '카카오맵 SDK 로드 실패';
+    document.getElementById('mapSubMsg').innerHTML =
+      '<b>SDK 스크립트가 로드되지 않았습니다.</b><br><br>' +
+      '플랫폼 키 → Default JS Key 옆 <code>⋮</code> 클릭 →<br>' +
+      '<code>JavaScript SDK 도메인</code>에<br>' +
+      '<code>https://leesungho-ai.github.io</code> 추가 필요';
+    return;
+  }
+
+  if (!kakao.maps || typeof kakao.maps.load !== 'function') {
+    console.error('❌ kakao.maps.load 함수 없음');
+    document.getElementById('mapMsg').textContent = '카카오맵 API 초기화 실패';
+    return;
+  }
+
+  console.log('🗺️ kakao.maps.load() 호출');
+  try {
+    kakao.maps.load(function() {
+      console.log('✅ kakao.maps.load 콜백 실행 — LatLng:', typeof kakao.maps.LatLng);
+      initMap();
+    });
+  } catch(e) {
+    console.error('❌ kakao.maps.load 에러:', e);
+    document.getElementById('mapMsg').textContent = '카카오맵 로드 중 에러';
+    document.getElementById('mapSubMsg').innerHTML =
+      '<code>' + e.message + '</code><br><br>' +
+      '<b>JavaScript SDK 도메인 등록을 확인하세요:</b><br>' +
+      '플랫폼 키 → JS Key 옆 <code>⋮</code> → JavaScript SDK 도메인 →<br>' +
+      '<code>https://leesungho-ai.github.io</code>';
+  }
+});
+
+function placeSensorOverlays() {
+  // Clear existing
+  kakaoOverlays.forEach(o => o.setMap(null));
+  kakaoOverlays = [];
+
+  sensors.forEach(s => {
+    const cls = s.status === 'warn' ? 'sm-alert' : (s.status === 'off' ? 'sm-alert' : typeClass[s.type]);
+    const statusLabel = s.status === 'on' ? '정상' : s.status === 'warn' ? '주의' : '오프';
+    const statusCls = s.status;
+
+    // Build metrics HTML
+    let metricsHtml = '';
+    if (s.type === 'air') {
+      metricsHtml = `
+        <div class="sib-metric"><div class="sib-metric-label">PM2.5</div><div class="sib-metric-value" style="color:${s.pm25>50?'var(--red)':'var(--teal)'}">${s.pm25} <small>µg/m³</small></div></div>
+        <div class="sib-metric"><div class="sib-metric-label">PM10</div><div class="sib-metric-value" style="color:var(--teal)">${s.pm10} <small>µg/m³</small></div></div>`;
+    } else if (s.type === 'temp') {
+      metricsHtml = `
+        <div class="sib-metric"><div class="sib-metric-label">온도</div><div class="sib-metric-value" style="color:var(--cyan)">${s.temp} <small>°C</small></div></div>
+        <div class="sib-metric"><div class="sib-metric-label">습도</div><div class="sib-metric-value" style="color:var(--cyan)">${s.humi} <small>%</small></div></div>`;
+    } else if (s.type === 'water') {
+      metricsHtml = `
+        <div class="sib-metric"><div class="sib-metric-label">pH</div><div class="sib-metric-value" style="color:${s.ph==='--'?'var(--red)':'var(--blue)'}">${s.ph}</div></div>
+        <div class="sib-metric"><div class="sib-metric-label">DO</div><div class="sib-metric-value" style="color:var(--blue)">${s.DO} <small>${s.DO!=='--'?'mg/L':''}</small></div></div>`;
+    } else if (s.type === 'noise') {
+      metricsHtml = `
+        <div class="sib-metric"><div class="sib-metric-label">소음</div><div class="sib-metric-value" style="color:var(--amber)">${s.db} <small>dB</small></div></div>
+        <div class="sib-metric"><div class="sib-metric-label">진동</div><div class="sib-metric-value" style="color:var(--amber)">${s.vib} <small>mm/s</small></div></div>`;
+    } else if (s.type === 'traffic') {
+      metricsHtml = `
+        <div class="sib-metric"><div class="sib-metric-label">통행량</div><div class="sib-metric-value" style="color:var(--purple)">${s.vol} <small>대/h</small></div></div>
+        <div class="sib-metric"><div class="sib-metric-label">평균속도</div><div class="sib-metric-value" style="color:var(--purple)">${s.spd} <small>km/h</small></div></div>`;
+    } else if (s.type === 'cctv') {
+      metricsHtml = `
+        <div class="sib-metric" style="grid-column:span 2"><div class="sib-metric-label">상태</div><div class="sib-metric-value" style="color:var(--orange)">녹화중</div></div>`;
+    }
+
+    const content = `
+      <div class="sensor-overlay" data-id="${s.id}">
+        <div class="sensor-marker ${cls}"></div>
+        <div class="sensor-info-bubble">
+          <div class="sib-header">
+            <span class="sib-id">${s.id}</span>
+            <span class="sib-status ${statusCls}">${statusLabel}</span>
+          </div>
+          <div class="sib-name">${s.name} (${typeKr[s.type]})</div>
+          <div class="sib-metrics">${metricsHtml}</div>
+          <div class="sib-coord">${s.lat.toFixed(4)}°N, ${s.lng.toFixed(4)}°E</div>
+        </div>
+      </div>`;
+
+    const overlay = new kakao.maps.CustomOverlay({
+      position: new kakao.maps.LatLng(s.lat, s.lng),
+      content: content,
+      yAnchor: 0.5,
+      xAnchor: 0.5,
+      zIndex: s.status === 'warn' ? 20 : 10
+    });
+
+    overlay.setMap(kakaoMap);
+    kakaoOverlays.push(overlay);
+  });
+}
+
+function setMapType(type) {
+  if (!kakaoMap) return;
+  const types = {
+    roadmap: kakao.maps.MapTypeId.ROADMAP,
+    skyview: kakao.maps.MapTypeId.SKYVIEW,
+    hybrid: kakao.maps.MapTypeId.HYBRID
+  };
+  kakaoMap.setMapTypeId(types[type] || types.roadmap);
+}
+
+// ══════════════ GAUGES ══════════════
+const gaugeData=[
+  {label:'PM2.5',val:28.4,min:0,max:100,unit:'µg/m³',color:'#00e5b0',warn:50},
+  {label:'기온',val:17.8,min:-10,max:45,unit:'°C',color:'#00b8e6',warn:35},
+  {label:'습도',val:64,min:0,max:100,unit:'%',color:'#3b82f6',warn:85},
+  {label:'소음',val:52.8,min:0,max:100,unit:'dB',color:'#f59e0b',warn:65},
+  {label:'풍속',val:2.8,min:0,max:30,unit:'m/s',color:'#8b5cf6',warn:15},
+  {label:'수질pH',val:7.1,min:0,max:14,unit:'',color:'#22c55e',warn:9},
+];
+function drawGauges(){
+  document.getElementById('gaugeGrid').innerHTML=gaugeData.map(g=>{
+    const pct=((g.val-g.min)/(g.max-g.min))*100;
+    const angle=-90+(pct/100)*180;
+    const isW=g.val>=g.warn;const c=isW?'#ef4444':g.color;
+    return `<div class="gauge-card"><div class="gauge-wrap"><svg class="gauge-svg" viewBox="0 0 100 55">
+      <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="rgba(26,38,64,.6)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${pct*1.26} 126" opacity=".9"/>
+      <line x1="50" y1="50" x2="${50+35*Math.cos(angle*Math.PI/180)}" y2="${50+35*Math.sin(angle*Math.PI/180)}" stroke="${c}" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="3" fill="${c}"/>
+    </svg><div class="gauge-val" style="color:${c}">${g.val}</div></div>
+    <div class="gauge-label">${g.label} <span style="color:var(--t4)">${g.unit}</span></div>
+    <div class="gauge-range">${g.min} — ${g.max}</div></div>`;
+  }).join('');
+}
+drawGauges();
+
+// ══════════════ SENSOR LIST ══════════════
+function renderSensorList(){
+  document.getElementById('sensorList').innerHTML=sensors.map(s=>{
+    let val='';
+    if(s.type==='air') val=`${s.pm25} µg/m³`;
+    else if(s.type==='temp') val=`${s.temp}°C`;
+    else if(s.type==='water') val=`pH ${s.ph}`;
+    else if(s.type==='noise') val=`${s.db} dB`;
+    else if(s.type==='traffic') val=`${s.vol} 대/h`;
+    else if(s.type==='cctv') val='REC';
+    return `<div class="sl-item" onclick="focusSensor('${s.id}')">
+      <div class="sl-dot ${s.status==='on'?'on':s.status==='warn'?'warn':'off'}"></div>
+      <div><div class="sl-name">${typeIcon[s.type]} ${s.id}</div><div class="sl-loc">${s.loc}</div></div>
+      <div class="sl-val" style="color:${typeColors[s.type]}">${val}</div>
+    </div>`;
+  }).join('');
+}
+renderSensorList();
+
+function focusSensor(id) {
+  const s = sensors.find(x=>x.id===id);
+  if (!s || !kakaoMap) return;
+  kakaoMap.setCenter(new kakao.maps.LatLng(s.lat, s.lng));
+  kakaoMap.setLevel(3);
+  // Update HUD
+  document.getElementById('hudSelected').style.display='block';
+  document.getElementById('hudSelId').textContent=s.id;
+  let val='';
+  if(s.type==='air') val=`PM2.5: ${s.pm25}µg/m³`;
+  else if(s.type==='temp') val=`${s.temp}°C / ${s.humi}%`;
+  else if(s.type==='water') val=`pH:${s.ph}`;
+  else if(s.type==='noise') val=`${s.db}dB`;
+  else if(s.type==='traffic') val=`${s.vol}대/h`;
+  else if(s.type==='cctv') val='REC';
+  document.getElementById('hudSelVal').textContent=val;
+  document.getElementById('hudSelCoord').textContent=`${s.lat.toFixed(4)}, ${s.lng.toFixed(4)}`;
+}
+
+// ══════════════ DATA GRID ══════════════
+function renderGrid(){
+  let html=`<table><thead><tr><th>센서ID</th><th>유형</th><th>상태</th><th>측정값1</th><th>측정값2</th><th>위치</th></tr></thead><tbody>`;
+  sensors.forEach(s=>{
+    const st=s.status==='on'?'<span class="val-good">●정상</span>':s.status==='warn'?'<span class="val-warn">▲주의</span>':'<span class="val-danger">■오프</span>';
+    let v1='',v2='';
+    if(s.type==='air'){v1=`<span class="${s.pm25>50?'val-danger':'val-normal'}">${s.pm25}µg/m³</span>`;v2=`${s.pm10}µg/m³`;}
+    else if(s.type==='temp'){v1=`<span class="val-normal">${s.temp}°C</span>`;v2=`${s.humi}%`;}
+    else if(s.type==='water'){v1=`<span class="${s.ph==='--'?'val-danger':'val-normal'}">pH${s.ph}</span>`;v2=`DO${s.DO}`;}
+    else if(s.type==='noise'){v1=`<span class="${s.db>60?'val-warn':'val-normal'}">${s.db}dB</span>`;v2=`${s.vib}mm/s`;}
+    else if(s.type==='traffic'){v1=`<span class="val-normal">${s.vol}대/h</span>`;v2=`${s.spd}km/h`;}
+    else if(s.type==='cctv'){v1=`<span class="val-normal">녹화중</span>`;v2='-';}
+    html+=`<tr><td style="color:var(--teal);font-weight:600;">${s.id}</td><td>${typeKr[s.type]}</td><td>${st}</td><td>${v1}</td><td>${v2}</td><td>${s.loc}</td></tr>`;
+  });
+  html+='</tbody></table>';
+  document.getElementById('dataGrid').innerHTML=html;
+}
+renderGrid();
+
+// ══════════════ ALERTS ══════════════
+const alerts=[
+  {time:'14:32',level:'critical',badge:'위험',msg:'DG-AQ04 PM2.5 72µg/m³ > 기준 50µg/m³'},
+  {time:'14:15',level:'warning',badge:'주의',msg:'DG-WQ03 시전천 수질센서 연결 끊김'},
+  {time:'13:50',level:'warning',badge:'주의',msg:'DG-NS01 소음 52.8dB → 야간기준 접근'},
+  {time:'13:22',level:'info',badge:'정보',msg:'파라다이스 인근 센서 캘리브레이션 완료 42/42'},
+  {time:'12:55',level:'info',badge:'정보',msg:'DG-CC02 AI CCTV 이상행위 탐지 정상'},
+  {time:'12:10',level:'info',badge:'정보',msg:'게이트웨이-DG02 연결 재설정 완료'},
+];
+document.getElementById('alertLog').innerHTML=alerts.map(a=>
+  `<div class="al-item al-${a.level}"><span class="al-time">${a.time}</span><span class="al-badge">${a.badge}</span><span class="al-msg">${a.msg}</span></div>`
+).join('');
+
+// ══════════════ CHARTS ══════════════
+const cOpts={responsive:true,maintainAspectRatio:false,animation:{duration:500},
+  plugins:{legend:{display:false}},
+  scales:{x:{grid:{color:'rgba(26,38,64,.4)',drawBorder:false},ticks:{color:'#475569',font:{family:'JetBrains Mono',size:8},maxTicksLimit:6}},
+          y:{grid:{color:'rgba(26,38,64,.4)',drawBorder:false},ticks:{color:'#475569',font:{family:'JetBrains Mono',size:8},maxTicksLimit:4}}},
+  elements:{point:{radius:0,hoverRadius:3},line:{tension:.4,borderWidth:1.5}}
+};
+const lbl=['09','10','11','12','13','14'];
+function mkG(ctx,r,g,b){const gd=ctx.createLinearGradient(0,0,0,160);gd.addColorStop(0,`rgba(${r},${g},${b},.25)`);gd.addColorStop(1,`rgba(${r},${g},${b},0)`);return gd;}
+
+const charts={};
+function initCharts(){
+  const c1=document.getElementById('cPM25').getContext('2d');
+  charts.pm=new Chart(c1,{type:'line',data:{labels:lbl,datasets:[{data:[20,22,25,28,30,28],borderColor:'#00e5b0',backgroundColor:mkG(c1,0,229,176),fill:true}]},options:{...cOpts,scales:{...cOpts.scales,y:{...cOpts.scales.y,suggestedMin:0,suggestedMax:80}}}});
+  const c2=document.getElementById('cTemp').getContext('2d');
+  charts.temp=new Chart(c2,{type:'line',data:{labels:lbl,datasets:[{data:[14.5,15.2,16.3,17.1,17.9,17.8],borderColor:'#00b8e6',backgroundColor:mkG(c2,0,184,230),fill:true}]},options:{...cOpts,scales:{...cOpts.scales,y:{...cOpts.scales.y,suggestedMin:10,suggestedMax:25}}}});
+  const c3=document.getElementById('cPH').getContext('2d');
+  charts.ph=new Chart(c3,{type:'line',data:{labels:lbl,datasets:[{data:[7.0,7.1,7.0,7.2,7.1,7.1],borderColor:'#3b82f6',backgroundColor:mkG(c3,59,130,246),fill:true}]},options:{...cOpts,scales:{...cOpts.scales,y:{...cOpts.scales.y,suggestedMin:6,suggestedMax:8.5}}}});
+  const c4=document.getElementById('cNoise').getContext('2d');
+  charts.noise=new Chart(c4,{type:'line',data:{labels:lbl,datasets:[{data:[40,42,48,50,53,52],borderColor:'#f59e0b',backgroundColor:mkG(c4,245,158,11),fill:true}]},options:{...cOpts,scales:{...cOpts.scales,y:{...cOpts.scales.y,suggestedMin:30,suggestedMax:80}}}});
+}
+initCharts();
+
+// ══════════════ LIVE SIMULATION (3s interval) ══════════════
+function simulate(){
+  sensors.forEach(s=>{
+    if(s.status==='off') return;
+    if(s.pm25!==undefined) s.pm25=Math.max(5,Math.round((s.pm25+(Math.random()-.5)*4)*10)/10);
+    if(s.pm10!==undefined) s.pm10=Math.max(10,Math.round(s.pm10+(Math.random()-.5)*5));
+    if(s.temp!==undefined) s.temp=Math.round((s.temp+(Math.random()-.5)*.5)*10)/10;
+    if(s.humi!==undefined) s.humi=Math.max(30,Math.min(95,Math.round(s.humi+(Math.random()-.5)*2)));
+    if(s.ph!==undefined&&s.ph!=='--') s.ph=Math.round((s.ph+(Math.random()-.5)*.08)*10)/10;
+    if(s.DO!==undefined&&s.DO!=='--') s.DO=Math.round((s.DO+(Math.random()-.5)*.2)*10)/10;
+    if(s.db!==undefined) s.db=Math.max(30,Math.round((s.db+(Math.random()-.5)*2.5)*10)/10);
+    if(s.vib!==undefined) s.vib=Math.max(2,Math.round((s.vib+(Math.random()-.5)*.8)*10)/10);
+    if(s.vol!==undefined) s.vol=Math.max(50,Math.round(s.vol+(Math.random()-.5)*15));
+    if(s.spd!==undefined) s.spd=Math.max(10,Math.round(s.spd+(Math.random()-.5)*4));
+  });
+
+  renderSensorList();
+  renderGrid();
+
+  // Update gauge data
+  const aq=sensors.find(s=>s.id==='DG-AQ01');
+  const th=sensors.find(s=>s.id==='DG-TH01');
+  const ns=sensors.find(s=>s.id==='DG-NS01');
+  const wq=sensors.find(s=>s.id==='DG-WQ01');
+  if(aq){gaugeData[0].val=aq.pm25;document.getElementById('cv-pm').textContent=aq.pm25;}
+  if(th){gaugeData[1].val=th.temp;gaugeData[2].val=th.humi;document.getElementById('cv-temp').textContent=th.temp+'°';}
+  if(ns){gaugeData[3].val=ns.db;document.getElementById('cv-noise').textContent=ns.db+' dB';}
+  if(wq){gaugeData[5].val=wq.ph;document.getElementById('cv-ph').textContent=wq.ph;}
+  drawGauges();
+
+  // Update map overlays if map is loaded
+  if(kakaoMap) placeSensorOverlays();
+
+  // ── 서비스 상태 시뮬레이션 ──
+  // WiFi 접속자 변동
+  const wfEl = document.getElementById('wifiUsers');
+  if(wfEl) {
+    const wf = Math.max(20, Math.round(80 + (Math.random()-.5)*20));
+    wfEl.innerHTML = `${wf}<span style="font-size:10px;color:var(--t3);font-weight:400;">명</span>`;
+    // WiFi 센서도 갱신
+    const wfS = sensors.find(s=>s.id==='DG-WF02');
+    if(wfS) { wfS.users = wf; wfS.crowd = wf > 60 ? '혼잡' : wf > 30 ? '보통' : '여유'; }
+  }
+  // ESS 충방전 변동
+  const essEl = document.getElementById('essKwh');
+  const essBarEl = document.getElementById('essBar');
+  const essPctEl = document.getElementById('essPct');
+  if(essEl) {
+    const hour = new Date().getHours();
+    // 낮(태양광 충전) vs 밤(방전)
+    const delta = (hour >= 7 && hour <= 17) ? Math.random() * 2 : -Math.random() * 1.5;
+    WORKATION.ess.current = Math.max(50, Math.min(500, (WORKATION.ess.current || 340) + delta));
+    const kwh = Math.round(WORKATION.ess.current);
+    const pct = Math.round(kwh / 500 * 100);
+    essEl.innerHTML = `${kwh}<span style="font-size:10px;color:var(--t3);font-weight:400;">kWh</span>`;
+    if(essBarEl) essBarEl.style.width = pct + '%';
+    if(essPctEl) essPctEl.textContent = pct + '%';
+  }
+  // Space-One 입주 변동 (가끔)
+  if(Math.random() < 0.05) {
+    const occEl = document.getElementById('spaceOccupancy');
+    if(occEl) {
+      WORKATION.occupancy = Math.max(15, Math.min(30, WORKATION.occupancy + (Math.random() > 0.5 ? 1 : -1)));
+      occEl.innerHTML = `${WORKATION.occupancy}<span style="font-size:10px;color:var(--t3);font-weight:400;">/30동</span>`;
+    }
+  }
+
+  // ── DRT 운영현황 시뮬레이션 ──
+  const drtHour = new Date().getHours();
+  const drtOperating = drtHour >= 6 && drtHour < 22;
+  
+  // 운행 상태
+  const drtStatusEl = document.getElementById('drtStatus');
+  if (drtStatusEl) {
+    if (drtOperating) {
+      drtStatusEl.innerHTML = '<span style="color:var(--green);">● 운행중</span>';
+    } else {
+      drtStatusEl.innerHTML = '<span style="color:var(--t4);">○ 운행종료</span>';
+    }
+  }
+  
+  // 차량 위치 (CV1 애니메이션 연동)
+  if (drtOperating && typeof DRT_ROUTE !== 'undefined') {
+    const stops = DRT_ROUTE.stops || [];
+    const v1Loc = document.getElementById('drtV1Loc');
+    const v2Loc = document.getElementById('drtV2Loc');
+    if (v1Loc && stops.length > 0) {
+      const idx1 = Math.floor(Math.random() * stops.length);
+      v1Loc.textContent = (stops[idx1]?.name || '도고 구간') + ' 부근';
+    }
+    if (v2Loc && stops.length > 0) {
+      const idx2 = Math.floor(Math.random() * stops.length);
+      v2Loc.textContent = (stops[idx2]?.name || '배방 구간') + ' 부근';
+    }
+  }
+  
+  // 수송 인원 (시간대별 패턴)
+  const drtTodayEl = document.getElementById('drtToday');
+  const drtTotalEl = document.getElementById('drtTotal');
+  const drtTripsEl = document.getElementById('drtTrips');
+  if (drtTodayEl && drtOperating) {
+    // 시간대별 승객 패턴: 출근(7-9), 점심(11-13), 퇴근(17-19)
+    const hourlyRate = [0,0,0,0,0,0,1,5,8,4,3,6,7,4,3,3,4,7,8,5,3,2,0,0];
+    window._drtDailyPax = (window._drtDailyPax || 0) + (Math.random() < 0.3 ? hourlyRate[drtHour] : 0);
+    window._drtDailyTrips = Math.max(1, Math.floor(drtHour - 5.5));
+    
+    const todayPax = Math.round(window._drtDailyPax || 48);
+    drtTodayEl.innerHTML = `${todayPax}<span style="font-size:8px;color:var(--t4);font-weight:400;">명</span>`;
+    
+    if (drtTotalEl) {
+      const total = 1247 + todayPax;
+      drtTotalEl.innerHTML = `${total.toLocaleString()}<span style="font-size:8px;color:var(--t4);font-weight:400;">명</span>`;
+    }
+    if (drtTripsEl) {
+      const trips = window._drtDailyTrips || 12;
+      drtTripsEl.innerHTML = `${trips}<span style="font-size:8px;color:var(--t4);font-weight:400;">회</span>`;
+    }
+  }
+
+  // Push chart data point every ~9s
+  if(Math.random()>.65){
+    Object.values(charts).forEach(ch=>{
+      const ds=ch.data.datasets[0].data;
+      if(ds.length>12)ds.shift();
+      ds.push(Math.round((ds[ds.length-1]+(Math.random()-.5)*3)*10)/10);
+      if(ch.data.labels.length<ds.length){
+        const now=new Date();ch.data.labels.push(now.getHours()+':'+String(now.getMinutes()).padStart(2,'0'));
+      }
+      if(ch.data.labels.length>12)ch.data.labels.shift();
+      ch.update('none');
+    });
+  }
+}
+setInterval(simulate,3000);
+
+// ══════════════ AJAX 자동 데이터 갱신 (30초마다, 페이지 리로드 없음) ══════════════
+async function autoRefreshData() {
+  try {
+    // 센서 이력 갱신
+    const histResp = await fetch('./data/sensor_history.json?t=' + Date.now());
+    if (histResp.ok) {
+      const hist = await histResp.json();
+      if (hist.data && hist.data.length > 0) {
+        const latest = hist.data[hist.data.length - 1];
+        if (latest.sensors) {
+          const s = latest.sensors;
+          const aq = sensors.find(x=>x.id==='DG-AQ01');
+          if (aq && s.pm25) { aq.pm25 = s.pm25; aq.pm10 = s.pm10 || aq.pm10; }
+          const th = sensors.find(x=>x.id==='DG-TH01');
+          if (th && s.temperature) { th.temp = s.temperature; th.humi = s.humidity || th.humi; }
+          const ns = sensors.find(x=>x.id==='DG-NS01');
+          if (ns && s.noise) { ns.db = s.noise; }
+          const wq = sensors.find(x=>x.id==='DG-WQ01');
+          if (wq && s.waterPH) { wq.ph = s.waterPH; }
+        }
+        // 인프라 데이터 갱신
+        if (latest.infrastructure || latest.crowd || latest.power) {
+          const wfEl = document.getElementById('wifiUsers');
+          const essEl = document.getElementById('essKwh');
+          if (wfEl && (latest.crowd?.wifi_total || latest.infrastructure?.publicWifi?.users)) {
+            const u = latest.crowd?.wifi_total || latest.infrastructure?.publicWifi?.users || 0;
+            wfEl.innerHTML = `${u}<span style="font-size:10px;color:var(--t3);font-weight:400;">명</span>`;
+          }
+          if (essEl && (latest.power?.ess_current || latest.infrastructure?.ess?.current)) {
+            const k = latest.power?.ess_current || latest.infrastructure?.ess?.current || 0;
+            essEl.innerHTML = `${k}<span style="font-size:10px;color:var(--t3);font-weight:400;">kWh</span>`;
+          }
+        }
+        console.log(`🔄 데이터 갱신: ${hist.totalPoints}pt | ${latest.timestamp}`);
+      }
+    }
+  } catch(e) { console.log('🔄 자동 갱신 실패:', e.message); }
+}
+setInterval(autoRefreshData, 30000);
+setTimeout(autoRefreshData, 5000); // 첫 로드 5초 후
+
+// ══════════════ ITS CCTV (cctv_live.json 또는 cctv.json fallback) ══════════════
+let allCctvData = [];
+
+async function loadCCTV() {
+  console.log('📹 CCTV 로드');
+  
+  // 1차: cctv_live.json (맥북 refresh_cctv.py가 push)
+  try {
+    const resp = await fetch('./data/cctv_live.json?t=' + Date.now());
+    const text = await resp.text();
+    if (text.startsWith('{')) {
+      const data = JSON.parse(text);
+      if (data.cctvs && data.cctvs.length > 0) {
+        allCctvData = data.cctvs;
+        document.getElementById('cctvCount').textContent = `${allCctvData.length}대 | ${(data.updated||'').split(' ')[1]||''}`;
+        renderCctvCards(allCctvData);
+        console.log(`📹 cctv_live.json: ${allCctvData.length}대`);
+        return;
+      }
+    }
+  } catch(e) { console.log('📹 cctv_live.json 실패'); }
+  
+  // 2차: cctv.json (ITS API 원본 — 구조 다름)
+  try {
+    const resp2 = await fetch('./data/cctv.json?t=' + Date.now());
+    const text2 = await resp2.text();
+    if (text2.startsWith('{')) {
+      const d2 = JSON.parse(text2);
+      const cctvs = (d2.cctvs || []);
+      // 도고 인근 6대 선택 (거리순)
+      const pLat = 36.763, pLng = 126.887;
+      cctvs.forEach(c => { c.dist = Math.sqrt(Math.pow((c.lat-pLat)*111,2) + Math.pow((c.lng-pLng)*88,2)); });
+      cctvs.sort((a,b) => a.dist - b.dist);
+      allCctvData = cctvs.slice(0, 6).map((c, i) => ({
+        id: `ITS-${String(i+1).padStart(2,'0')}`,
+        name: c.name || '',
+        url: c.url || '',
+        lat: c.lat, lng: c.lng,
+        distance: Math.round(c.dist * 10) / 10,
+        status: c.url ? 'live' : 'offline',
+        type: c.typeLabel || '국도',
+      }));
+      document.getElementById('cctvCount').textContent = `${allCctvData.length}대 | ${(d2.updated||'').split(' ')[1]||''}`;
+      renderCctvCards(allCctvData);
+      console.log(`📹 cctv.json fallback: ${allCctvData.length}대`);
+      return;
+    }
+  } catch(e) { console.log('📹 cctv.json 실패'); }
+  
+  // 3차: 정적 fallback
+  renderCctvFallback('CCTV 데이터 로딩 실패');
+}
+
+function renderCctvCards(cctvs) {
+  const area = document.getElementById('cctvArea');
+  if (!area) return;
+  cctvs.forEach((c, i) => {
+    const cell = document.getElementById('cctv-' + i);
+    if (!cell) return;
+    const hasUrl = c.url && c.url.startsWith('http');
+    const name = (c.name || '').replace(/\[.*?\]\s*/g, '');
+    cell.innerHTML = `
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:6px;text-align:center;">
+        <i class="fas fa-video" style="font-size:18px;color:${hasUrl?'var(--teal)':'var(--border-hi)'};opacity:${hasUrl?.4:.2};margin-bottom:4px;"></i>
+        <div style="font-size:10px;font-weight:600;color:var(--t1);line-height:1.3;margin-bottom:3px;">${name || 'CCTV'}</div>
+        <div style="display:flex;gap:4px;align-items:center;">
+          <span style="font-size:7px;padding:1px 5px;border-radius:2px;background:${hasUrl?'rgba(0,229,176,.12)':'rgba(100,116,139,.1)'};color:${hasUrl?'var(--teal)':'var(--t4)'};font-family:var(--mono);font-weight:600;">${c.type||'ITS'}</span>
+          ${c.distance?`<span style="font-size:7px;color:var(--t4);font-family:var(--mono);">${c.distance}km</span>`:''}
+        </div>
+      </div>
+      <span class="cctv-label" style="font-size:7px;">${c.id||'ITS'}</span>
+      <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;background:${hasUrl?'var(--green)':'var(--amber)'};"></span><span style="font-size:7px;color:${hasUrl?'var(--green)':'var(--amber)'};">${hasUrl?'LIVE':'META'}</span></span>`;
+    // 클릭 이벤트
+    cell.style.cursor = 'pointer';
+    cell.onclick = function() { if (c.url) window.open(c.url, '_blank'); };
+  });
+}
+
+function renderCctvFallback(msg) {
+  const names = ['시전사거리','금산삼거리','와산삼거리','와산리','순천향대','읍내교차로'];
+  for (let i = 0; i < 6; i++) {
+    const cell = document.getElementById('cctv-' + i);
+    if (!cell) continue;
+    cell.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;"><i class="fas fa-video" style="font-size:16px;color:var(--border-hi);opacity:.3;margin-bottom:4px;"></i><span style="font-size:9px;color:var(--t3);">${names[i]}</span><span style="font-size:7px;color:var(--t4);margin-top:2px;">${i===0?msg:'ITS'}</span></div>`;
+  }
+}
+
+// CCTV 30초 자동갱신 + 초기 로드
+setInterval(loadCCTV, 30000);
+setTimeout(loadCCTV, 2000);
+
+// ══════════════ 존 전환 (도고 ↔ 배방) ══════════════
+let currentZone = 'dogo';
+
+
+function switchZone(zone) {
+  if (zone === currentZone) return;
+  currentZone = zone;
+
+  // 탭 활성화
+  document.querySelectorAll('.tb-tab').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.textContent.includes('OASIS') && zone === 'dogo') btn.classList.add('active');
+    if (btn.textContent.includes('배방') && zone === 'baebang') btn.classList.add('active');
+  });
+
+  const bbZone = document.getElementById('baebangZone');
+  const dogoContent = document.querySelector('.content');
+
+  if (zone === 'baebang') {
+    bbZone.style.display = 'block';
+    // 타이틀 변경
+    document.querySelector('.topbar-title').innerHTML = '아산이노베이션 스퀘어 — 배방존<small>ASAN INNOVATION SQUARE</small>';
+    // 디지털 트윈 직접 초기화 (display:block 후 즉시)
+    setTimeout(function() {
+      if (window._initDigitalTwin) window._initDigitalTwin();
+    }, 100);
+    initBaebangCharts();
+  } else {
+    bbZone.style.display = 'none';
+    document.querySelector('.topbar-title').innerHTML = '아산 AI 통합관제시스템 — 도고 파라다이스<small>ASAN AI CONTROL CENTER v3.1</small>';
+  }
+}
+
+// Baebang map replaced by digital twin module (baebang-digital-twin.js)
+
+let bbCharts = {};
+function initBaebangCharts() {
+  if (bbCharts.occ) return;
+  const mkChart = (id, label, color, data) => {
+    const ctx = document.getElementById(id);
+    if (!ctx) return null;
+    return new Chart(ctx, {
+      type: 'line',
+      data: { labels: data.map((_,i)=>i), datasets: [{ data, borderColor: color, borderWidth: 1.5, fill: false, pointRadius: 0, tension: 0.4 }] },
+      options: { plugins:{legend:{display:false}}, scales:{x:{display:false},y:{display:false}}, responsive:true, maintainAspectRatio:false, animation:false }
+    });
+  };
+  const gen = (base, var_) => Array.from({length:20}, ()=> base + (Math.random()-.5)*var_);
+  bbCharts.occ = mkChart('bbOcc', '이용률', '#8b5cf6', gen(75, 20));
+  bbCharts.wifi = mkChart('bbWifi', 'WiFi', '#00b8e6', gen(32, 15));
+  bbCharts.sales = mkChart('bbSales', '매출', '#22c55e', gen(128, 40));
+  bbCharts.event = mkChart('bbEvent', '행사', '#f59e0b', gen(2, 2));
+}
+
+// 전역 노출
+window.switchZone = switchZone;
+
+// ══════════════ 환경 모니터링 대시보드 (대기질/기상/수질/소음) ══════════════
+function openEnvDash(type) {
+  // 기존 오버레이 제거
+  let ov = document.getElementById('envDashOverlay');
+  if (ov) ov.remove();
+
+  // 탭 활성화
+  document.querySelectorAll('.tb-tab').forEach(b => b.classList.remove('active'));
+  const labels = {air:'대기질',weather:'기상관측',water:'수질',noise:'소음'};
+  document.querySelectorAll('.tb-tab').forEach(b => { if(b.textContent === labels[type]) b.classList.add('active'); });
+
+  const data = getEnvData(type);
+
+  ov = document.createElement('div');
+  ov.id = 'envDashOverlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:var(--bg);overflow:auto;';
+
+  ov.innerHTML = `
+    <div style="padding:16px 24px;">
+      <!-- Header -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <h2 style="font-size:20px;font-weight:700;color:var(--t1);margin:0;font-family:var(--mono);">${data.icon} ${data.title}</h2>
+          <p style="font-size:11px;color:var(--t3);margin:4px 0 0;font-family:var(--mono);">도고 디지털 OASIS | 실시간 모니터링</p>
+        </div>
+        <button onclick="closeEnvDash()" style="padding:8px 16px;font-size:12px;font-weight:600;color:var(--t2);background:var(--bg2);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-family:var(--mono);">✕ 닫기</button>
+      </div>
+
+      <!-- Summary Cards -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+        ${data.cards.map(c => `
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;border-top:3px solid ${c.color};">
+            <div style="font-size:10px;color:var(--t3);font-family:var(--mono);">${c.label}</div>
+            <div style="font-size:26px;font-weight:700;color:${c.color};font-family:var(--mono);margin-top:4px;">${c.value}<span style="font-size:12px;color:var(--t3);font-weight:400;">${c.unit}</span></div>
+            <div style="font-size:9px;color:${c.status==='양호'||c.status==='좋음'?'var(--green)':c.status==='보통'?'var(--amber)':'var(--red)'};margin-top:4px;font-family:var(--mono);font-weight:600;">${c.status} ${c.statusDetail||''}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Charts + Details -->
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;">
+        <!-- Chart Area -->
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;">
+          <h3 style="font-size:12px;font-weight:600;color:var(--t1);margin:0 0 10px;font-family:var(--mono);">24시간 추이</h3>
+          <canvas id="envChart" height="220"></canvas>
+        </div>
+        <!-- Sensor List -->
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;">
+          <h3 style="font-size:12px;font-weight:600;color:var(--t1);margin:0 0 10px;font-family:var(--mono);">센서 현황</h3>
+          <div style="display:grid;gap:6px;">
+            ${data.sensors.map(s => `
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:10px;font-weight:600;color:var(--t1);">${s.name}</span>
+                  <span style="font-size:8px;color:var(--green);font-family:var(--mono);">● 정상</span>
+                </div>
+                <div style="font-size:8px;color:var(--t3);margin-top:2px;">${s.loc}</div>
+                <div style="font-size:14px;font-weight:700;color:${data.mainColor};font-family:var(--mono);margin-top:4px;">${s.value}<span style="font-size:9px;color:var(--t3);font-weight:400;">${s.unit}</span></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Standards Table -->
+      <div style="margin-top:10px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;">
+        <h3 style="font-size:12px;font-weight:600;color:var(--t1);margin:0 0 10px;font-family:var(--mono);">기준치 비교</h3>
+        <div style="display:grid;grid-template-columns:repeat(${data.standards.length},1fr);gap:8px;">
+          ${data.standards.map(st => `
+            <div style="text-align:center;padding:8px;background:var(--bg3);border-radius:6px;">
+              <div style="font-size:9px;color:var(--t3);font-family:var(--mono);">${st.label}</div>
+              <div style="font-size:16px;font-weight:700;color:${st.ok?'var(--green)':'var(--red)'};font-family:var(--mono);margin-top:4px;">${st.current}</div>
+              <div style="font-size:8px;color:var(--t4);margin-top:2px;">기준: ${st.limit}</div>
+              <div style="margin-top:4px;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${Math.min(100,st.pct)}%;background:${st.ok?'var(--green)':'var(--red)'};border-radius:2px;"></div></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>`;
+
+  document.body.appendChild(ov);
+
+  // Chart.js 차트 렌더링
+  setTimeout(() => {
+    const ctx = document.getElementById('envChart');
+    if (ctx && typeof Chart !== 'undefined') {
+      const hours = Array.from({length:24}, (_,i) => i+':00');
+      new Chart(ctx, {
+        type:'line',
+        data:{
+          labels: hours,
+          datasets: data.chartSets.map(ds => ({
+            label: ds.label,
+            data: ds.data,
+            borderColor: ds.color,
+            borderWidth: 1.5,
+            fill: false,
+            pointRadius: 0,
+            tension: 0.4,
+          }))
+        },
+        options:{
+          plugins:{legend:{display:true,position:'top',labels:{color:'#94a3b8',font:{size:10,family:'monospace'}}}},
+          scales:{x:{ticks:{color:'#475569',font:{size:8}},grid:{color:'rgba(255,255,255,.03)'}},y:{ticks:{color:'#475569',font:{size:8}},grid:{color:'rgba(255,255,255,.05)'}}},
+          responsive:true, maintainAspectRatio:false, animation:false
+        }
+      });
+    }
+  }, 200);
+}
+
+function closeEnvDash() {
+  const ov = document.getElementById('envDashOverlay');
+  if (ov) ov.remove();
+  // 도고 탭 재활성화
+  document.querySelectorAll('.tb-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tb-tab').forEach(b => { if(b.textContent.includes('도고')) b.classList.add('active'); });
+}
+
+function getEnvData(type) {
+  const gen = (base, range, n) => Array.from({length:n||24}, () => +(base + (Math.random()-.5)*range*2).toFixed(1));
+
+  if (type === 'air') return {
+    icon:'🌫️', title:'대기질 모니터링', mainColor:'var(--teal)',
+    cards:[
+      {label:'PM2.5',value:'24.5',unit:'㎍/㎥',color:'var(--teal)',status:'보통',statusDetail:'(기준 35)'},
+      {label:'PM10',value:'38.2',unit:'㎍/㎥',color:'var(--cyan)',status:'양호',statusDetail:'(기준 80)'},
+      {label:'통합대기지수',value:'72',unit:'',color:'var(--green)',status:'보통'},
+      {label:'센서',value:'4',unit:'기',color:'var(--purple)',status:'정상',statusDetail:'가동'},
+    ],
+    sensors:[
+      {name:'DG-AQ01',loc:'이마트24 도고온천점',value:'28.3',unit:'㎍/㎥'},
+      {name:'DG-AQ02',loc:'더자라 무인텔 앞',value:'24.1',unit:'㎍/㎥'},
+      {name:'DG-AQ03',loc:'한국콘도 도고점',value:'22.4',unit:'㎍/㎥'},
+      {name:'DG-AQ04',loc:'Space-One 단지',value:'18.2',unit:'㎍/㎥'},
+    ],
+    chartSets:[
+      {label:'PM2.5',color:'#00d4aa',data:gen(25,8)},
+      {label:'PM10',color:'#00b8e6',data:gen(40,12)},
+    ],
+    standards:[
+      {label:'PM2.5 일평균',current:'24.5',limit:'35㎍/㎥',pct:70,ok:true},
+      {label:'PM10 일평균',current:'38.2',limit:'80㎍/㎥',pct:48,ok:true},
+      {label:'PM2.5 시간',current:'28.3',limit:'75㎍/㎥',pct:38,ok:true},
+      {label:'PM10 시간',current:'42.1',limit:'150㎍/㎥',pct:28,ok:true},
+    ]
+  };
+
+  if (type === 'weather') return {
+    icon:'🌤️', title:'기상관측 모니터링', mainColor:'var(--amber)',
+    cards:[
+      {label:'기온',value:'17.8',unit:'°C',color:'var(--amber)',status:'보통'},
+      {label:'습도',value:'64',unit:'%',color:'var(--cyan)',status:'양호'},
+      {label:'풍속',value:'2.5',unit:'m/s',color:'var(--teal)',status:'양호',statusDetail:'미풍'},
+      {label:'센서',value:'2',unit:'기',color:'var(--purple)',status:'정상',statusDetail:'가동'},
+    ],
+    sensors:[
+      {name:'DG-TH01',loc:'도고온천로 중앙',value:'17.8',unit:'°C'},
+      {name:'DG-TH02',loc:'파라다이스 스파',value:'16.9',unit:'°C'},
+    ],
+    chartSets:[
+      {label:'기온(°C)',color:'#f59e0b',data:gen(15,6)},
+      {label:'습도(%)',color:'#00b8e6',data:gen(65,10)},
+    ],
+    standards:[
+      {label:'기온',current:'17.8°C',limit:'쾌적 18~26°C',pct:65,ok:true},
+      {label:'습도',current:'64%',limit:'쾌적 40~70%',pct:64,ok:true},
+      {label:'풍속',current:'2.5m/s',limit:'주의 14m/s',pct:18,ok:true},
+      {label:'체감온도',current:'16.2°C',limit:'한랭 -10°C',pct:55,ok:true},
+    ]
+  };
+
+  if (type === 'water') return {
+    icon:'💧', title:'수질 모니터링', mainColor:'var(--green)',
+    cards:[
+      {label:'pH',value:'7.1',unit:'',color:'var(--green)',status:'양호',statusDetail:'(중성)'},
+      {label:'DO (용존산소)',value:'8.2',unit:'mg/L',color:'var(--cyan)',status:'양호'},
+      {label:'수온',value:'14.5',unit:'°C',color:'var(--amber)',status:'정상'},
+      {label:'센서',value:'3',unit:'기',color:'var(--purple)',status:'정상',statusDetail:'가동'},
+    ],
+    sensors:[
+      {name:'DG-WQ01',loc:'도고천 워케이션 인근',value:'7.1',unit:'pH'},
+      {name:'DG-WQ02',loc:'온천 취수정',value:'7.3',unit:'pH'},
+      {name:'DG-WQ03',loc:'시전천 합류점',value:'7.0',unit:'pH'},
+    ],
+    chartSets:[
+      {label:'pH',color:'#22c55e',data:gen(7.1,0.3)},
+      {label:'DO(mg/L)',color:'#00b8e6',data:gen(8.2,1)},
+    ],
+    standards:[
+      {label:'pH',current:'7.1',limit:'6.5~8.5',pct:50,ok:true},
+      {label:'DO',current:'8.2mg/L',limit:'≥5mg/L',pct:60,ok:true},
+      {label:'BOD',current:'2.1mg/L',limit:'≤5mg/L',pct:42,ok:true},
+      {label:'SS',current:'8.5mg/L',limit:'≤25mg/L',pct:34,ok:true},
+    ]
+  };
+
+  // noise
+  return {
+    icon:'🔊', title:'소음 모니터링', mainColor:'var(--amber)',
+    cards:[
+      {label:'평균 소음',value:'48.2',unit:'dB',color:'var(--amber)',status:'양호',statusDetail:'(기준 65dB)'},
+      {label:'최대 소음',value:'62.5',unit:'dB',color:'var(--red)',status:'주의'},
+      {label:'진동',value:'7.4',unit:'mm/s',color:'var(--teal)',status:'양호'},
+      {label:'센서',value:'2',unit:'기',color:'var(--purple)',status:'정상',statusDetail:'가동'},
+    ],
+    sensors:[
+      {name:'DG-NS01',loc:'도고온천로 상가',value:'48.2',unit:'dB'},
+      {name:'DG-NS02',loc:'Space-One 단지',value:'35.1',unit:'dB'},
+    ],
+    chartSets:[
+      {label:'소음(dB)',color:'#f59e0b',data:gen(45,12)},
+      {label:'진동(mm/s)',color:'#8b5cf6',data:gen(5,3)},
+    ],
+    standards:[
+      {label:'주간 소음',current:'48.2dB',limit:'65dB',pct:74,ok:true},
+      {label:'야간 소음',current:'35.1dB',limit:'55dB',pct:64,ok:true},
+      {label:'진동',current:'7.4mm/s',limit:'75dB(V)',pct:10,ok:true},
+      {label:'저주파',current:'42Hz',limit:'기준없음',pct:30,ok:true},
+    ]
+  };
+}
+
+window.openEnvDash = openEnvDash;
+window.closeEnvDash = closeEnvDash;
+window.charts = charts;
+
+// ══════════════ CCTV 풀스크린 오버레이 + 확대 ══════════════
+let cctvSnapshotsCache = null;
+
+function openCctvOverlay() {
+  let overlay = document.getElementById('cctvOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'cctv-overlay';
+    overlay.id = 'cctvOverlay';
+    overlay.innerHTML = `
+      <div class="cctv-overlay-head">
+        <h3><i class="fas fa-video"></i> ITS 교통 CCTV — 도고 파라다이스 인근</h3>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span id="cctvOverlayCount" style="font-size:10px;color:var(--t4);font-family:var(--mono);"></span>
+          <button class="cctv-overlay-close" onclick="closeCctvOverlay()"><i class="fas fa-times"></i> 닫기 (ESC)</button>
+        </div>
+      </div>
+      <div class="cctv-overlay-grid" id="cctvOverlayGrid"></div>`;
+    document.body.appendChild(overlay);
+  }
+  populateCctvOverlay();
+  overlay.classList.add('active');
+  document.addEventListener('keydown', cctvEscHandler);
+}
+
+function closeCctvOverlay() {
+  const overlay = document.getElementById('cctvOverlay');
+  if (overlay) overlay.classList.remove('active');
+  document.removeEventListener('keydown', cctvEscHandler);
+}
+
+function cctvEscHandler(e) {
+  if (e.key === 'Escape') {
+    closeCctvSingle();
+    closeCctvOverlay();
+  }
+}
+
+function populateCctvOverlay() {
+  const grid = document.getElementById('cctvOverlayGrid');
+  if (!grid) return;
+
+  // cctv_snapshots.json에서 데이터 가져오기
+  if (cctvSnapshotsCache) {
+    renderOverlayGrid(grid, cctvSnapshotsCache);
+    return;
+  }
+
+  fetch('./data/cctv_snapshots.json?t=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      cctvSnapshotsCache = data;
+      const el = document.getElementById('cctvOverlayCount');
+      if (el) el.textContent = `${data.captured || data.total}대 | ${data.updated || ''}`;
+      renderOverlayGrid(grid, data);
+    })
+    .catch(() => {
+      grid.innerHTML = '<div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;color:var(--t3);"><i class="fas fa-video-slash" style="font-size:24px;opacity:.3;margin-right:10px;"></i>CCTV 데이터 없음</div>';
+    });
+}
+
+function renderOverlayGrid(grid, data) {
+  const snaps = (data.snapshots || []).filter(s => s.image);
+  grid.innerHTML = snaps.map((s, i) => {
+    const name = s.name.replace(/\[.*?\]\s*/, '');
+    let src = s.image || '';
+    if (src.startsWith('data:image/jpeg;base64,')) src = src.replace('data:image/jpeg;base64,', 'data:video/mp4;base64,');
+    return `
+      <div class="cctv-overlay-cell" onclick="openCctvSingle(${i})">
+        <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;">
+          <source src="${src}" type="video/mp4">
+        </video>
+        <span class="cctv-label">${name}</span>
+        <span class="cctv-status"><span class="live-dot" style="width:5px;height:5px;"></span><span style="font-size:8px;color:var(--green);">LIVE</span></span>
+        <span style="position:absolute;bottom:6px;left:8px;font-size:9px;color:rgba(255,255,255,.7);font-family:var(--mono);text-shadow:0 1px 2px #000;">${s.typeLabel||'CCTV'} | ${s.dist_km}km</span>
+        <span style="position:absolute;bottom:6px;right:8px;font-size:8px;color:rgba(255,255,255,.5);font-family:var(--mono);"><i class="fas fa-expand" style="margin-right:4px;"></i>확대</span>
+      </div>`;
+  }).join('');
+  // autoplay
+  setTimeout(() => grid.querySelectorAll('video').forEach(v => v.play().catch(()=>{})), 300);
+}
+
+// 단일 CCTV 확대
+function openCctvSingle(idx) {
+  const data = cctvSnapshotsCache;
+  if (!data) return;
+  const snaps = (data.snapshots || []).filter(s => s.image);
+  if (idx >= snaps.length) return;
+  const s = snaps[idx];
+  const name = s.name.replace(/\[.*?\]\s*/, '');
+  let src = s.image || '';
+  if (src.startsWith('data:image/jpeg;base64,')) src = src.replace('data:image/jpeg;base64,', 'data:video/mp4;base64,');
+
+  let overlay = document.getElementById('cctvSingleOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'cctv-single-overlay';
+    overlay.id = 'cctvSingleOverlay';
+    overlay.onclick = function(e) { if (e.target === this) closeCctvSingle(); };
+    document.body.appendChild(overlay);
+  }
+  overlay.innerHTML = `
+    <div class="cctv-single-box">
+      <button class="cctv-single-close" onclick="closeCctvSingle()"><i class="fas fa-times"></i></button>
+      <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:contain;background:#000;">
+        <source src="${src}" type="video/mp4">
+      </video>
+      <div class="cctv-single-info">
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--t1);">${name}</div>
+          <div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-top:2px;">${s.typeLabel||'CCTV'} | ${s.lat?.toFixed(4) || ''}°N, ${s.lng?.toFixed(4) || ''}°E | ${s.dist_km}km from 파라다이스</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span class="live-dot" style="width:6px;height:6px;"></span>
+          <span style="font-size:11px;color:var(--green);font-family:var(--mono);font-weight:600;">LIVE</span>
+        </div>
+      </div>
+    </div>`;
+  overlay.classList.add('active');
+  setTimeout(() => overlay.querySelector('video')?.play().catch(()=>{}), 200);
+}
+
+function closeCctvSingle() {
+  const overlay = document.getElementById('cctvSingleOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+// 메인 페이지 CCTV 셀 클릭 → 확대
+document.addEventListener('click', function(e) {
+  const cell = e.target.closest('.cctv-cell');
+  if (!cell) return;
+  const id = cell.id; // cctv-0 ~ cctv-5
+  if (!id || !id.startsWith('cctv-')) return;
+  const idx = parseInt(id.split('-')[1]);
+  // 스냅샷 캐시가 없으면 로드
+  if (!cctvSnapshotsCache) {
+    fetch('./data/cctv_snapshots.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(data => { cctvSnapshotsCache = data; openCctvSingle(idx); })
+      .catch(() => {});
+  } else {
+    openCctvSingle(idx);
+  }
+});
+</script>
+
+<!-- AI 예측 모듈 -->
+<script src="prediction-ui.js"></script>
+<!-- 순찰 로봇 모니터링 모듈 -->
+<script src="robot-patrol.js"></script>
+<!-- 배방존 디지털 트윈 -->
+<script src="baebang-digital-twin.js"></script>
+
+</body>
+</html>

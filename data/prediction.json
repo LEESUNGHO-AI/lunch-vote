@@ -1,0 +1,10 @@
+{
+  "updated": "2026-03-23 02:22:53 KST",
+  "model": "claude-sonnet-4-20250514",
+  "version": "4-model-v1",
+  "dataPoints": 6,
+  "prediction": {
+    "analysis": "도고 OASIS 전 구간 정상 운영 중입니다. 오후 시간대 관광객 증가에 따른 교통량 소폭 증가가 예상됩니다.",
+    "alerts": []
+  }
+}
