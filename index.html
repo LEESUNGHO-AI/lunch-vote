@@ -362,10 +362,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
     <div class="w-head"><div class="w-head-title"><i class="fas fa-microchip"></i> 도고 OASIS 센서 현황</div></div>
     <div class="w-body">
       <div class="sensor-summary">
-        <div class="ss-card"><div class="ss-val">17</div><div class="ss-label">전체 센서</div></div>
+        <div class="ss-card"><div class="ss-val">8</div><div class="ss-label">전체 센서</div></div>
         <div class="ss-card"><div class="ss-val">97.6%</div><div class="ss-label">수집률</div></div>
-        <div class="ss-card"><div class="ss-val">16</div><div class="ss-label">정상 가동</div></div>
-        <div class="ss-card"><div class="ss-val">2</div><div class="ss-label">경보</div></div>
+        <div class="ss-card"><div class="ss-val">8</div><div class="ss-label">정상 가동</div></div>
+        <div class="ss-card"><div class="ss-val">0</div><div class="ss-label">경보</div></div>
       </div>
     </div>
   </div>
@@ -605,20 +605,23 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
     </div>
   </div>
 
-  <div class="widget" style="min-height:0;flex:1;overflow:hidden;">
+  <div class="widget" style="flex-shrink:0;max-height:200px;overflow:hidden;">
     <div class="w-head">
       <div class="w-head-title"><i class="fas fa-table"></i> 실시간 센서 데이터</div>
       <div class="w-head-actions"><span id="dataSrcBadge" style="display:inline-flex;gap:3px;margin-right:4px;"></span><button class="active">ALL</button><button>AIR</button><button>ENV</button></div>
     </div>
-    <div class="w-body data-grid" id="dataGrid"></div>
+    <div class="w-body data-grid" id="dataGrid" style="overflow-y:auto;"></div>
   </div>
 
-  <div class="widget" style="max-height:180px;flex-shrink:0;">
+  <!-- 로봇 순찰 위젯은 robot-patrol.js가 여기에 삽입 -->
+  <div id="robotSlot"></div>
+
+  <div class="widget" style="min-height:140px;flex:1;overflow:hidden;">
     <div class="w-head">
       <div class="w-head-title"><i class="fas fa-bell"></i> 경보 로그</div>
       <div class="w-head-actions"><button class="active">금일</button><button>전체</button></div>
     </div>
-    <div class="w-body alert-log" id="alertLog"></div>
+    <div class="w-body alert-log" id="alertLog" style="overflow-y:auto;"></div>
   </div>
 </div>
 
@@ -933,31 +936,18 @@ const WORKATION = {
 
 // ══════════════ SENSOR DATA — 도고온천로 + 더자라모텔 구간 ══════════════
 const sensors = [
-  // 대기질 — 도고온천로 구간
-  { id:'DG-AQ01', name:'이마트24 앞 대기질',       type:'air',     status:'on',  lat:36.7641, lng:126.8865, loc:'이마트24 도고온천점',    pm25:28,  pm10:42 },
-  { id:'DG-AQ02', name:'더자라모텔 대기질',        type:'air',     status:'on',  lat:36.7624, lng:126.8882, loc:'더자라 무인텔 앞',       pm25:24,  pm10:38 },
-  { id:'DG-AQ03', name:'한국콘도 앞 대기질',       type:'air',     status:'on',  lat:36.7612, lng:126.8880, loc:'한국콘도 도고점',        pm25:22,  pm10:35 },
-  { id:'DG-AQ04', name:'워케이션 ZONE 대기질',     type:'air',     status:'on',  lat:36.7625, lng:126.8890, loc:'Space-One 단지',        pm25:18,  pm10:30 },
-  // 기상 센서
-  { id:'DG-TH01', name:'도고온천로 기상관측',      type:'temp',    status:'on',  lat:36.7635, lng:126.8870, loc:'도고온천로 중앙',        temp:17.8, humi:64 },
-  { id:'DG-TH02', name:'파라다이스 기상',          type:'temp',    status:'on',  lat:36.7661, lng:126.8862, loc:'파라다이스 스파',        temp:16.9, humi:68 },
+  // 대기질 — 도고온천로 구간 (에어코리아 API 연동)
+  { id:'DG-AQ01', name:'이마트24 도고온천점',     type:'air',   status:'on',  lat:36.7641, lng:126.8865, loc:'이마트24 도고온천점',    pm25:28,  pm10:42 },
+  { id:'DG-AQ02', name:'디자라 무인텔 앞',        type:'air',   status:'on',  lat:36.7624, lng:126.8882, loc:'디자라 무인텔 앞',       pm25:24,  pm10:38 },
+  { id:'DG-AQ03', name:'한국콘도 도고점',         type:'air',   status:'on',  lat:36.7612, lng:126.8880, loc:'한국콘도 도고점',        pm25:22,  pm10:35 },
+  { id:'DG-AQ04', name:'Space-One 단지',         type:'air',   status:'on',  lat:36.7625, lng:126.8890, loc:'Space-One 단지',        pm25:18,  pm10:30 },
+  // 기상 센서 (기상청 API 연동)
+  { id:'DG-TH01', name:'도고온천로 중앙',         type:'temp',  status:'on',  lat:36.7635, lng:126.8870, loc:'도고온천로 중앙',        temp:17.8, humi:64 },
+  { id:'DG-TH02', name:'파라다이스 스파도고',      type:'temp',  status:'on',  lat:36.7661, lng:126.8862, loc:'파라다이스 스파도고',     temp:16.9, humi:68 },
   // 수질 센서
-  { id:'DG-WQ01', name:'도고천 수질',              type:'water',   status:'on',  lat:36.7620, lng:126.8898, loc:'도고천 워케이션 인근',   ph:7.1,   DO:8.2 },
-  { id:'DG-WQ02', name:'온천수 수질',              type:'water',   status:'on',  lat:36.7640, lng:126.8880, loc:'온천 취수정',            ph:7.3,   DO:8.6 },
+  { id:'DG-WQ01', name:'도고천 워케이션 인근',     type:'water', status:'on',  lat:36.7620, lng:126.8898, loc:'도고천 워케이션 인근',   ph:7.1,   DO:8.2 },
   // 소음 센서
-  { id:'DG-NS01', name:'도고온천로 소음',          type:'noise',   status:'on',  lat:36.7630, lng:126.8868, loc:'도고온천로 상가',        db:48.2,  vib:7.4 },
-  { id:'DG-NS02', name:'워케이션 소음',            type:'noise',   status:'on',  lat:36.7625, lng:126.8885, loc:'Space-One 단지',        db:35.1,  vib:3.2 },
-  // 교통
-  { id:'DG-TR01', name:'도고온천로 교통',          type:'traffic', status:'on',  lat:36.7635, lng:126.8860, loc:'도고온천로 입구',        vol:86,   spd:30 },
-  // CCTV
-  { id:'DG-CC01', name:'도고온천로 CCTV',          type:'cctv',    status:'on',  lat:36.7638, lng:126.8865, loc:'스마트가로등 #8' },
-  { id:'DG-CC02', name:'워케이션 AI CCTV',         type:'cctv',    status:'on',  lat:36.7625, lng:126.8888, loc:'Space-One 입구' },
-  // ESS
-  { id:'DG-ES01', name:'ESS 모니터링',             type:'ess',     status:'on',  lat:36.7622, lng:126.8892, loc:'RE100 ESS동', kwh:340, capacity:500 },
-  // WiFi
-  { id:'DG-WF01', name:'공공WiFi AP-1',            type:'wifi',    status:'on',  lat:36.7645, lng:126.8858, loc:'스마트가로등 #1', users:23, crowd:'보통' },
-  { id:'DG-WF02', name:'공공WiFi AP-2',            type:'wifi',    status:'on',  lat:36.7630, lng:126.8870, loc:'스마트가로등 #8', users:45, crowd:'혼잡' },
-  { id:'DG-WF03', name:'공공WiFi AP-3',            type:'wifi',    status:'on',  lat:36.7615, lng:126.8878, loc:'스마트가로등 #14', users:12, crowd:'여유' },
+  { id:'DG-NS01', name:'도고온천로 스마트가로등',   type:'noise', status:'on',  lat:36.7630, lng:126.8868, loc:'도고온천로 상가',        db:48.2,  vib:7.4 },
 ];
 
 const typeColors = {

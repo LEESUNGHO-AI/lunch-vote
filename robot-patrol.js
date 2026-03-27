@@ -237,14 +237,20 @@ function tick() {
 }
 
 function init() {
+  // robotSlot이 있으면 그곳에, 없으면 right-panel에 삽입
+  const slot = document.getElementById('robotSlot');
   const rp = document.querySelector('.right-panel');
-  if (!rp || document.getElementById('robotWidget')) return;
+  if ((!slot && !rp) || document.getElementById('robotWidget')) return;
   injectCSS();
   const w = document.createElement('div');
   w.className='widget'; w.id='robotWidget'; w.style.cssText='flex-shrink:0;';
   w.innerHTML = `<div class="w-head"><div class="w-head-title"><span style="color:${COL};width:20px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;">${UNITREE_SMALL}</span> 순찰 로봇 현황</div></div><div class="w-body" style="padding:0;" id="robotPanel"><div style="text-align:center;padding:10px;color:var(--t3);font-size:10px;">초기화중...</div></div>`;
-  const last = rp.lastElementChild;
-  if (last) rp.insertBefore(w, last); else rp.appendChild(w);
+  if (slot) {
+    slot.appendChild(w);
+  } else {
+    const last = rp.lastElementChild;
+    if (last) rp.insertBefore(w, last); else rp.appendChild(w);
+  }
 
   const wait = setInterval(() => {
     if (typeof kakao!=='undefined' && window.kakaoMap) { clearInterval(wait); updateMap(); }
