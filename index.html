@@ -370,6 +370,31 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
     </div>
   </div>
 
+  <!-- ★ 실시간 날씨 위젯 (기상청 API) -->
+  <div class="widget" style="flex-shrink:0;">
+    <div class="w-head">
+      <div class="w-head-title"><i class="fas fa-cloud-sun" style="color:#60a5fa;"></i> 도고면 실시간 날씨</div>
+      <div class="w-head-actions"><span style="font-size:7px;padding:1px 5px;border-radius:3px;background:rgba(59,130,246,.1);color:#60a5fa;font-family:var(--mono);font-weight:600;">기상청 API</span></div>
+    </div>
+    <div class="w-body" style="flex:none;padding:10px 12px;" id="weatherWidget">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="weatherIcon" style="font-size:36px;line-height:1;">--</div>
+        <div style="flex:1;">
+          <div style="display:flex;align-items:baseline;gap:6px;">
+            <span id="weatherTemp" style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--cyan);text-shadow:0 0 12px rgba(0,184,230,.3);">--</span>
+            <span style="font-size:12px;color:var(--t3);">°C</span>
+            <span id="weatherText" style="font-size:12px;color:var(--t2);margin-left:4px;">로딩중...</span>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:4px;">
+            <span style="font-size:10px;color:var(--t3);"><i class="fas fa-droplet" style="color:#3b82f6;font-size:8px;margin-right:3px;"></i>습도 <span id="weatherHumi" style="color:var(--t1);font-family:var(--mono);font-weight:600;">--</span>%</span>
+            <span style="font-size:10px;color:var(--t3);"><i class="fas fa-wind" style="color:#8b5cf6;font-size:8px;margin-right:3px;"></i>풍속 <span id="weatherWind" style="color:var(--t1);font-family:var(--mono);font-weight:600;">--</span>m/s</span>
+            <span style="font-size:10px;color:var(--t3);"><i class="fas fa-umbrella" style="color:#06b6d4;font-size:8px;margin-right:3px;"></i>강수 <span id="weatherRain" style="color:var(--t1);font-family:var(--mono);font-weight:600;">0</span>mm</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="widget">
     <div class="w-head"><div class="w-head-title"><i class="fas fa-tachometer-alt"></i> 도고 OASIS 주요 지표</div></div>
     <div class="w-body"><div class="gauge-grid" id="gaugeGrid"></div></div>
@@ -1715,6 +1740,39 @@ async function autoRefreshData() {
           const keyMap = {pm25:s.pm25, temp:s.temperature, humi:s.humidity, noise:s.noise, wind:s.windSpeed, ph:s.waterPH};
           gaugeData.forEach(g => { if (g.key && keyMap[g.key] != null) g.val = keyMap[g.key]; });
           drawGauges();
+        }
+        // ── ★ 날씨 위젯 업데이트 ──
+        if (latest.sensors) {
+          const s = latest.sensors;
+          const wIcon = document.getElementById('weatherIcon');
+          const wTemp = document.getElementById('weatherTemp');
+          const wText = document.getElementById('weatherText');
+          const wHumi = document.getElementById('weatherHumi');
+          const wWind = document.getElementById('weatherWind');
+          const wRain = document.getElementById('weatherRain');
+          if (wTemp && s.temperature != null) wTemp.textContent = s.temperature;
+          if (wHumi && s.humidity != null) wHumi.textContent = s.humidity;
+          if (wWind && s.windSpeed != null) wWind.textContent = s.windSpeed;
+          if (wRain) wRain.textContent = s.rainfall || 0;
+          if (wText) {
+            const txt = s.weatherText || s.skyText || (s.pty > 0 ? '강수' : null);
+            wText.textContent = txt || '데이터 대기중';
+          }
+          if (wIcon) {
+            const h = new Date().getHours();
+            const isNight = h >= 19 || h < 6;
+            const pty = s.pty;
+            const sky = s.sky;
+            let icon = '';
+            if (pty === 1 || pty === 5) icon = '🌧️';
+            else if (pty === 2 || pty === 6) icon = '🌨️';
+            else if (pty === 3 || pty === 7) icon = '❄️';
+            else if (sky === 1) icon = isNight ? '🌙' : '☀️';
+            else if (sky === 3) icon = isNight ? '☁️' : '⛅';
+            else if (sky === 4) icon = '☁️';
+            else icon = isNight ? '🌙' : '☀️';
+            wIcon.textContent = icon;
+          }
         }
       }
     }
