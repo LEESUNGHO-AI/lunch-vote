@@ -111,15 +111,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
 .ss-card:nth-child(4) .ss-val{color:var(--amber);text-shadow:0 0 16px rgba(245,158,11,.25);}
 .ss-label{font-size:10px;color:var(--t3);margin-top:5px;font-family:var(--mono);font-weight:500;letter-spacing:.5px;}
 
-/* LEFT — GAUGES */
-.gauge-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:8px;}
-.gauge-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;transition:all .3s;}
+/* LEFT — GAUGES (Zabbix-style 270° arc) */
+.gauge-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:8px;}
+.gauge-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 6px 6px;display:flex;flex-direction:column;align-items:center;transition:all .3s;}
 .gauge-card:hover{border-color:var(--border-hi);background:var(--bg4);}
-.gauge-wrap{position:relative;width:96px;height:55px;overflow:hidden;}
-.gauge-svg{width:96px;height:55px;}
-.gauge-val{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);font-family:var(--display);font-size:16px;font-weight:800;}
-.gauge-label{font-size:10px;color:var(--t2);margin-top:5px;font-family:var(--mono);text-align:center;font-weight:500;}
-.gauge-range{font-size:7px;color:var(--t4);font-family:var(--mono);}
+.gauge-wrap{position:relative;width:90px;height:90px;}
+.gauge-svg{width:90px;height:90px;}
+.gauge-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
+.gauge-val{font-family:var(--display);font-size:18px;font-weight:800;line-height:1;}
+.gauge-unit{font-size:8px;color:var(--t3);font-family:var(--mono);margin-top:1px;}
+.gauge-label{font-size:9px;color:var(--t2);margin-top:3px;font-family:var(--mono);text-align:center;font-weight:500;}
 
 /* LEFT — SENSOR LIST */
 .sensor-list{overflow-y:auto;padding:6px;display:flex;flex-direction:column;gap:4px;}
@@ -1476,18 +1477,59 @@ const gaugeData=[
   {label:'수질pH',val:7.1,min:0,max:14,unit:'',color:'#22c55e',warn:9,key:'ph'},
 ];
 function drawGauges(){
+  const cx=45,cy=45,r=36,sw=7;
+  // 270° arc: starts at 135° (bottom-left), ends at 45° (bottom-right)
+  const startAngle=135,totalAngle=270;
+  const toRad=d=>d*Math.PI/180;
+  const arcPoint=(angle)=>({x:cx+r*Math.cos(toRad(angle)),y:cy+r*Math.sin(toRad(angle))});
+  const describeArc=(sa,ea)=>{
+    const s=arcPoint(sa),e=arcPoint(ea);
+    const large=(ea-sa)>180?1:0;
+    return `M${s.x} ${s.y} A${r} ${r} 0 ${large} 1 ${e.x} ${e.y}`;
+  };
+  // Full bg arc
+  const bgArc=describeArc(startAngle,startAngle+totalAngle);
+
   document.getElementById('gaugeGrid').innerHTML=gaugeData.map(g=>{
-    const pct=((g.val-g.min)/(g.max-g.min))*100;
-    const angle=-90+(pct/100)*180;
-    const isW=g.val>=g.warn;const c=isW?'#ef4444':g.color;
-    return `<div class="gauge-card"><div class="gauge-wrap"><svg class="gauge-svg" viewBox="0 0 100 55">
-      <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="rgba(26,38,64,.6)" stroke-width="6" stroke-linecap="round"/>
-      <path d="M10 50 A40 40 0 0 1 90 50" fill="none" stroke="${c}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${pct*1.26} 126" opacity=".9"/>
-      <line x1="50" y1="50" x2="${50+35*Math.cos(angle*Math.PI/180)}" y2="${50+35*Math.sin(angle*Math.PI/180)}" stroke="${c}" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="50" cy="50" r="3" fill="${c}"/>
-    </svg><div class="gauge-val" style="color:${c}">${g.val}</div></div>
-    <div class="gauge-label">${g.label} <span style="color:var(--t4)">${g.unit}</span></div>
-    <div class="gauge-range">${g.min} — ${g.max}</div></div>`;
+    const pct=Math.max(0,Math.min(100,((g.val-g.min)/(g.max-g.min))*100));
+    const warnPct=((g.warn-g.min)/(g.max-g.min))*100;
+    const isW=g.val>=g.warn;
+    const valAngle=startAngle+(pct/100)*totalAngle;
+    const valArc=pct>0.5?describeArc(startAngle,Math.min(valAngle,startAngle+totalAngle)):'';
+    // Color: gradient from green→yellow→red based on warn threshold
+    const c=isW?'#ef4444':g.color;
+    // Zone markers
+    const safeEnd=startAngle+(warnPct/100)*totalAngle;
+    const safeArc=describeArc(startAngle,safeEnd);
+    const dangerArc=describeArc(safeEnd,startAngle+totalAngle);
+    // Tick marks at 0%, 25%, 50%, 75%, 100%
+    const ticks=[0,25,50,75,100].map(p=>{
+      const a=startAngle+(p/100)*totalAngle;
+      const inner={x:cx+(r-sw/2-2)*Math.cos(toRad(a)),y:cy+(r-sw/2-2)*Math.sin(toRad(a))};
+      const outer={x:cx+(r+sw/2+1)*Math.cos(toRad(a)),y:cy+(r+sw/2+1)*Math.sin(toRad(a))};
+      return `<line x1="${inner.x}" y1="${inner.y}" x2="${outer.x}" y2="${outer.y}" stroke="rgba(255,255,255,.1)" stroke-width="1"/>`;
+    }).join('');
+    // End dot (current value indicator)
+    const dotPos=arcPoint(valAngle);
+
+    return `<div class="gauge-card">
+      <div class="gauge-wrap">
+        <svg class="gauge-svg" viewBox="0 0 90 90">
+          <path d="${bgArc}" fill="none" stroke="rgba(26,38,64,.5)" stroke-width="${sw}" stroke-linecap="round"/>
+          <path d="${safeArc}" fill="none" stroke="rgba(34,197,94,.15)" stroke-width="${sw}" stroke-linecap="round"/>
+          <path d="${dangerArc}" fill="none" stroke="rgba(239,68,68,.1)" stroke-width="${sw}" stroke-linecap="round"/>
+          ${ticks}
+          ${pct>0.5?`<path d="${valArc}" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" opacity=".9"/>
+          <circle cx="${dotPos.x}" cy="${dotPos.y}" r="4" fill="${c}" stroke="var(--bg3)" stroke-width="1.5"/>
+          <circle cx="${dotPos.x}" cy="${dotPos.y}" r="2" fill="#fff" opacity=".7"/>`:''}
+        </svg>
+        <div class="gauge-center">
+          <div class="gauge-val" style="color:${c}">${g.val}</div>
+          <div class="gauge-unit">${g.unit}</div>
+        </div>
+      </div>
+      <div class="gauge-label">${g.label}</div>
+    </div>`;
   }).join('');
 }
 drawGauges();
