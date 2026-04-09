@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0">
 <title>아산 AI 통합관제시스템 — 도고 파라다이스</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2300e5b0'/><text x='16' y='22' text-anchor='middle' font-size='16' font-weight='700' fill='%23060a12' font-family='monospace'>AI</text></svg>">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
@@ -26,7 +26,7 @@
   --glow-teal:0 0 20px rgba(0,229,176,.15);--glow-cyan:0 0 20px rgba(0,184,230,.12);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-family:var(--sans);-webkit-font-smoothing:antialiased;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;}
 ::-webkit-scrollbar{width:3px;height:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
@@ -44,18 +44,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
   border-bottom:1px solid var(--border);z-index:100;position:relative;
 }
 .topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,var(--teal) 30%,var(--cyan) 70%,transparent 100%);opacity:.3;}
-.topbar-left{display:flex;align-items:center;gap:14px;}
+.topbar-left{display:flex;align-items:center;gap:14px;min-width:0;}
 .logo-icon{
-  width:32px;height:32px;
+  width:32px;height:32px;flex-shrink:0;
   background:linear-gradient(135deg,var(--teal),var(--cyan));border-radius:8px;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--mono);font-size:10px;font-weight:700;color:var(--bg);
   box-shadow:var(--glow-teal);position:relative;
 }
 .logo-icon::after{content:'';position:absolute;inset:-1px;border-radius:9px;border:1px solid rgba(0,229,176,.3);}
-.topbar-title{font-size:14px;font-weight:700;letter-spacing:-.3px;display:flex;align-items:baseline;gap:8px;}
+.topbar-title{font-size:14px;font-weight:700;letter-spacing:-.3px;display:flex;align-items:baseline;gap:8px;white-space:nowrap;}
 .topbar-title small{font-size:9px;color:var(--t4);font-family:var(--mono);letter-spacing:1.5px;text-transform:uppercase;}
-.topbar-center{display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px;}
+.topbar-center{display:flex;align-items:center;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:2px;flex-shrink:0;}
 .tb-tab{padding:5px 14px;font-size:10px;font-family:var(--mono);color:var(--t3);background:0;border:none;border-radius:4px;cursor:pointer;transition:all .2s;font-weight:500;}
 .tb-tab:hover{color:var(--t2);background:rgba(255,255,255,.03);}
 .tb-tab.active{color:var(--teal);background:rgba(0,229,176,.08);box-shadow:inset 0 0 0 1px rgba(0,229,176,.2);}
@@ -68,11 +68,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
 .tb-btn{width:28px;height:28px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .2s;}
 .tb-btn:hover{border-color:var(--teal);color:var(--teal);box-shadow:var(--glow-teal);}
 
-/* CONTENT GRID */
-.content{display:grid;grid-template-columns:380px 1fr 400px;gap:var(--gap);padding:var(--gap);overflow:hidden;position:relative;}
-.left-panel{display:flex;flex-direction:column;gap:var(--gap);overflow:hidden;}
-.center-panel{display:grid;grid-template-rows:1fr 120px;gap:var(--gap);overflow:hidden;}
-.right-panel{display:flex;flex-direction:column;gap:var(--gap);overflow:hidden;}
+/* CONTENT GRID — fluid 3-column (55" 4K primary, scales to FHD/laptop) */
+.content{display:grid;grid-template-columns:minmax(300px,22%) 1fr minmax(300px,24%);gap:var(--gap);padding:var(--gap);overflow:hidden;position:relative;}
+.left-panel{display:flex;flex-direction:column;gap:var(--gap);overflow-y:auto;overflow-x:hidden;min-width:0;}
+.center-panel{display:grid;grid-template-rows:1fr 120px;gap:var(--gap);overflow:hidden;min-width:0;}
+.right-panel{display:flex;flex-direction:column;gap:var(--gap);overflow-y:auto;overflow-x:hidden;min-width:0;}
 
 /* WIDGET — glassmorphism + refined borders */
 .widget{
@@ -316,6 +316,120 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
   border:6px solid transparent;border-top-color:rgba(6,10,18,.95);
 }
 
+/* ══════════════════════════════════════
+   RESPONSIVE — 55" 4K 기본 + 다양한 화면 대응
+   ══════════════════════════════════════ */
+
+/* 4K+ (3840px+): 55인치 대시보드 — 여유로운 레이아웃 */
+@media (min-width:3200px) {
+  :root{--gap:8px;--r:10px;}
+  .dashboard{grid-template-rows:56px 1fr;}
+  .topbar{padding:0 24px;}
+  .topbar-title{font-size:18px;}
+  .topbar-title small{font-size:11px;}
+  .tb-tab{padding:7px 18px;font-size:12px;}
+  .clock{font-size:18px;}
+  .content{grid-template-columns:minmax(400px,20%) 1fr minmax(420px,22%);}
+  .w-head{padding:10px 14px;min-height:40px;}
+  .w-head-title{font-size:13px;}
+  .gauge-grid{grid-template-columns:1fr 1fr 1fr;gap:6px;padding:10px;}
+  .gauge-val{font-size:22px!important;}
+  .gauge-wrap{width:110px;height:110px;}
+  .gauge-svg{width:110px;height:110px;}
+  .ss-val{font-size:30px;}
+  .sl-item{padding:11px 14px;}
+  .sl-name{font-size:13px;}
+  .sl-val{font-size:16px;}
+  .chart-current{font-size:20px;}
+  .cctv-cell{min-height:110px;}
+  .al-item{padding:8px 12px;font-size:12px;}
+  .status-ticker{height:30px;font-size:10px;}
+}
+
+/* 2K-QHD (2560px): 고해상도 모니터 */
+@media (min-width:2400px) and (max-width:3199px) {
+  .content{grid-template-columns:minmax(360px,21%) 1fr minmax(380px,23%);}
+  .gauge-wrap{width:100px;height:100px;}
+  .gauge-svg{width:100px;height:100px;}
+  .gauge-val{font-size:20px!important;}
+}
+
+/* FHD (1920px): 표준 데스크톱 — 기본값과 동일 */
+
+/* HD+ (1600px~1919px): 소형 데스크톱/큰 노트북 */
+@media (max-width:1919px) {
+  .content{grid-template-columns:minmax(280px,24%) 1fr minmax(280px,25%);}
+  .topbar-title small{display:none;}
+  .gauge-grid{gap:3px;padding:6px;}
+  .gauge-wrap{width:80px;height:80px;}
+  .gauge-svg{width:80px;height:80px;}
+  .gauge-val{font-size:15px!important;}
+  .gauge-unit{font-size:7px;}
+  .gauge-label{font-size:8px;}
+}
+
+/* HD (1366px~1599px): 노트북 */
+@media (max-width:1599px) {
+  :root{--gap:4px;}
+  .dashboard{grid-template-rows:42px 1fr;}
+  .topbar{padding:0 10px;}
+  .topbar-title{font-size:12px;}
+  .content{grid-template-columns:minmax(250px,26%) 1fr minmax(260px,27%);}
+  .center-panel{grid-template-rows:1fr 100px;}
+  .tb-tab{padding:4px 10px;font-size:9px;}
+  .w-head{padding:6px 8px;min-height:28px;}
+  .w-head-title{font-size:10px;}
+  .ss-val{font-size:22px;}
+  .ss-label{font-size:9px;}
+  .gauge-grid{grid-template-columns:1fr 1fr 1fr;gap:3px;padding:5px;}
+  .gauge-wrap{width:72px;height:72px;}
+  .gauge-svg{width:72px;height:72px;}
+  .gauge-val{font-size:14px!important;}
+  .sl-item{padding:7px 9px;gap:6px;}
+  .sl-name{font-size:10px;}
+  .sl-val{font-size:12px;}
+  .cctv-cell{min-height:72px;}
+  .chart-current{font-size:14px;}
+  .charts-row{grid-template-columns:repeat(4,1fr);}
+  .status-ticker{height:22px;font-size:8px;}
+}
+
+/* 태블릿/좁은 화면 (1024px~1365px): 2열 레이아웃 */
+@media (max-width:1365px) {
+  html,body{overflow:auto;}
+  .dashboard{height:auto;min-height:100vh;}
+  .content{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto;
+    overflow:auto;
+    height:auto;
+  }
+  .left-panel{order:1;overflow:visible;}
+  .center-panel{order:3;grid-column:1/-1;min-height:500px;grid-template-rows:1fr 100px;}
+  .right-panel{order:2;overflow:visible;}
+}
+
+/* 모바일/소형 (768px 이하): 1열 */
+@media (max-width:768px) {
+  .content{grid-template-columns:1fr;padding:4px;}
+  .left-panel,.center-panel,.right-panel{order:unset;overflow:visible;}
+  .center-panel{min-height:400px;grid-column:auto;}
+  .topbar-center{display:none;}
+  .topbar-title{font-size:11px;}
+  .charts-row{grid-template-columns:1fr 1fr;}
+  .gauge-grid{grid-template-columns:1fr 1fr 1fr;}
+  .cctv-area{grid-template-columns:1fr 1fr!important;}
+}
+
+/* 크로스브라우저 대응 */
+@supports not (backdrop-filter:blur(12px)) {
+  .widget{background:rgba(10,16,32,.97);}
+  .map-info-box,.map-legend,.zone-badge{background:rgba(6,10,18,.97);}
+}
+/* Windows ClearType 힌팅 */
+@media (-webkit-min-device-pixel-ratio:1) {
+  body{-webkit-text-stroke:0.2px transparent;}
+}
 
 </style>
 </head>
