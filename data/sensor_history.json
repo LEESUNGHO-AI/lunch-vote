@@ -1,8 +1,8 @@
 {
-  "updated": "2026-03-23 02:22:53 KST",
-  "totalPoints": 6,
-  "oldestPoint": "2026-03-23 02:22:53 KST",
-  "newestPoint": "2026-03-23 02:22:53 KST",
+  "updated": "2026-04-24T15:09:12",
+  "totalPoints": 1,
+  "oldestPoint": "2026-04-24T15:09:12",
+  "newestPoint": "2026-04-24T15:09:12",
   "center": {
     "lat": 36.763,
     "lng": 126.887,
@@ -10,220 +10,74 @@
   },
   "data": [
     {
-      "timestamp": "2026-03-23 02:22:53 KST",
-      "time": "21:00",
+      "timestamp": "2026-04-24T15:09:12",
+      "time": "15:09",
+      "dayOfWeek": 5,
+      "isWeekend": false,
+      "dataSources": [
+        "기상청",
+        "기상청예보",
+        "에어코리아"
+      ],
       "sensors": {
-        "pm25": 25.0,
-        "pm10": 35.3,
-        "temperature": 17.1,
-        "humidity": 64,
-        "noise": 42.7,
-        "windSpeed": 3.9,
-        "waterPH": 7.1,
-        "waterDO": 8.1
-      },
-      "infrastructure": {
-        "smartLights": {
-          "total": 15,
-          "active": 15
-        },
-        "publicWifi": {
-          "aps": 3,
-          "users": 52
-        },
-        "ess": {
-          "capacity": 500,
-          "current": 330,
-          "solar": "charging"
-        },
-        "workation": {
-          "total": 30,
-          "occupied": 22
-        },
-        "drt": {
-          "status": "running"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-23 02:22:53 KST",
-      "time": "22:10",
-      "sensors": {
-        "pm25": 21.5,
-        "pm10": 39.6,
-        "temperature": 18.1,
-        "humidity": 66,
-        "noise": 49.3,
-        "windSpeed": 3.7,
-        "waterPH": 7.1,
-        "waterDO": 8.2
-      },
-      "infrastructure": {
-        "smartLights": {
-          "total": 15,
-          "active": 15
-        },
-        "publicWifi": {
-          "aps": 3,
-          "users": 77
-        },
-        "ess": {
-          "capacity": 500,
-          "current": 342,
-          "solar": "charging"
-        },
-        "workation": {
-          "total": 30,
-          "occupied": 25
-        },
-        "drt": {
-          "status": "running"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-23 02:22:53 KST",
-      "time": "23:20",
-      "sensors": {
-        "pm25": 29.9,
-        "pm10": 44.6,
-        "temperature": 17.3,
-        "humidity": 67,
-        "noise": 41.5,
-        "windSpeed": 2.6,
+        "pm25": 5,
+        "pm10": 24,
+        "temperature": 23.4,
+        "humidity": 13,
+        "noise": 54.2,
+        "windSpeed": 2.3,
+        "rainfall": 0,
         "waterPH": 7.2,
-        "waterDO": 8.3
+        "waterDO": 8,
+        "o3": 0.065,
+        "no2": 0.006,
+        "co": 0.3,
+        "so2": 0.004,
+        "airGrade": "1",
+        "airDataTime": "2026-04-24 15:00",
+        "sky": 1,
+        "pty": 0,
+        "lgt": 0,
+        "weatherText": "맑음",
+        "skyText": "맑음",
+        "ptyText": ""
       },
-      "infrastructure": {
-        "smartLights": {
-          "total": 15,
-          "active": 15
-        },
-        "publicWifi": {
-          "aps": 3,
-          "users": 56
-        },
-        "ess": {
-          "capacity": 500,
-          "current": 311,
-          "solar": "charging"
-        },
-        "workation": {
-          "total": 30,
-          "occupied": 24
-        },
-        "drt": {
-          "status": "running"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-23 02:22:53 KST",
-      "time": "00:30",
-      "sensors": {
-        "pm25": 25.1,
-        "pm10": 45.6,
-        "temperature": 16.6,
-        "humidity": 61,
-        "noise": 43.6,
-        "windSpeed": 2.0,
-        "waterPH": 7.3,
-        "waterDO": 8.3
+      "power": {
+        "ess_capacity": 500,
+        "ess_current": 363,
+        "solar_output": 146,
+        "grid_import": 0,
+        "total_consumption": 46,
+        "re100_ratio": 100,
+        "smartlight_power": 0.3
       },
-      "infrastructure": {
-        "smartLights": {
-          "total": 15,
-          "active": 15
-        },
-        "publicWifi": {
-          "aps": 3,
-          "users": 64
-        },
-        "ess": {
-          "capacity": 500,
-          "current": 353,
-          "solar": "charging"
-        },
-        "workation": {
-          "total": 30,
-          "occupied": 25
-        },
-        "drt": {
-          "status": "running"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-23 02:22:53 KST",
-      "time": "01:40",
-      "sensors": {
-        "pm25": 28.0,
-        "pm10": 48.3,
-        "temperature": 17.6,
-        "humidity": 61,
-        "noise": 41.3,
-        "windSpeed": 2.7,
-        "waterPH": 7.1,
-        "waterDO": 8.4
+      "traffic": {
+        "volume": 37,
+        "speed": 39,
+        "congestion": "보통",
+        "drt_passengers": 9
       },
-      "infrastructure": {
-        "smartLights": {
-          "total": 15,
-          "active": 15
-        },
-        "publicWifi": {
-          "aps": 3,
-          "users": 57
-        },
-        "ess": {
-          "capacity": 500,
-          "current": 331,
-          "solar": "charging"
-        },
-        "workation": {
-          "total": 30,
-          "occupied": 22
-        },
-        "drt": {
-          "status": "running"
-        }
-      }
-    },
-    {
-      "timestamp": "2026-03-23 02:22:53 KST",
-      "time": "02:50",
-      "sensors": {
-        "pm25": 23.8,
-        "pm10": 46.3,
-        "temperature": 17.1,
-        "humidity": 63,
-        "noise": 45.5,
-        "windSpeed": 3.5,
-        "waterPH": 7.1,
-        "waterDO": 8.2
+      "crowd": {
+        "wifi_total": 34,
+        "wifi_ap1": 13,
+        "wifi_ap2": 13,
+        "wifi_ap3": 8,
+        "density_level": "보통",
+        "estimated_people": 85
       },
-      "infrastructure": {
-        "smartLights": {
-          "total": 15,
-          "active": 15
-        },
-        "publicWifi": {
-          "aps": 3,
-          "users": 71
-        },
-        "ess": {
-          "capacity": 500,
-          "current": 347,
-          "solar": "charging"
-        },
-        "workation": {
-          "total": 30,
-          "occupied": 20
-        },
-        "drt": {
-          "status": "running"
-        }
+      "caravan": {
+        "total": 30,
+        "occupied": 24,
+        "checkin_today": 5,
+        "checkout_today": 0,
+        "occupancy_rate": 80,
+        "revenue_today": 2880000
       }
     }
+  ],
+  "dataSources": [
+    "기상청",
+    "기상청예보",
+    "에어코리아"
   ]
 }
