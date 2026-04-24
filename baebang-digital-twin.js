@@ -8,9 +8,9 @@
 
 // ── 뷰 파라미터 (드래그로 변경됨) ──
 var azimuth = 0.52;    // 좌우 회전 (라디안, 초기: ~30도)
-var elevation = 0.45;  // 상하 기울기 (라디안, 초기: ~25도)
-var scale = 12;        // 줌
-var panX = 350, panY = 120; // 중심점
+var elevation = 0.38;  // 상하 기울기 (라디안, 약간 평평하게)
+var scale = 7.5;       // 줌 (12→7.5, 전체 건물이 화면에 여유있게)
+var panX = 350, panY = 250; // 중심점 (120→250, viewBox 중앙)
 var WH = 2.2, GAP = 5.5, BW = 22.2, BD = 21.35;
 
 // ── 3D → 2D 투영 (회전 가능) ──
@@ -250,7 +250,7 @@ function svgBtn(label, val, x, y) {
 
 // 리셋 버튼
 window._dtReset = function() {
-  azimuth = 0.52; elevation = 0.45; scale = 12; panX = 350; panY = 120;
+  azimuth = 0.52; elevation = 0.38; scale = 7.5; panX = 350; panY = 250;
   var ct = document.getElementById('bbDigitalTwin');
   if (ct) draw(ct);
 };

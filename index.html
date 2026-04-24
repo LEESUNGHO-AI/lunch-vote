@@ -13,7 +13,7 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b1361278a86d86da710ca149e76282c4&autoload=false"></script>
 <style>
 /* ══════════════════════════════════════
-   CSS VARIABLES & RESET — v5.2 Production
+   CSS VARIABLES & RESET — v5.3 Production
    ══════════════════════════════════════ */
 :root {
   --bg:#060a12;--bg2:#0a1020;--bg3:#0f1729;--bg4:#162032;
@@ -443,7 +443,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
     <div class="logo-icon">AI</div>
     <div class="topbar-title">
       아산 AI 통합관제시스템 — 도고 파라다이스
-      <small>ASAN AI CONTROL CENTER v5.2</small>
+      <small>ASAN AI CONTROL CENTER v5.3</small>
     </div>
     <div style="display:flex;gap:4px;margin-left:8px;">
       <span style="font-size:7px;padding:2px 6px;border-radius:3px;background:rgba(34,197,94,.1);color:#22c55e;font-family:var(--mono);font-weight:600;border:1px solid rgba(34,197,94,.2);">기상청 API</span>
@@ -1056,7 +1056,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
 <div class="status-ticker">
   <span>© 2024-2026 아산시 강소형 스마트시티</span>
   <span class="ticker-tag">도고 디지털 OASIS</span>
-  <span class="ticker-tag">v5.2</span>
+  <span class="ticker-tag">v5.3</span>
   <div class="ticker-scroll">
     <span class="ticker-text">
       <span class="ticker-dot" style="background:var(--green);"></span> 스마트가로등 15기 정상운영 &nbsp;
@@ -1712,7 +1712,7 @@ function initAlertLog() {
   const now = new Date();
   const hhmm = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
   const initAlerts = [
-    {time:hhmm, level:'info', badge:'시스템', msg:'v5.2 통합관제시스템 기동 — 공공API 연동 활성'},
+    {time:hhmm, level:'info', badge:'시스템', msg:'v5.3 통합관제시스템 기동 — 공공API 연동 활성'},
     {time:hhmm, level:'info', badge:'정보', msg:'기상청·에어코리아 실시간 데이터 수신 대기중...'},
   ];
   document.getElementById('alertLog').innerHTML=initAlerts.map(a=>
@@ -2257,7 +2257,7 @@ function switchZone(zone) {
     initBaebangCharts();
   } else {
     bbZone.style.display = 'none';
-    document.querySelector('.topbar-title').innerHTML = '아산 AI 통합관제시스템 — 도고 파라다이스<small>ASAN AI CONTROL CENTER v5.2</small>';
+    document.querySelector('.topbar-title').innerHTML = '아산 AI 통합관제시스템 — 도고 파라다이스<small>ASAN AI CONTROL CENTER v5.3</small>';
   }
 }
 
@@ -2966,15 +2966,21 @@ function drawForecastChart(period, d, chartData) {
     yearly: ['1Q','2Q','3Q','4Q'],
   }[period];
 
+  // 자연스러운 시계열 생성 (사인파 + 노이즈)
   const generateSeries = (current, forecast, len) => {
     const step = (forecast - current) / (len - 1);
-    return labels.map((_, i) => Math.round(current + step * i + (Math.random() - .5) * current * 0.08));
+    const amp = Math.max(1, current * 0.12);
+    return labels.map((_, i) => {
+      const wave = Math.sin((i / len) * Math.PI * 1.3) * amp * 0.5;
+      const noise = (Math.random() - .5) * amp * 0.3;
+      return Math.max(0, Math.round(current + step * i + wave + noise));
+    });
   };
 
   const trafficData = chartData?.traffic || generateSeries(d.traffic.current, d.traffic.forecast, labels.length);
-  const crowdData = chartData?.crowd || generateSeries(d.crowd.current/5, d.crowd.forecast/5, labels.length);
+  const crowdData = chartData?.crowd || generateSeries(d.crowd.current, d.crowd.forecast, labels.length);
   const storeData = chartData?.store || generateSeries(d.store.current, d.store.forecast, labels.length);
-  const metaData = chartData?.metaverse || generateSeries(d.metaverse.current/10, d.metaverse.forecast/10, labels.length);
+  const metaData = chartData?.metaverse || generateSeries(d.metaverse.current, d.metaverse.forecast, labels.length);
 
   if (window._aiForecastChart) window._aiForecastChart.destroy();
 
@@ -2983,20 +2989,33 @@ function drawForecastChart(period, d, chartData) {
     data: {
       labels: labels,
       datasets: [
-        {label:'교통량', data: trafficData, borderColor:'#00b8e6', backgroundColor:'rgba(0,184,230,.1)', tension:.4, fill:true, pointRadius:3},
-        {label:'방문자', data: crowdData, borderColor:'#00e5b0', backgroundColor:'rgba(0,229,176,.1)', tension:.4, fill:true, pointRadius:3},
-        {label:'무인매장', data: storeData, borderColor:'#ec4899', backgroundColor:'rgba(236,72,153,.08)', tension:.4, fill:true, pointRadius:3},
-        {label:'메타버스', data: metaData, borderColor:'#a78bfa', backgroundColor:'rgba(167,139,250,.08)', tension:.4, fill:true, pointRadius:3},
+        {label:'교통량 (대/h)', data: trafficData, borderColor:'#00b8e6', backgroundColor:'rgba(0,184,230,.08)', tension:.4, fill:false, pointRadius:4, pointBackgroundColor:'#00b8e6', borderWidth:2, yAxisID:'y1'},
+        {label:'방문자 (명)', data: crowdData, borderColor:'#00e5b0', backgroundColor:'rgba(0,229,176,.08)', tension:.4, fill:false, pointRadius:4, pointBackgroundColor:'#00e5b0', borderWidth:2, yAxisID:'y2'},
+        {label:'무인매장 (건)', data: storeData, borderColor:'#ec4899', backgroundColor:'rgba(236,72,153,.08)', tension:.4, fill:false, pointRadius:4, pointBackgroundColor:'#ec4899', borderWidth:2, yAxisID:'y1'},
+        {label:'메타버스 (명)', data: metaData, borderColor:'#a78bfa', backgroundColor:'rgba(167,139,250,.08)', tension:.4, fill:false, pointRadius:4, pointBackgroundColor:'#a78bfa', borderWidth:2, yAxisID:'y2'},
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
+      interaction: {mode:'index', intersect:false},
       plugins: {
-        legend: {labels:{color:'#94a3b8', font:{size:10, family:'JetBrains Mono'}, usePointStyle:true, padding:12}, position:'bottom'}
+        legend: {labels:{color:'#94a3b8', font:{size:10, family:'JetBrains Mono'}, usePointStyle:true, padding:10, boxWidth:6}, position:'bottom'},
+        tooltip: {backgroundColor:'rgba(15,23,41,.95)', borderColor:'rgba(139,92,246,.3)', borderWidth:1, titleColor:'#e8edf5', bodyColor:'#94a3b8', padding:10, boxPadding:4, titleFont:{size:11,family:'JetBrains Mono'}, bodyFont:{size:10,family:'JetBrains Mono'}}
       },
       scales: {
-        x: {grid:{color:'rgba(26,38,64,.3)'}, ticks:{color:'#64748b', font:{size:10, family:'JetBrains Mono'}}},
-        y: {grid:{color:'rgba(26,38,64,.3)'}, ticks:{color:'#64748b', font:{size:10, family:'JetBrains Mono'}}}
+        x: {grid:{color:'rgba(26,38,64,.3)', drawBorder:false}, ticks:{color:'#94a3b8', font:{size:10, family:'JetBrains Mono', weight:'600'}}},
+        y1: {
+          type:'linear', position:'left',
+          title:{display:true, text:'교통·매장', color:'#00b8e6', font:{size:9, family:'JetBrains Mono'}},
+          grid:{color:'rgba(26,38,64,.3)', drawBorder:false},
+          ticks:{color:'#00b8e6', font:{size:9, family:'JetBrains Mono'}, padding:6}
+        },
+        y2: {
+          type:'linear', position:'right',
+          title:{display:true, text:'방문자·메타버스', color:'#00e5b0', font:{size:9, family:'JetBrains Mono'}},
+          grid:{drawOnChartArea:false},
+          ticks:{color:'#00e5b0', font:{size:9, family:'JetBrains Mono'}, padding:6}
+        }
       }
     }
   });
