@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-25T02:17:51",
+  "updated": "2026-04-25T02:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 67,
+  "dataPoints": 70,
   "dataRange": {
     "from": "2026-04-24T15:09:12",
-    "to": "2026-04-25T02:09:14"
+    "to": "2026-04-25T02:39:15"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 34,
       "temperature": 7,
       "humidity": 74,
-      "noise": 27.1,
+      "noise": 28.1,
       "windSpeed": 0.1,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 7.8,
+      "waterPH": 7.2,
+      "waterDO": 7.9,
       "o3": 0.025,
       "no2": 0.009,
       "co": 0.4,
@@ -33,7 +33,7 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 279,
+      "ess_current": 284,
       "solar_output": 0,
       "grid_import": 38,
       "total_consumption": 38,
@@ -41,18 +41,18 @@
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 9,
+      "volume": 11,
       "speed": 49,
       "congestion": "원활",
-      "drt_passengers": 11
+      "drt_passengers": 8
     },
     "crowd": {
-      "wifi_total": 5,
-      "wifi_ap1": 3,
-      "wifi_ap2": 1,
-      "wifi_ap3": 1,
+      "wifi_total": -1,
+      "wifi_ap1": -2,
+      "wifi_ap2": -1,
+      "wifi_ap3": 2,
       "density_level": "여유",
-      "estimated_people": 13
+      "estimated_people": -2
     },
     "caravan": {
       "total": 30,
@@ -66,17 +66,17 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 245,
-        "solar_kw": 0,
-        "consumption_kw": 36,
-        "re100_pct": 0,
-        "trend": "방전"
+        "ess_kwh": 180,
+        "solar_kw": 45,
+        "consumption_kw": 41,
+        "re100_pct": 78,
+        "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 320,
+        "ess_kwh": 420,
         "solar_kw": 85,
-        "consumption_kw": 42,
-        "re100_pct": 65,
+        "consumption_kw": 44,
+        "re100_pct": 85,
         "trend": "충전"
       },
       "peak_time": "18:00",
@@ -84,7 +84,7 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 12,
+        "volume": 15,
         "speed_kmh": 48,
         "congestion": "원활"
       },
@@ -98,22 +98,22 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 4,
+        "wifi_users": 8,
         "density": "여유",
-        "estimated_people": 8
+        "estimated_people": 12
       },
       "forecast_24h": {
-        "wifi_users": 22,
+        "wifi_users": 25,
         "density": "보통",
-        "estimated_people": 44
+        "estimated_people": 38
       },
       "peak_time": "18:00",
-      "hotspot": "AP1"
+      "hotspot": "AP3"
     },
     "caravan": {
       "forecast_6h": {
-        "occupancy": 25,
-        "occupancy_rate": 83,
+        "occupancy": 26,
+        "occupancy_rate": 87,
         "checkins": 2
       },
       "forecast_24h": {
@@ -124,30 +124,30 @@
       "weekend_prediction": {
         "occupancy_rate": 82
       },
-      "revenue_trend": "유지"
+      "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 18,
-        "temperature": 6,
-        "noise": 26,
+        "pm25": 15,
+        "temperature": 12,
+        "noise": 32,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 12,
-        "temperature": 15,
-        "noise": 35,
+        "pm25": 8,
+        "temperature": 18,
+        "noise": 45,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "power",
-        "message": "새벽 시간대 ESS 방전으로 인한 저장 용량 감소 예상"
+        "model": "caravan",
+        "message": "카라반 점유율 90%로 만실 임박, 추가 예약 관리 필요"
       }
     ],
-    "analysis": "현재 새벽 시간대로 전력 소비와 교통량이 최소 수준을 유지하고 있으며, 카라반 점유율은 90%로 높은 상태입니다. 오후부터 저녁 시간대에 모든 도메인에서 활동량 증가가 예상되며, 태양광 발전으로 인한 ESS 재충전이 이루어질 것으로 전망됩니다."
+    "analysis": "현재 새벽 시간대로 모든 지표가 안정적이며, 카라반 점유율이 높은 상태입니다. 일출 후 태양광 발전으로 ESS 충전이 시작되고 오후 시간대 교통량과 유동인구가 증가할 예정입니다."
   },
   "center": {
     "lat": 36.763,
