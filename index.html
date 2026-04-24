@@ -2850,7 +2850,9 @@ async function renderAIAnalytics(overlay, period) {
           <h3 style="font-size:12px;font-weight:700;color:var(--t1);"><i class="fas fa-chart-line" style="color:#00e5b0;margin-right:6px;"></i>통합 예측 추이</h3>
           <span style="font-size:9px;color:var(--t4);font-family:var(--mono);">${period === 'weekly' ? '7일' : period === 'monthly' ? '4주' : '4분기'}</span>
         </div>
-        <canvas id="aiForecastChart" style="width:100%;height:240px;"></canvas>
+        <div style="position:relative;height:280px;width:100%;">
+          <canvas id="aiForecastChart"></canvas>
+        </div>
       </div>
 
       <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;">
@@ -2953,7 +2955,7 @@ async function renderAIAnalytics(overlay, period) {
     </div>
   </div>`;
 
-  setTimeout(() => drawForecastChart(period, d, realData?.chartData), 100);
+  setTimeout(() => drawForecastChart(period, d, realData?.chartData), 300);
 }
 
 function drawForecastChart(period, d, chartData) {
