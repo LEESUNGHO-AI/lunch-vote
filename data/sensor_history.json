@@ -1,8 +1,8 @@
 {
-  "updated": "2026-04-24T21:39:13",
-  "totalPoints": 40,
+  "updated": "2026-04-24T21:49:14",
+  "totalPoints": 41,
   "oldestPoint": "2026-04-24T15:09:12",
-  "newestPoint": "2026-04-24T21:39:13",
+  "newestPoint": "2026-04-24T21:49:14",
   "center": {
     "lat": 36.763,
     "lng": 126.887,
@@ -2604,6 +2604,70 @@
         "checkout_today": 0,
         "occupancy_rate": 77,
         "revenue_today": 2760000
+      }
+    },
+    {
+      "timestamp": "2026-04-24T21:49:14",
+      "time": "21:49",
+      "dayOfWeek": 5,
+      "isWeekend": false,
+      "dataSources": [
+        "기상청",
+        "기상청예보"
+      ],
+      "sensors": {
+        "pm25": 27.2,
+        "pm10": 34.6,
+        "temperature": 9.1,
+        "humidity": 65,
+        "noise": 44.6,
+        "windSpeed": 0.1,
+        "rainfall": 0,
+        "waterPH": 7.1,
+        "waterDO": 8.3,
+        "o3": null,
+        "no2": null,
+        "co": null,
+        "so2": null,
+        "airGrade": null,
+        "airDataTime": null,
+        "sky": 1,
+        "pty": 0,
+        "lgt": 0,
+        "weatherText": "맑음",
+        "skyText": "맑음",
+        "ptyText": ""
+      },
+      "power": {
+        "ess_capacity": 500,
+        "ess_current": 285,
+        "solar_output": 0,
+        "grid_import": 41,
+        "total_consumption": 41,
+        "re100_ratio": 0,
+        "smartlight_power": 1.8
+      },
+      "traffic": {
+        "volume": 24,
+        "speed": 45,
+        "congestion": "원활",
+        "drt_passengers": 6
+      },
+      "crowd": {
+        "wifi_total": 14,
+        "wifi_ap1": 5,
+        "wifi_ap2": 6,
+        "wifi_ap3": 3,
+        "density_level": "여유",
+        "estimated_people": 35
+      },
+      "caravan": {
+        "total": 30,
+        "occupied": 25,
+        "checkin_today": 0,
+        "checkout_today": 0,
+        "occupancy_rate": 83,
+        "revenue_today": 3000000
       }
     }
   ],
