@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-25T06:17:50",
+  "updated": "2026-04-25T06:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 91,
+  "dataPoints": 94,
   "dataRange": {
     "from": "2026-04-24T15:09:12",
-    "to": "2026-04-25T06:09:13"
+    "to": "2026-04-25T06:39:12"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 32,
       "temperature": 4,
       "humidity": 95,
-      "noise": 51.1,
+      "noise": 49.5,
       "windSpeed": 0.1,
       "rainfall": 0,
       "waterPH": 7.2,
-      "waterDO": 7.9,
+      "waterDO": 7.7,
       "o3": 0.015,
       "no2": 0.009,
       "co": 0.4,
@@ -33,34 +33,34 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 274,
+      "ess_current": 287,
       "solar_output": 0,
-      "grid_import": 45,
-      "total_consumption": 45,
+      "grid_import": 49,
+      "total_consumption": 49,
       "re100_ratio": 0,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 14,
-      "speed": 46,
+      "volume": 16,
+      "speed": 44,
       "congestion": "원활",
-      "drt_passengers": 9
+      "drt_passengers": 6
     },
     "crowd": {
-      "wifi_total": 10,
-      "wifi_ap1": 2,
-      "wifi_ap2": 3,
-      "wifi_ap3": 5,
+      "wifi_total": 12,
+      "wifi_ap1": 5,
+      "wifi_ap2": 6,
+      "wifi_ap3": 1,
       "density_level": "여유",
-      "estimated_people": 25
+      "estimated_people": 30
     },
     "caravan": {
       "total": 30,
-      "occupied": 27,
+      "occupied": 24,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 90,
-      "revenue_today": 4050000
+      "occupancy_rate": 80,
+      "revenue_today": 3600000
     }
   },
   "prediction": {
@@ -68,15 +68,15 @@
       "forecast_6h": {
         "ess_kwh": 420,
         "solar_kw": 85,
-        "consumption_kw": 44,
-        "re100_pct": 65,
+        "consumption_kw": 42,
+        "re100_pct": 78,
         "trend": "충전"
       },
       "forecast_24h": {
         "ess_kwh": 385,
         "solar_kw": 120,
         "consumption_kw": 46,
-        "re100_pct": 72,
+        "re100_pct": 65,
         "trend": "충전"
       },
       "peak_time": "18:00",
@@ -84,31 +84,31 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 22,
-        "speed_kmh": 48,
+        "volume": 18,
+        "speed_kmh": 42,
         "congestion": "원활"
       },
       "forecast_24h": {
         "volume": 35,
-        "speed_kmh": 44,
+        "speed_kmh": 38,
         "congestion": "보통"
       },
       "peak_time": "17:00",
-      "drt_demand": "보통"
+      "drt_demand": "낮음"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 18,
-        "density": "여유",
-        "estimated_people": 54
+        "wifi_users": 22,
+        "density": "보통",
+        "estimated_people": 35
       },
       "forecast_24h": {
         "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 84
+        "estimated_people": 45
       },
       "peak_time": "18:00",
-      "hotspot": "AP3"
+      "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
@@ -128,26 +128,26 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 12,
-        "temperature": 8,
+        "pm25": 15,
+        "temperature": 12,
         "noise": 52,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 15,
-        "temperature": 12,
-        "noise": 54,
+        "pm25": 12,
+        "temperature": 18,
+        "noise": 56,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "traffic",
-        "message": "오후 17시경 교통량 증가로 일시적 혼잡 예상"
+        "model": "crowd",
+        "message": "오후 시간대 WiFi 사용자 급증으로 네트워크 부하 예상"
       }
     ],
-    "analysis": "주말 오전 현재 모든 시설이 안정적으로 운영 중이며, 태양광 발전 시작과 함께 ESS 충전률이 점진적으로 개선될 전망입니다. 오후 시간대 방문객 증가로 카라반 매출과 WiFi 이용자 수가 늘어날 것으로 예측됩니다."
+    "analysis": "주말 이른 아침 시간으로 전반적으로 안정된 운영 상태를 보이고 있습니다. 태양광 발전 시작과 함께 ESS 충전이 활발해질 예정이며, 오후 시간대 카라반 이용객 증가로 인한 활성화가 예상됩니다."
   },
   "center": {
     "lat": 36.763,
