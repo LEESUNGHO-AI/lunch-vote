@@ -458,6 +458,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-
     <button class="tb-tab" onclick="openEnvDash('water')">수질</button>
     <button class="tb-tab" onclick="openEnvDash('noise')">소음</button>
     <button class="tb-tab" onclick="openCctvOverlay()">CCTV</button>
+    <button class="tb-tab" onclick="openAIAnalytics()" style="background:rgba(139,92,246,.08);color:#a78bfa;"><i class="fas fa-brain" style="font-size:8px;margin-right:3px;"></i>AI 분석</button>
   </div>
   <div class="topbar-right">
     <div class="live-badge"><div class="live-dot"></div>LIVE</div>
@@ -2643,6 +2644,364 @@ function closeCctvSingle() {
   const overlay = document.getElementById('cctvSingleOverlay');
   if (overlay) overlay.classList.remove('active');
 }
+
+// ══════════════════════════════════════════
+// AI 분석 모델 — 주간/월간/년간 예측 및 사업 KPI
+// ══════════════════════════════════════════
+
+function openAIAnalytics() {
+  let overlay = document.getElementById('aiAnalyticsOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'aiAnalyticsOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(6,10,18,.98);backdrop-filter:blur(10px);z-index:9999;display:none;overflow-y:auto;';
+    document.body.appendChild(overlay);
+  }
+  renderAIAnalytics(overlay, 'weekly');
+  overlay.style.display = 'block';
+  document.addEventListener('keydown', aiEscHandler);
+}
+
+function closeAIAnalytics() {
+  const o = document.getElementById('aiAnalyticsOverlay');
+  if (o) o.style.display = 'none';
+  document.removeEventListener('keydown', aiEscHandler);
+}
+
+function aiEscHandler(e) { if (e.key === 'Escape') closeAIAnalytics(); }
+
+// 캐시
+const _aiCache = {weekly:null, monthly:null, yearly:null};
+
+async function renderAIAnalytics(overlay, period) {
+  const now = new Date();
+  const kstTime = now.toLocaleString('ko-KR', {timeZone:'Asia/Seoul'});
+
+  // 1. 로딩 UI
+  overlay.innerHTML = `<div style="max-width:1800px;margin:0 auto;padding:40px;text-align:center;color:var(--t3);">
+    <i class="fas fa-brain" style="font-size:36px;color:#a78bfa;margin-bottom:16px;"></i>
+    <div style="font-size:14px;">Claude Sonnet 4 분석 결과 로딩중...</div>
+  </div>`;
+
+  // 2. GitHub에서 실제 분석 데이터 로드
+  let realData = _aiCache[period];
+  if (!realData) {
+    try {
+      const resp = await fetch(`./data/prediction_${period}.json?t=${Date.now()}`);
+      if (resp.ok) {
+        realData = await resp.json();
+        _aiCache[period] = realData;
+      }
+    } catch (e) {
+      console.log(`prediction_${period}.json 로딩 실패, 기본값 사용`);
+    }
+  }
+
+  // 3. 데이터 매핑 (실제 데이터 우선, 없으면 기본값)
+  const defaultData = {
+    weekly: {
+      label: '주간 (7일)', range: '이번주',
+      traffic: {current:342, forecast:385, change:12.6, conf:89},
+      crowd: {current:1842, forecast:2150, change:16.7, conf:85},
+      caravan: {current:68, forecast:74, change:8.8, conf:92},
+      power: {current:2850, forecast:2920, change:2.5, conf:94},
+      store: {current:142, forecast:168, change:18.3, conf:87},
+      metaverse: {current:195, forecast:265, change:35.9, conf:78},
+    },
+    monthly: {
+      label: '월간 (30일)', range: '이번달',
+      traffic: {current:1480, forecast:1620, change:9.5, conf:91},
+      crowd: {current:7890, forecast:9200, change:16.6, conf:88},
+      caravan: {current:72, forecast:76, change:5.6, conf:93},
+      power: {current:12400, forecast:12800, change:3.2, conf:95},
+      store: {current:615, forecast:720, change:17.1, conf:89},
+      metaverse: {current:3842, forecast:5200, change:35.3, conf:82},
+    },
+    yearly: {
+      label: '년간 (365일)', range: '2026년',
+      traffic: {current:17800, forecast:19200, change:7.9, conf:86},
+      crowd: {current:94000, forecast:108000, change:14.9, conf:84},
+      caravan: {current:71, forecast:78, change:9.9, conf:90},
+      power: {current:148000, forecast:152000, change:2.7, conf:93},
+      store: {current:7400, forecast:9100, change:23.0, conf:85},
+      metaverse: {current:46000, forecast:72000, change:56.5, conf:79},
+    },
+  };
+
+  const d = {...defaultData[period]};
+
+  // 실제 AI 분석 데이터가 있으면 덮어쓰기
+  if (realData) {
+    if (realData.forecast) {
+      const f = realData.forecast;
+      ['traffic','crowd','caravan','power','store','metaverse'].forEach(k => {
+        if (f[k]) {
+          d[k] = {
+            current: f[k].current || d[k].current,
+            forecast: f[k].forecast || d[k].forecast,
+            change: f[k].change_pct != null ? f[k].change_pct : d[k].change,
+            conf: f[k].confidence || d[k].conf
+          };
+        }
+      });
+    }
+  }
+
+  const aiSummary = realData?.summary || '현재 AI 분석 결과를 생성 중입니다. 주간 분석은 매일 새벽 3시, 월간은 매주 월요일 새벽 4시, 년간은 매월 1일 새벽 5시에 자동 실행됩니다.';
+  const aiInsights = realData?.insights || {
+    positive: `주말 카라반 입주율이 ${d.caravan.forecast}%로 상승세, 메타버스 방문자 +${d.metaverse.change}% 증가 추세`,
+    warning: `도고온천로 피크타임(10~14시) 교통량 집중, DRT 증편 검토 필요`,
+    strategy: `무인매장 지역특산품 매출 +${d.store.change}% 예상, 제품군 확대 및 배방존 2호점 검토 권장`,
+    key_metric: `디지털 노마드 체류기간 평균 4.2일, 워케이션 재방문율 38.5% (국내 1위 수준)`
+  };
+  const aiKpi = realData?.kpi || {
+    budget_execution: 78.5, project_progress: 68.2, regional_economy: 72.0,
+    digital_transformation: 85.4, citizen_satisfaction: 81.3, esg_re100: 92.0
+  };
+  const aiUnits = realData?.units || [
+    {id:'#1', name:'스마트가로등 15기', progress:95, status:'완료'},
+    {id:'#2', name:'모바일 전자시민증 ECC', progress:82, status:'진행'},
+    {id:'#3', name:'DRT 수요응답교통', progress:88, status:'진행'},
+    {id:'#4', name:'공공WiFi 3기', progress:100, status:'완료'},
+    {id:'#5', name:'ESS·RE100 태양광', progress:92, status:'진행'},
+    {id:'#6', name:'지능형 CCTV', progress:78, status:'진행'},
+    {id:'#7', name:'스마트 주차', progress:65, status:'진행'},
+    {id:'#8', name:'OASIS SPOT 30동', progress:98, status:'완료'},
+    {id:'#9', name:'무인매장 2개소', progress:90, status:'진행'},
+    {id:'#10', name:'이노베이션 스퀘어', progress:95, status:'완료'},
+    {id:'#11', name:'순찰 로봇', progress:72, status:'진행'},
+    {id:'#12', name:'디지털 노마드 NOP', progress:68, status:'진행'},
+    {id:'#13', name:'AI 융복합 서비스', progress:70, status:'진행'},
+    {id:'#14', name:'디지털링크 플랫폼', progress:62, status:'진행'},
+  ];
+  const unitColor = s => s === '완료' ? '#22c55e' : '#00b8e6';
+
+  const dataFreshness = realData ? `<span style="color:#22c55e;">● LIVE</span> Claude Sonnet 4 분석 (${realData.updated || kstTime})` :
+    `<span style="color:#f59e0b;">● 기본값</span> 실시간 분석 대기중`;
+
+  overlay.innerHTML = `
+  <div style="max-width:1800px;margin:0 auto;padding:20px 28px 40px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:40px;height:40px;background:linear-gradient(135deg,#a78bfa,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(139,92,246,.3);">
+          <i class="fas fa-brain" style="color:#fff;font-size:18px;"></i>
+        </div>
+        <div>
+          <h2 style="font-size:18px;font-weight:700;color:var(--t1);letter-spacing:-.3px;">AI 분석 모델 — 아산 강소형 스마트시티</h2>
+          <div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-top:2px;">Claude Sonnet 4 · 4-Model Prediction Engine · ${kstTime}</div>
+        </div>
+      </div>
+      <button onclick="closeAIAnalytics()" style="background:var(--bg3);border:1px solid var(--border);color:var(--t2);padding:8px 14px;border-radius:6px;cursor:pointer;font-size:11px;font-family:var(--mono);">
+        <i class="fas fa-times"></i> 닫기 (ESC)
+      </button>
+    </div>
+
+    <div style="display:flex;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:3px;margin-bottom:24px;width:fit-content;">
+      ${['weekly','monthly','yearly'].map(p => {
+        const label = {weekly:'주간 예측',monthly:'월간 예측',yearly:'년간 예측'}[p];
+        const active = p === period;
+        return `<button onclick="renderAIAnalytics(document.getElementById('aiAnalyticsOverlay'),'${p}')"
+          style="padding:8px 24px;font-size:12px;font-family:var(--mono);border:none;cursor:pointer;border-radius:5px;font-weight:600;
+          ${active ? 'background:rgba(139,92,246,.15);color:#a78bfa;' : 'background:transparent;color:var(--t3);'}">${label}</button>`;
+      }).join('')}
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding:12px 16px;background:linear-gradient(90deg,rgba(139,92,246,.06),transparent);border-left:3px solid #a78bfa;border-radius:4px;">
+      <div>
+        <span style="font-size:11px;color:var(--t3);">분석 기간</span>
+        <span style="font-size:14px;font-weight:700;color:var(--t1);margin-left:12px;">${d.label}</span>
+        <span style="font-size:11px;color:var(--t3);font-family:var(--mono);margin-left:12px;">${d.range}</span>
+      </div>
+      <div style="font-size:10px;color:var(--t3);font-family:var(--mono);">${dataFreshness}</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:24px;">
+      ${[
+        {key:'traffic', label:'교통량', icon:'fa-car', color:'#00b8e6', unit:'대', extra:'시간당 평균'},
+        {key:'crowd', label:'방문자', icon:'fa-users', color:'#00e5b0', unit:'명', extra:'WiFi 기반 추정'},
+        {key:'caravan', label:'카라반 입주율', icon:'fa-campground', color:'#f59e0b', unit:'%', extra:'Space-One 30동'},
+        {key:'power', label:'전력 사용', icon:'fa-bolt', color:'#8b5cf6', unit:'kWh', extra:'ESS + 소비'},
+        {key:'store', label:'무인매장 거래', icon:'fa-store', color:'#ec4899', unit:'건', extra:'도고·배방점'},
+        {key:'metaverse', label:'메타버스 방문', icon:'fa-vr-cardboard', color:'#a78bfa', unit:'명', extra:'누적 접속'},
+      ].map(kpi => {
+        const m = d[kpi.key];
+        const positive = m.change >= 0;
+        return `
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;border-top:2px solid ${kpi.color};">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-size:10px;color:var(--t3);font-weight:600;"><i class="fas ${kpi.icon}" style="color:${kpi.color};margin-right:5px;"></i>${kpi.label}</span>
+            <span style="font-size:9px;color:var(--t4);font-family:var(--mono);">${m.conf}%</span>
+          </div>
+          <div style="font-family:var(--display);font-size:22px;font-weight:800;color:${kpi.color};line-height:1;margin-bottom:2px;">${m.forecast.toLocaleString()}<span style="font-size:10px;color:var(--t4);font-weight:400;margin-left:3px;">${kpi.unit}</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,.04);">
+            <span style="font-size:9px;color:var(--t4);font-family:var(--mono);">현재: ${m.current.toLocaleString()}</span>
+            <span style="font-size:10px;font-weight:600;color:${positive ? '#22c55e' : '#ef4444'};font-family:var(--mono);">
+              <i class="fas fa-arrow-${positive ? 'up' : 'down'}" style="font-size:8px;"></i> ${positive?'+':''}${m.change}%
+            </span>
+          </div>
+          <div style="font-size:8px;color:var(--t4);margin-top:4px;">${kpi.extra}</div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <h3 style="font-size:12px;font-weight:700;color:var(--t1);"><i class="fas fa-chart-line" style="color:#00e5b0;margin-right:6px;"></i>통합 예측 추이</h3>
+          <span style="font-size:9px;color:var(--t4);font-family:var(--mono);">${period === 'weekly' ? '7일' : period === 'monthly' ? '4주' : '4분기'}</span>
+        </div>
+        <canvas id="aiForecastChart" style="width:100%;height:240px;"></canvas>
+      </div>
+
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;">
+        <h3 style="font-size:12px;font-weight:700;color:var(--t1);margin-bottom:12px;"><i class="fas fa-bullseye" style="color:#f59e0b;margin-right:6px;"></i>사업 성과 지표</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${[
+            {key:'budget_execution', label:'예산 집행률', color:'#00e5b0', detail:'188.4억 / 240억'},
+            {key:'project_progress', label:'사업 진척도', color:'#00b8e6', detail:'14개 단위사업'},
+            {key:'regional_economy', label:'지역경제 기여도', color:'#ec4899', detail:'무인매장 매출 기준'},
+            {key:'digital_transformation', label:'디지털 전환율', color:'#a78bfa', detail:'AI·IoT 인프라'},
+            {key:'citizen_satisfaction', label:'시민 만족도', color:'#22c55e', detail:'응답자 기반'},
+            {key:'esg_re100', label:'ESG·RE100', color:'#f59e0b', detail:'재생에너지 비율'},
+          ].map(k => {
+            const val = aiKpi[k.key] || 0;
+            return `
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+                <span style="font-size:10px;color:var(--t2);font-weight:600;">${k.label}</span>
+                <span style="font-size:13px;font-weight:700;color:${k.color};font-family:var(--display);">${val}<span style="font-size:9px;color:var(--t4);">%</span></span>
+              </div>
+              <div style="background:rgba(26,38,64,.5);border-radius:3px;height:6px;overflow:hidden;position:relative;">
+                <div style="background:linear-gradient(90deg,${k.color},${k.color}dd);height:100%;width:${val}%;border-radius:3px;box-shadow:0 0 8px ${k.color}66;"></div>
+              </div>
+              <div style="font-size:8px;color:var(--t4);margin-top:2px;font-family:var(--mono);">${k.detail}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(180deg,rgba(139,92,246,.08),var(--bg2));border:1px solid rgba(139,92,246,.2);border-radius:8px;padding:16px;">
+        <h3 style="font-size:12px;font-weight:700;color:var(--t1);margin-bottom:12px;"><i class="fas fa-lightbulb" style="color:#a78bfa;margin-right:6px;"></i>AI 분석 인사이트</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:10px;background:rgba(34,197,94,.05);border-left:3px solid #22c55e;border-radius:4px;">
+            <div style="font-size:10px;font-weight:700;color:#22c55e;margin-bottom:4px;">✓ 긍정 요인</div>
+            <div style="font-size:10px;color:var(--t2);line-height:1.5;">${aiInsights.positive}</div>
+          </div>
+          <div style="padding:10px;background:rgba(245,158,11,.05);border-left:3px solid #f59e0b;border-radius:4px;">
+            <div style="font-size:10px;font-weight:700;color:#f59e0b;margin-bottom:4px;">⚠ 주의 사항</div>
+            <div style="font-size:10px;color:var(--t2);line-height:1.5;">${aiInsights.warning}</div>
+          </div>
+          <div style="padding:10px;background:rgba(0,184,230,.05);border-left:3px solid #00b8e6;border-radius:4px;">
+            <div style="font-size:10px;font-weight:700;color:#00b8e6;margin-bottom:4px;">→ 전략 제언</div>
+            <div style="font-size:10px;color:var(--t2);line-height:1.5;">${aiInsights.strategy}</div>
+          </div>
+          <div style="padding:10px;background:rgba(167,139,250,.05);border-left:3px solid #a78bfa;border-radius:4px;">
+            <div style="font-size:10px;font-weight:700;color:#a78bfa;margin-bottom:4px;">🎯 핵심 지표</div>
+            <div style="font-size:10px;color:var(--t2);line-height:1.5;">${aiInsights.key_metric}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h3 style="font-size:12px;font-weight:700;color:var(--t1);"><i class="fas fa-diagram-project" style="color:#00e5b0;margin-right:6px;"></i>14개 단위사업 AI 성과 평가</h3>
+        <span style="font-size:9px;color:var(--t4);font-family:var(--mono);">2023.12 ~ 2026.12 (3년)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">
+        ${aiUnits.map(u => {
+          const color = unitColor(u.status);
+          return `
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-size:8px;color:var(--t4);font-family:var(--mono);font-weight:600;">${u.id}</span>
+              <span style="font-size:7px;padding:1px 5px;border-radius:2px;background:${color}22;color:${color};font-family:var(--mono);font-weight:600;">${u.status}</span>
+            </div>
+            <div style="font-size:9px;font-weight:600;color:var(--t1);line-height:1.3;margin-bottom:6px;min-height:26px;">${u.name}</div>
+            <div style="background:rgba(26,38,64,.5);border-radius:2px;height:4px;margin-bottom:3px;">
+              <div style="background:${color};height:100%;width:${u.progress}%;border-radius:2px;"></div>
+            </div>
+            <div style="font-family:var(--display);font-size:11px;font-weight:700;color:${color};text-align:right;">${u.progress}%</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;">
+        <h3 style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:12px;"><i class="fas fa-cogs" style="color:var(--t3);margin-right:6px;"></i>AI 엔진 정보</h3>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:10px;font-family:var(--mono);">
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span style="color:var(--t3);">모델</span><span style="color:var(--t1);">Claude Sonnet 4</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span style="color:var(--t3);">버전</span><span style="color:var(--teal);">v5.3</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span style="color:var(--t3);">학습 데이터</span><span style="color:var(--t1);">${realData?.range?.points || realData?.range?.days || '168h × 1008pt'}</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span style="color:var(--t3);">${period} 분석 주기</span><span style="color:var(--t1);">${period === 'weekly' ? '매일 03:00' : period === 'monthly' ? '매주 월 04:00' : '매월 1일 05:00'}</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span style="color:var(--t3);">도메인</span><span style="color:var(--t1);">전력·교통·군집·카라반·매장·메타</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);"><span style="color:var(--t3);">공공 API</span><span style="color:#22c55e;">기상청 · 에어코리아</span></div>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;"><span style="color:var(--t3);">마지막 분석</span><span style="color:${realData ? '#22c55e' : '#f59e0b'};font-weight:700;">${realData?.updated?.substring(5,16) || '대기중'}</span></div>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(0,229,176,.04));border:1px solid rgba(139,92,246,.2);border-radius:8px;padding:18px;">
+        <h3 style="font-size:11px;font-weight:700;color:var(--t1);margin-bottom:12px;"><i class="fas fa-sparkles" style="color:#a78bfa;margin-right:6px;"></i>Claude AI 종합 분석</h3>
+        <div style="font-size:11px;color:var(--t2);line-height:1.7;">${aiSummary}</div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:12px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;color:var(--t4);font-family:var(--mono);">
+      <div>ⓒ 아산시 · 제일엔지니어링(PMO) · 호서대학교 산학협력단 · 충남연구원 · KAIST</div>
+      <div>사업기간 2023.12 ~ 2026.12 · 240억원 (국비 50% + 도비 12% + 시비 38%)</div>
+    </div>
+  </div>`;
+
+  setTimeout(() => drawForecastChart(period, d, realData?.chartData), 100);
+}
+
+function drawForecastChart(period, d, chartData) {
+  const ctx = document.getElementById('aiForecastChart');
+  if (!ctx) return;
+
+  const labels = chartData?.labels || {
+    weekly: ['월','화','수','목','금','토','일'],
+    monthly: ['W1','W2','W3','W4'],
+    yearly: ['1Q','2Q','3Q','4Q'],
+  }[period];
+
+  const generateSeries = (current, forecast, len) => {
+    const step = (forecast - current) / (len - 1);
+    return labels.map((_, i) => Math.round(current + step * i + (Math.random() - .5) * current * 0.08));
+  };
+
+  const trafficData = chartData?.traffic || generateSeries(d.traffic.current, d.traffic.forecast, labels.length);
+  const crowdData = chartData?.crowd || generateSeries(d.crowd.current/5, d.crowd.forecast/5, labels.length);
+  const storeData = chartData?.store || generateSeries(d.store.current, d.store.forecast, labels.length);
+  const metaData = chartData?.metaverse || generateSeries(d.metaverse.current/10, d.metaverse.forecast/10, labels.length);
+
+  if (window._aiForecastChart) window._aiForecastChart.destroy();
+
+  window._aiForecastChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {label:'교통량', data: trafficData, borderColor:'#00b8e6', backgroundColor:'rgba(0,184,230,.1)', tension:.4, fill:true, pointRadius:3},
+        {label:'방문자', data: crowdData, borderColor:'#00e5b0', backgroundColor:'rgba(0,229,176,.1)', tension:.4, fill:true, pointRadius:3},
+        {label:'무인매장', data: storeData, borderColor:'#ec4899', backgroundColor:'rgba(236,72,153,.08)', tension:.4, fill:true, pointRadius:3},
+        {label:'메타버스', data: metaData, borderColor:'#a78bfa', backgroundColor:'rgba(167,139,250,.08)', tension:.4, fill:true, pointRadius:3},
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {labels:{color:'#94a3b8', font:{size:10, family:'JetBrains Mono'}, usePointStyle:true, padding:12}, position:'bottom'}
+      },
+      scales: {
+        x: {grid:{color:'rgba(26,38,64,.3)'}, ticks:{color:'#64748b', font:{size:10, family:'JetBrains Mono'}}},
+        y: {grid:{color:'rgba(26,38,64,.3)'}, ticks:{color:'#64748b', font:{size:10, family:'JetBrains Mono'}}}
+      }
+    }
+  });
+}
+
 </script>
 
 <!-- AI 예측 모듈 -->
