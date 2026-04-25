@@ -1,8 +1,8 @@
 {
-  "updated": "2026-04-25T19:09:13",
-  "totalPoints": 169,
+  "updated": "2026-04-25T19:19:13",
+  "totalPoints": 170,
   "oldestPoint": "2026-04-24T15:09:12",
-  "newestPoint": "2026-04-25T19:09:13",
+  "newestPoint": "2026-04-25T19:19:13",
   "center": {
     "lat": 36.763,
     "lng": 126.887,
@@ -10975,6 +10975,71 @@
         "wifi_ap1": 16,
         "wifi_ap2": 17,
         "wifi_ap3": 14,
+        "density_level": "혼잡",
+        "estimated_people": 118
+      },
+      "caravan": {
+        "total": 30,
+        "occupied": 27,
+        "checkin_today": 0,
+        "checkout_today": 0,
+        "occupancy_rate": 90,
+        "revenue_today": 4050000
+      }
+    },
+    {
+      "timestamp": "2026-04-25T19:19:13",
+      "time": "19:19",
+      "dayOfWeek": 6,
+      "isWeekend": true,
+      "dataSources": [
+        "기상청",
+        "기상청예보",
+        "에어코리아"
+      ],
+      "sensors": {
+        "pm25": 8,
+        "pm10": 28,
+        "temperature": 21.5,
+        "humidity": 26,
+        "noise": 57.3,
+        "windSpeed": 2.8,
+        "rainfall": 0,
+        "waterPH": 7.2,
+        "waterDO": 7.8,
+        "o3": 0.068,
+        "no2": 0.011,
+        "co": 0.6,
+        "so2": 0.009,
+        "airGrade": "1",
+        "airDataTime": "2026-04-25 19:00",
+        "sky": 3,
+        "pty": 0,
+        "lgt": 0,
+        "weatherText": "구름많음",
+        "skyText": "구름많음",
+        "ptyText": ""
+      },
+      "power": {
+        "ess_capacity": 500,
+        "ess_current": 277,
+        "solar_output": 0,
+        "grid_import": 57,
+        "total_consumption": 57,
+        "re100_ratio": 0,
+        "smartlight_power": 1.8
+      },
+      "traffic": {
+        "volume": 52,
+        "speed": 33,
+        "congestion": "보통",
+        "drt_passengers": 11
+      },
+      "crowd": {
+        "wifi_total": 47,
+        "wifi_ap1": 15,
+        "wifi_ap2": 17,
+        "wifi_ap3": 15,
         "density_level": "혼잡",
         "estimated_people": 118
       },
