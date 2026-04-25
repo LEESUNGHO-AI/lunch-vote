@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-25T14:17:51",
+  "updated": "2026-04-25T14:47:50",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 139,
+  "dataPoints": 142,
   "dataRange": {
     "from": "2026-04-24T15:09:12",
-    "to": "2026-04-25T14:09:13"
+    "to": "2026-04-25T14:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 29,
       "temperature": 25.6,
       "humidity": 18,
-      "noise": 55.1,
+      "noise": 55.4,
       "windSpeed": 2.4,
       "rainfall": 0,
-      "waterPH": 7.2,
-      "waterDO": 8.3,
+      "waterPH": 7,
+      "waterDO": 8.1,
       "o3": 0.071,
       "no2": 0.006,
       "co": 0.3,
@@ -34,50 +34,50 @@
     "power": {
       "ess_capacity": 500,
       "ess_current": 370,
-      "solar_output": 175,
+      "solar_output": 176,
       "grid_import": 0,
       "total_consumption": 59,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 65,
-      "speed": 31,
+      "volume": 64,
+      "speed": 32,
       "congestion": "혼잡",
-      "drt_passengers": 11
+      "drt_passengers": 4
     },
     "crowd": {
-      "wifi_total": 58,
+      "wifi_total": 59,
       "wifi_ap1": 22,
-      "wifi_ap2": 24,
+      "wifi_ap2": 25,
       "wifi_ap3": 12,
       "density_level": "혼잡",
-      "estimated_people": 145
+      "estimated_people": 148
     },
     "caravan": {
       "total": 30,
-      "occupied": 25,
+      "occupied": 26,
       "checkin_today": 3,
       "checkout_today": 0,
-      "occupancy_rate": 83,
-      "revenue_today": 3750000
+      "occupancy_rate": 87,
+      "revenue_today": 3900000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 285,
-        "solar_kw": 45,
+        "ess_kwh": 420,
+        "solar_kw": 145,
         "consumption_kw": 48,
         "re100_pct": 95,
-        "trend": "방전"
+        "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 420,
-        "solar_kw": 165,
+        "ess_kwh": 380,
+        "solar_kw": 85,
         "consumption_kw": 52,
-        "re100_pct": 100,
-        "trend": "충전"
+        "re100_pct": 88,
+        "trend": "유지"
       },
       "peak_time": "11:00",
       "risk": "없음"
@@ -98,14 +98,14 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 32,
+        "wifi_users": 35,
         "density": "보통",
-        "estimated_people": 85
+        "estimated_people": 105
       },
       "forecast_24h": {
-        "wifi_users": 45,
+        "wifi_users": 42,
         "density": "보통",
-        "estimated_people": 120
+        "estimated_people": 126
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -114,40 +114,40 @@
       "forecast_6h": {
         "occupancy": 24,
         "occupancy_rate": 80,
-        "checkins": 2
+        "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 26,
-        "occupancy_rate": 87,
+        "occupancy": 25,
+        "occupancy_rate": 83,
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 88
+        "occupancy_rate": 85
       },
-      "revenue_trend": "상승"
+      "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 8,
-        "temperature": 23.2,
-        "noise": 52.5,
+        "temperature": 22.5,
+        "noise": 52.8,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 15,
-        "temperature": 18.5,
-        "noise": 48.8,
+        "temperature": 18.8,
+        "noise": 48.5,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "power",
-        "message": "일몰 후 ESS 방전으로 RE100 달성률 95%로 하락 예상"
+        "model": "crowd",
+        "message": "WiFi 접속자 수가 평균 대비 높은 수준으로 네트워크 부하 주의 필요"
       }
     ],
-    "analysis": "현재 주말 오후 피크타임으로 모든 도메인에서 높은 활동량을 보이고 있습니다. 저녁 시간대 접어들면서 교통량과 인구밀도는 감소하지만 카라반 점유율은 높은 수준을 유지할 전망입니다."
+    "analysis": "현재 도고 디지털 OASIS는 주말 오후 피크타임으로 모든 지표가 높은 활용도를 보이고 있습니다. 태양광 발전이 활발하여 ESS 충전 상태가 양호하며, 저녁 시간대부터는 전반적인 활동이 감소할 것으로 예상됩니다."
   },
   "center": {
     "lat": 36.763,
