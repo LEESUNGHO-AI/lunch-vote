@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-26T18:17:50",
+  "updated": "2026-04-26T18:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 307,
+  "dataPoints": 310,
   "dataRange": {
     "from": "2026-04-24T15:09:12",
-    "to": "2026-04-26T18:09:13"
+    "to": "2026-04-26T18:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 41,
       "temperature": 24.3,
       "humidity": 20,
-      "noise": 56.6,
+      "noise": 59.5,
       "windSpeed": 1.6,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8,
+      "waterPH": 7.1,
+      "waterDO": 8.7,
       "o3": 0.066,
       "no2": 0.009,
       "co": 0.8,
@@ -33,50 +33,50 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 264,
+      "ess_current": 275,
       "solar_output": 0,
-      "grid_import": 60,
-      "total_consumption": 60,
+      "grid_import": 61,
+      "total_consumption": 61,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 55,
-      "speed": 34,
-      "congestion": "보통",
-      "drt_passengers": 10
+      "volume": 61,
+      "speed": 32,
+      "congestion": "혼잡",
+      "drt_passengers": 6
     },
     "crowd": {
-      "wifi_total": 59,
+      "wifi_total": 60,
       "wifi_ap1": 21,
-      "wifi_ap2": 23,
+      "wifi_ap2": 24,
       "wifi_ap3": 15,
       "density_level": "혼잡",
-      "estimated_people": 148
+      "estimated_people": 150
     },
     "caravan": {
       "total": 30,
-      "occupied": 26,
-      "checkin_today": 3,
+      "occupied": 27,
+      "checkin_today": 2,
       "checkout_today": 0,
-      "occupancy_rate": 87,
-      "revenue_today": 3900000
+      "occupancy_rate": 90,
+      "revenue_today": 4050000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 220,
+        "ess_kwh": 240,
         "solar_kw": 0,
         "consumption_kw": 52,
         "re100_pct": 0,
         "trend": "방전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
-        "solar_kw": 120,
+        "ess_kwh": 320,
+        "solar_kw": 45,
         "consumption_kw": 58,
-        "re100_pct": 45,
+        "re100_pct": 35,
         "trend": "충전"
       },
       "peak_time": "12:00",
@@ -84,9 +84,9 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 28,
+        "volume": 38,
         "speed_kmh": 42,
-        "congestion": "원활"
+        "congestion": "보통"
       },
       "forecast_24h": {
         "volume": 45,
@@ -98,9 +98,9 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 18,
-        "density": "여유",
-        "estimated_people": 54
+        "wifi_users": 28,
+        "density": "보통",
+        "estimated_people": 84
       },
       "forecast_24h": {
         "wifi_users": 42,
@@ -122,21 +122,21 @@
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 92
+        "occupancy_rate": 93
       },
-      "revenue_trend": "상승"
+      "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 15,
-        "temperature": 18.5,
-        "noise": 48.2,
+        "pm25": 18,
+        "temperature": 20.5,
+        "noise": 55.2,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 22,
-        "temperature": 26.8,
-        "noise": 52.5,
+        "temperature": 25.8,
+        "noise": 58.8,
         "water_ph": 7.1
       }
     },
@@ -144,15 +144,15 @@
       {
         "level": "warning",
         "model": "power",
-        "message": "야간 시간대 ESS 방전으로 인한 전력 공급 안정성 주의 필요"
+        "message": "야간시간 ESS 방전으로 인한 전력부족 우려, 새벽 5시경 240kWh까지 감소 예상"
       },
       {
         "level": "warning",
-        "model": "caravan",
-        "message": "주말 카라반 점유율 90% 초과로 예약 포화 상태 예상"
+        "model": "crowd",
+        "message": "주말 오후 피크시간 WiFi 사용자 증가로 네트워크 부하 가능성"
       }
     ],
-    "analysis": "현재 주말 저녁 시간대로 카라반 점유율이 높고 WiFi 이용자가 많아 활발한 관광 활동이 이루어지고 있습니다. 야간 시간대 ESS 방전이 예상되나 내일 낮 태양광 발전으로 충전이 가능할 것으로 보입니다."
+    "analysis": "현재 주말 저녁시간으로 모든 도메인에서 높은 활동량을 보이고 있습니다. 야간 시간대 ESS 방전으로 인한 전력 관리가 필요하며, 내일 낮 시간대 태양광 발전으로 회복될 것으로 예상됩니다. 카라반 점유율이 90%로 높아 주말 성수기 특성을 보이고 있습니다."
   },
   "center": {
     "lat": 36.763,
