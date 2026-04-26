@@ -1,82 +1,82 @@
 {
-  "updated": "2026-04-26T03:01:32",
+  "updated": "2026-04-27T03:01:32",
   "model": "claude-sonnet-4-20250514",
   "period": "weekly",
   "range": {
     "from": "2026-04-24T15:09:12",
-    "to": "2026-04-26T02:59:13",
-    "points": 216
+    "to": "2026-04-27T02:59:13",
+    "points": 360
   },
-  "summary": "아산시 스마트시티 사업이 안정적으로 운영되고 있으나 야간시간대 활용도 개선이 필요합니다. 카라반 시설은 87% 높은 가동률을 유지하고 있으며, 공공WiFi와 교통량은 시간대별 적정 수준을 보이고 있습니다. 무인매장과 메타버스 플랫폼의 활성화를 통한 야간 서비스 확대가 시급합니다.",
+  "summary": "아산시 스마트시티 데이터 분석 결과, 야간시간대 교통량과 WiFi 이용률이 현저히 감소하는 패턴을 보이고 있습니다. 카라반 이용률은 80-93%로 높은 수준을 유지하고 있으나, 매출과 메타버스 활동은 전무한 상태입니다. 미세먼지는 양호한 수준이며, 기온 하락에 따른 자연스러운 활동 감소 패턴이 관찰됩니다.",
   "forecast": {
     "traffic": {
-      "current": 28,
-      "forecast": 32,
-      "change_pct": 14.3,
+      "current": 15,
+      "forecast": 45,
+      "change_pct": 200,
       "confidence": 85
     },
     "crowd": {
-      "current": 8,
-      "forecast": 15,
-      "change_pct": 87.5,
-      "confidence": 78
+      "current": 4,
+      "forecast": 35,
+      "change_pct": 775,
+      "confidence": 80
     },
     "caravan": {
-      "current": 87,
-      "forecast": 89,
-      "change_pct": 2.3,
-      "confidence": 92
+      "current": 63,
+      "forecast": 75,
+      "change_pct": 19,
+      "confidence": 90
     },
     "power": {
-      "current": 75,
-      "forecast": 82,
-      "change_pct": 9.3,
-      "confidence": 88
+      "current": 45,
+      "forecast": 65,
+      "change_pct": 44,
+      "confidence": 75
     },
     "store": {
       "current": 0,
-      "forecast": 12,
+      "forecast": 25,
       "change_pct": 0,
-      "confidence": 65
+      "confidence": 60
     },
     "metaverse": {
       "current": 0,
-      "forecast": 8,
+      "forecast": 15,
       "change_pct": 0,
-      "confidence": 60
+      "confidence": 50
     }
   },
   "kpi": {
-    "budget_execution": 68,
-    "project_progress": 72,
-    "regional_economy": 64,
-    "digital_transformation": 58,
-    "citizen_satisfaction": 71,
-    "esg_re100": 79
+    "budget_execution": 45,
+    "project_progress": 60,
+    "regional_economy": 35,
+    "digital_transformation": 40,
+    "citizen_satisfaction": 55,
+    "esg_re100": 70
   },
   "insights": {
-    "positive": "카라반 시설의 높은 가동률(87%)과 안정적인 인프라 운영이 스마트시티 기반을 견고히 하고 있습니다.",
-    "warning": "무인매장과 메타버스 플랫폼의 활용도가 전무한 상태로 디지털 서비스 활성화가 시급합니다.",
-    "strategy": "야간시간대 WiFi 활용도 증진과 무인매장 홍보를 통해 24시간 스마트 서비스 생태계 구축이 필요합니다.",
-    "key_metric": "카라반 가동률 87%는 우수하나 디지털 서비스(매출, 메타버스) 제로 상태는 개선 요구됩니다."
+    "positive": "카라반 이용률이 안정적으로 유지되고 있으며 미세먼지 수준이 양호하여 환경 조건이 우수합니다.",
+    "warning": "무인매장과 메타버스 플랫폼의 활용도가 전무하여 디지털 서비스 활성화 방안이 시급합니다.",
+    "strategy": "야간 시간대 디지털 콘텐츠 제공과 카라반 이용객 대상 맞춤형 서비스 개발을 통해 매출 창출 기회를 모색해야 합니다.",
+    "key_metric": "카라반 이용률 63%는 양호하나 WiFi 이용률 4%와 교통량 감소는 야간 활동 저조를 시사합니다."
   },
   "units": [
     {
       "id": "#1",
       "name": "스마트가로등 15기",
-      "progress": 88,
+      "progress": 75,
       "status": "진행"
     },
     {
       "id": "#2",
       "name": "모바일 전자시민증 ECC",
-      "progress": 75,
+      "progress": 60,
       "status": "진행"
     },
     {
       "id": "#3",
       "name": "DRT 수요응답교통",
-      "progress": 82,
+      "progress": 40,
       "status": "진행"
     },
     {
@@ -88,61 +88,61 @@
     {
       "id": "#5",
       "name": "ESS·RE100 태양광",
-      "progress": 79,
+      "progress": 70,
       "status": "진행"
     },
     {
       "id": "#6",
       "name": "지능형 CCTV",
-      "progress": 71,
+      "progress": 65,
       "status": "진행"
     },
     {
       "id": "#7",
       "name": "스마트 주차",
-      "progress": 68,
+      "progress": 50,
       "status": "진행"
     },
     {
       "id": "#8",
       "name": "OASIS SPOT 30동",
-      "progress": 92,
+      "progress": 80,
       "status": "진행"
     },
     {
       "id": "#9",
       "name": "무인매장 2개소",
-      "progress": 45,
+      "progress": 90,
       "status": "진행"
     },
     {
       "id": "#10",
       "name": "이노베이션 스퀘어",
-      "progress": 73,
+      "progress": 55,
       "status": "진행"
     },
     {
       "id": "#11",
       "name": "순찰 로봇",
-      "progress": 56,
+      "progress": 35,
       "status": "진행"
     },
     {
       "id": "#12",
       "name": "디지털 노마드 NOP",
-      "progress": 64,
+      "progress": 45,
       "status": "진행"
     },
     {
       "id": "#13",
       "name": "AI 융복합 서비스",
-      "progress": 59,
+      "progress": 30,
       "status": "진행"
     },
     {
       "id": "#14",
       "name": "디지털링크 플랫폼",
-      "progress": 52,
+      "progress": 25,
       "status": "진행"
     }
   ],
@@ -157,22 +157,22 @@
       "일"
     ],
     "traffic": [
-      12,
+      9,
+      4,
       3,
-      4,
-      8,
-      4,
-      11,
-      4
+      10,
+      5,
+      1,
+      3
     ],
     "crowd": [
       1,
-      1,
-      0,
       2,
       0,
-      -1,
-      -1
+      0,
+      0,
+      0,
+      1
     ],
     "store": [
       0,
