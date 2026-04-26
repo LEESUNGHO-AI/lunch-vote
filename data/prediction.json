@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-26T12:17:51",
+  "updated": "2026-04-26T12:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 271,
+  "dataPoints": 274,
   "dataRange": {
     "from": "2026-04-24T15:09:12",
-    "to": "2026-04-26T12:09:13"
+    "to": "2026-04-26T12:39:12"
   },
   "current": {
     "sensors": {
@@ -13,10 +13,10 @@
       "pm10": 60,
       "temperature": 22.6,
       "humidity": 24,
-      "noise": 53.7,
+      "noise": 56.8,
       "windSpeed": 1.8,
       "rainfall": 0,
-      "waterPH": 7,
+      "waterPH": 7.1,
       "waterDO": 8.6,
       "o3": 0.068,
       "no2": 0.008,
@@ -33,26 +33,26 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 368,
-      "solar_output": 191,
+      "ess_current": 369,
+      "solar_output": 206,
       "grid_import": 0,
-      "total_consumption": 62,
+      "total_consumption": 65,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 67,
-      "speed": 31,
+      "volume": 69,
+      "speed": 32,
       "congestion": "혼잡",
-      "drt_passengers": 8
+      "drt_passengers": 7
     },
     "crowd": {
-      "wifi_total": 72,
+      "wifi_total": 70,
       "wifi_ap1": 26,
-      "wifi_ap2": 27,
-      "wifi_ap3": 19,
+      "wifi_ap2": 28,
+      "wifi_ap3": 16,
       "density_level": "과밀",
-      "estimated_people": 180
+      "estimated_people": 175
     },
     "caravan": {
       "total": 30,
@@ -66,25 +66,25 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 420,
-        "solar_kw": 145,
-        "consumption_kw": 55,
+        "ess_kwh": 445,
+        "solar_kw": 180,
+        "consumption_kw": 58,
         "re100_pct": 100,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 385,
-        "solar_kw": 80,
-        "consumption_kw": 48,
-        "re100_pct": 95,
+        "ess_kwh": 420,
+        "solar_kw": 95,
+        "consumption_kw": 52,
+        "re100_pct": 98,
         "trend": "방전"
       },
-      "peak_time": "12:00",
+      "peak_time": "18:00",
       "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 58,
+        "volume": 55,
         "speed_kmh": 35,
         "congestion": "보통"
       },
@@ -93,19 +93,19 @@
         "speed_kmh": 38,
         "congestion": "보통"
       },
-      "peak_time": "12:00",
+      "peak_time": "18:00",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 60,
+        "wifi_users": 58,
         "density": "혼잡",
-        "estimated_people": 180
+        "estimated_people": 145
       },
       "forecast_24h": {
-        "wifi_users": 35,
+        "wifi_users": 45,
         "density": "보통",
-        "estimated_people": 105
+        "estimated_people": 112
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -114,7 +114,7 @@
       "forecast_6h": {
         "occupancy": 25,
         "occupancy_rate": 83,
-        "checkins": 2
+        "checkins": 3
       },
       "forecast_24h": {
         "occupancy": 26,
@@ -122,21 +122,21 @@
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 90
+        "occupancy_rate": 92
       },
-      "revenue_trend": "유지"
+      "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 18,
-        "temperature": 24.2,
-        "noise": 48.5,
+        "temperature": 24.8,
+        "noise": 58.2,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 22,
-        "temperature": 18.8,
-        "noise": 45.2,
+        "temperature": 19.5,
+        "noise": 52.4,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "crowd",
-        "message": "WiFi 접속자 수 과밀 상태, 네트워크 부하 주의"
+        "message": "WiFi 접속자 과밀 상태로 네트워크 성능 저하 우려"
       }
     ],
-    "analysis": "주말 오후 시간대로 도고온천 관광객이 집중되면서 교통량과 인구밀도가 높은 상황입니다. 태양광 발전이 활발하여 전력 자급률은 양호하나, 야간까지 고려시 ESS 관리가 필요합니다."
+    "analysis": "주말 오후 시간대로 관광객 유입이 집중되어 WiFi 과밀 상태를 보이고 있습니다. 태양광 발전량이 양호하여 ESS 충전이 원활하며, 카라반 점유율도 높은 수준을 유지하고 있어 전반적으로 안정적인 운영 상황입니다."
   },
   "center": {
     "lat": 36.763,
