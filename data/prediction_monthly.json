@@ -1,0 +1,179 @@
+{
+  "updated": "2026-04-27T04:00:32",
+  "model": "claude-sonnet-4-20250514",
+  "period": "monthly",
+  "range": {
+    "days": 4
+  },
+  "summary": "아산시 강소형 스마트시티 사업이 2023년 12월 시작되어 4개월째 운영 중이며, 4월 말 기준 전반적으로 안정적인 진행 상황을 보이고 있습니다. 기온 변화(15.3→8.8℃)에 따른 이용패턴 변화가 관찰되며, 카라반 평균 점유율 77.8%로 양호한 수준입니다. 다만 무인매장과 메타버스 플랫폼의 본격적인 운영 개시가 필요한 상황입니다.",
+  "forecast": {
+    "traffic": {
+      "current": 29,
+      "forecast": 35,
+      "change_pct": 20.7,
+      "confidence": 75
+    },
+    "crowd": {
+      "current": 23,
+      "forecast": 28,
+      "change_pct": 21.7,
+      "confidence": 70
+    },
+    "caravan": {
+      "current": 77.8,
+      "forecast": 82,
+      "change_pct": 5.4,
+      "confidence": 80
+    },
+    "power": {
+      "current": 65,
+      "forecast": 72,
+      "change_pct": 10.8,
+      "confidence": 85
+    },
+    "store": {
+      "current": 0,
+      "forecast": 15,
+      "change_pct": 1500,
+      "confidence": 60
+    },
+    "metaverse": {
+      "current": 0,
+      "forecast": 8,
+      "change_pct": 800,
+      "confidence": 55
+    }
+  },
+  "kpi": {
+    "budget_execution": 35,
+    "project_progress": 42,
+    "regional_economy": 68,
+    "digital_transformation": 38,
+    "citizen_satisfaction": 72,
+    "esg_re100": 45
+  },
+  "insights": {
+    "positive": "카라반 점유율이 높은 수준을 유지하고 있어 도고 OASIS SPOT의 안정적인 운영 기반이 구축되었습니다.",
+    "warning": "무인매장과 메타버스 플랫폼의 매출 및 이용실적이 전무한 상태로 조기 활성화 방안이 시급합니다.",
+    "strategy": "5월 기온 상승기를 맞아 무인매장 홍보 강화와 메타버스 플랫폼 시범 운영을 통한 이용자 확보가 필요합니다.",
+    "key_metric": "카라반 점유율 77.8%는 우수하나, 디지털 서비스 활용률 제고가 전체 사업 성공의 핵심 지표입니다."
+  },
+  "units": [
+    {
+      "id": "#1",
+      "name": "스마트가로등 15기",
+      "progress": 85,
+      "status": "진행"
+    },
+    {
+      "id": "#2",
+      "name": "모바일 전자시민증 ECC",
+      "progress": 30,
+      "status": "진행"
+    },
+    {
+      "id": "#3",
+      "name": "DRT 수요응답교통",
+      "progress": 25,
+      "status": "진행"
+    },
+    {
+      "id": "#4",
+      "name": "공공WiFi 3기",
+      "progress": 90,
+      "status": "진행"
+    },
+    {
+      "id": "#5",
+      "name": "ESS·RE100 태양광",
+      "progress": 60,
+      "status": "진행"
+    },
+    {
+      "id": "#6",
+      "name": "지능형 CCTV",
+      "progress": 55,
+      "status": "진행"
+    },
+    {
+      "id": "#7",
+      "name": "스마트 주차",
+      "progress": 40,
+      "status": "진행"
+    },
+    {
+      "id": "#8",
+      "name": "OASIS SPOT 30동",
+      "progress": 75,
+      "status": "진행"
+    },
+    {
+      "id": "#9",
+      "name": "무인매장 2개소",
+      "progress": 80,
+      "status": "진행"
+    },
+    {
+      "id": "#10",
+      "name": "이노베이션 스퀘어",
+      "progress": 35,
+      "status": "진행"
+    },
+    {
+      "id": "#11",
+      "name": "순찰 로봇",
+      "progress": 20,
+      "status": "진행"
+    },
+    {
+      "id": "#12",
+      "name": "디지털 노마드 NOP",
+      "progress": 15,
+      "status": "진행"
+    },
+    {
+      "id": "#13",
+      "name": "AI 융복합 서비스",
+      "progress": 25,
+      "status": "진행"
+    },
+    {
+      "id": "#14",
+      "name": "디지털링크 플랫폼",
+      "progress": 30,
+      "status": "진행"
+    }
+  ],
+  "chartData": {
+    "labels": [
+      "W1",
+      "W2",
+      "W3",
+      "W4"
+    ],
+    "traffic": [
+      37,
+      37,
+      37,
+      7
+    ],
+    "crowd": [
+      8,
+      11,
+      11,
+      1
+    ],
+    "store": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "metaverse": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
