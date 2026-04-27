@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-27T19:17:51",
+  "updated": "2026-04-27T19:47:53",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 432,
+  "dataPoints": 433,
   "dataRange": {
-    "from": "2026-04-24T19:19:13",
-    "to": "2026-04-27T19:09:13"
+    "from": "2026-04-24T19:39:13",
+    "to": "2026-04-27T19:39:12"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 28,
       "temperature": 18.4,
       "humidity": 34,
-      "noise": 51.5,
+      "noise": 53.1,
       "windSpeed": 1,
       "rainfall": 0,
-      "waterPH": 7.2,
-      "waterDO": 8.6,
+      "waterPH": 7.1,
+      "waterDO": 8.7,
       "o3": 0.048,
       "no2": 0.009,
       "co": 0.3,
@@ -33,24 +33,24 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 282,
+      "ess_current": 267,
       "solar_output": 0,
-      "grid_import": 45,
-      "total_consumption": 45,
+      "grid_import": 46,
+      "total_consumption": 46,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 49,
-      "speed": 34,
+      "volume": 44,
+      "speed": 36,
       "congestion": "보통",
-      "drt_passengers": 10
+      "drt_passengers": 6
     },
     "crowd": {
       "wifi_total": 31,
-      "wifi_ap1": 10,
-      "wifi_ap2": 11,
-      "wifi_ap3": 10,
+      "wifi_ap1": 11,
+      "wifi_ap2": 14,
+      "wifi_ap3": 6,
       "density_level": "보통",
       "estimated_people": 78
     },
@@ -66,31 +66,31 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 195,
+        "ess_kwh": 185,
         "solar_kw": 0,
-        "consumption_kw": 48.2,
+        "consumption_kw": 52,
         "re100_pct": 0,
         "trend": "방전"
       },
       "forecast_24h": {
-        "ess_kwh": 145,
-        "solar_kw": 85,
-        "consumption_kw": 42.3,
+        "ess_kwh": 320,
+        "solar_kw": 45,
+        "consumption_kw": 42,
         "re100_pct": 35,
-        "trend": "방전"
+        "trend": "충전"
       },
-      "peak_time": "08:30",
+      "peak_time": "12:00",
       "risk": "주의"
     },
     "traffic": {
       "forecast_6h": {
         "volume": 35,
-        "speed_kmh": 38,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 42,
-        "speed_kmh": 35,
+        "volume": 38,
+        "speed_kmh": 40,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -98,9 +98,9 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 18,
-        "density": "여유",
-        "estimated_people": 54
+        "wifi_users": 22,
+        "density": "보통",
+        "estimated_people": 66
       },
       "forecast_24h": {
         "wifi_users": 28,
@@ -117,42 +117,37 @@
         "checkins": 6
       },
       "forecast_24h": {
-        "occupancy": 22,
-        "occupancy_rate": 73,
+        "occupancy": 20,
+        "occupancy_rate": 67,
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 87
+        "occupancy_rate": 85
       },
       "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 15.5,
-        "temperature": 16.2,
-        "noise": 48.5,
+        "pm25": 15,
+        "temperature": 16.8,
+        "noise": 50.5,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 18.3,
-        "temperature": 22.1,
+        "pm25": 18,
+        "temperature": 22.5,
         "noise": 52.8,
-        "water_ph": 7.1
+        "water_ph": 7.3
       }
     },
     "alerts": [
       {
         "level": "warning",
         "model": "power",
-        "message": "ESS 배터리 잔량이 6시간 후 39%까지 감소 예상, 충전 계획 필요"
-      },
-      {
-        "level": "warning",
-        "model": "traffic",
-        "message": "내일 오전 8시경 교통량 58대/h로 증가하여 혼잡 예상"
+        "message": "야간시간 ESS 방전으로 인한 전력부족 우려"
       }
     ],
-    "analysis": "현재 평일 저녁시간대로 카라반 이용률이 높은 상황입니다. ESS 배터리는 지속적인 전력 소비로 인해 내일 아침까지 상당량 방전될 예상이며, 태양광 발전이 시작되는 오전 중순부터 점진적 회복이 예상됩니다."
+    "analysis": "현재 평일 저녁시간으로 카라반 이용률이 높고 WiFi 이용자도 적정 수준을 유지하고 있습니다. 야간 시간대 ESS 방전이 예상되나 내일 일출 후 태양광 발전으로 충전이 가능할 것으로 예측됩니다."
   },
   "center": {
     "lat": 36.763,
