@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-28T00:17:51",
+  "updated": "2026-04-28T00:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-04-25T00:19:13",
-    "to": "2026-04-28T00:09:13"
+    "from": "2026-04-25T00:49:14",
+    "to": "2026-04-28T00:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 20,
       "temperature": 12.5,
       "humidity": 49,
-      "noise": 33.8,
+      "noise": 40.5,
       "windSpeed": 0.6,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 8,
+      "waterPH": 7,
+      "waterDO": 8.5,
       "o3": 0.056,
       "no2": 0.007,
       "co": 0.3,
@@ -33,26 +33,26 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 291,
+      "ess_current": 274,
       "solar_output": 0,
-      "grid_import": 35,
-      "total_consumption": 35,
+      "grid_import": 34,
+      "total_consumption": 34,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 9,
-      "speed": 48,
+      "volume": 15,
+      "speed": 44,
       "congestion": "원활",
       "drt_passengers": 10
     },
     "crowd": {
-      "wifi_total": 4,
-      "wifi_ap1": 1,
-      "wifi_ap2": 3,
-      "wifi_ap3": 0,
+      "wifi_total": 3,
+      "wifi_ap1": 0,
+      "wifi_ap2": 2,
+      "wifi_ap3": 1,
       "density_level": "여유",
-      "estimated_people": 10
+      "estimated_people": 8
     },
     "caravan": {
       "total": 30,
@@ -74,9 +74,9 @@
       },
       "forecast_24h": {
         "ess_kwh": 380,
-        "solar_kw": 85,
-        "consumption_kw": 46,
-        "re100_pct": 78,
+        "solar_kw": 120,
+        "consumption_kw": 45,
+        "re100_pct": 75,
         "trend": "방전"
       },
       "peak_time": "12:00",
@@ -84,13 +84,13 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 25,
-        "speed_kmh": 52,
+        "volume": 18,
+        "speed_kmh": 42,
         "congestion": "원활"
       },
       "forecast_24h": {
-        "volume": 38,
-        "speed_kmh": 48,
+        "volume": 35,
+        "speed_kmh": 38,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -98,56 +98,56 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 18,
+        "wifi_users": 15,
         "density": "보통",
-        "estimated_people": 32
+        "estimated_people": 45
       },
       "forecast_24h": {
         "wifi_users": 32,
         "density": "보통",
-        "estimated_people": 58
+        "estimated_people": 96
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
-        "occupancy": 17,
-        "occupancy_rate": 57,
+        "occupancy": 18,
+        "occupancy_rate": 60,
         "checkins": 2
       },
       "forecast_24h": {
-        "occupancy": 22,
-        "occupancy_rate": 73,
-        "checkins": 8
+        "occupancy": 18,
+        "occupancy_rate": 60,
+        "checkins": 5
       },
       "weekend_prediction": {
         "occupancy_rate": 85
       },
-      "revenue_trend": "상승"
+      "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 16,
-        "temperature": 14.2,
-        "noise": 38.5,
+        "temperature": 15.2,
+        "noise": 45.5,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 18,
-        "temperature": 18.5,
-        "noise": 42.3,
+        "temperature": 18.8,
+        "noise": 48.2,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "environment",
-        "message": "오전 중 PM2.5 농도가 20㎍/㎥ 이상으로 상승할 예정"
+        "model": "power",
+        "message": "오후 피크 시간대 전력 소비량 급증 예상"
       }
     ],
-    "analysis": "현재 야간시간대로 모든 지표가 안정적인 상태입니다. 오전 7-8시경 출근시간대에 교통량과 WiFi 사용자가 급증하며, 태양광 발전으로 ESS 충전이 활발해질 것으로 예측됩니다."
+    "analysis": "현재 심야 시간대로 전반적으로 안정적인 상황입니다. 오전 출근 시간대부터 교통량과 인구 밀집도가 증가하며, 태양광 발전으로 RE100 달성률이 크게 향상될 예정입니다."
   },
   "center": {
     "lat": 36.763,
