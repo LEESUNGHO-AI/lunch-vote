@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-27T12:17:51",
+  "updated": "2026-04-27T12:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 415,
+  "dataPoints": 418,
   "dataRange": {
     "from": "2026-04-24T15:09:12",
-    "to": "2026-04-27T12:09:13"
+    "to": "2026-04-27T12:39:12"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 38,
       "temperature": 22.1,
       "humidity": 30,
-      "noise": 56.9,
+      "noise": 54.2,
       "windSpeed": 1.9,
       "rainfall": 0,
-      "waterPH": 7.2,
-      "waterDO": 8.4,
+      "waterPH": 7.1,
+      "waterDO": 8,
       "o3": 0.079,
       "no2": 0.007,
       "co": 0.4,
@@ -33,10 +33,10 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 357,
-      "solar_output": 193,
+      "ess_current": 390,
+      "solar_output": 203,
       "grid_import": 0,
-      "total_consumption": 53,
+      "total_consumption": 52,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
@@ -44,21 +44,21 @@
       "volume": 39,
       "speed": 37,
       "congestion": "보통",
-      "drt_passengers": 4
+      "drt_passengers": 8
     },
     "crowd": {
-      "wifi_total": 46,
-      "wifi_ap1": 15,
-      "wifi_ap2": 19,
-      "wifi_ap3": 12,
+      "wifi_total": 43,
+      "wifi_ap1": 14,
+      "wifi_ap2": 16,
+      "wifi_ap3": 13,
       "density_level": "혼잡",
-      "estimated_people": 115
+      "estimated_people": 108
     },
     "caravan": {
       "total": 30,
       "occupied": 17,
       "checkin_today": 0,
-      "checkout_today": 3,
+      "checkout_today": 1,
       "occupancy_rate": 57,
       "revenue_today": 2040000
     }
@@ -67,13 +67,13 @@
     "power": {
       "forecast_6h": {
         "ess_kwh": 420,
-        "solar_kw": 145,
-        "consumption_kw": 58,
-        "re100_pct": 95,
+        "solar_kw": 185,
+        "consumption_kw": 57,
+        "re100_pct": 98,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
+        "ess_kwh": 385,
         "solar_kw": 0,
         "consumption_kw": 45,
         "re100_pct": 85,
@@ -84,8 +84,8 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 58,
-        "speed_kmh": 34,
+        "volume": 55,
+        "speed_kmh": 35,
         "congestion": "혼잡"
       },
       "forecast_24h": {
@@ -93,19 +93,19 @@
         "speed_kmh": 42,
         "congestion": "보통"
       },
-      "peak_time": "18:00",
+      "peak_time": "13:00",
       "drt_demand": "높음"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 58,
+        "wifi_users": 56,
         "density": "혼잡",
-        "estimated_people": 145
+        "estimated_people": 168
       },
       "forecast_24h": {
-        "wifi_users": 12,
-        "density": "여유",
-        "estimated_people": 30
+        "wifi_users": 15,
+        "density": "보통",
+        "estimated_people": 45
       },
       "peak_time": "13:00",
       "hotspot": "AP2"
@@ -119,7 +119,7 @@
       "forecast_24h": {
         "occupancy": 26,
         "occupancy_rate": 87,
-        "checkins": 12
+        "checkins": 15
       },
       "weekend_prediction": {
         "occupancy_rate": 95
@@ -130,29 +130,24 @@
       "forecast_6h": {
         "pm25": 12,
         "temperature": 24.5,
-        "noise": 62.5,
+        "noise": 58.5,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 18,
-        "temperature": 15.8,
-        "noise": 48.2,
-        "water_ph": 7.1
+        "temperature": 18.2,
+        "noise": 48.5,
+        "water_ph": 7.3
       }
     },
     "alerts": [
       {
         "level": "warning",
         "model": "crowd",
-        "message": "오후 시간대 WiFi 접속자 급증으로 네트워크 과부하 예상"
-      },
-      {
-        "level": "warning",
-        "model": "caravan",
-        "message": "높은 점유율로 추가 예약 대기자 발생 가능"
+        "message": "오후 시간대 WiFi 이용자 과밀 예상, 대역폭 관리 필요"
       }
     ],
-    "analysis": "현재 도고 디지털 OASIS는 높은 활성도를 보이며, 오후~저녁 시간대 peak 예상됩니다. 카라반 점유율이 87%로 매우 높아 수익성이 우수하나, 군집 밀도 관리와 전력 수요 대응이 필요한 상황입니다."
+    "analysis": "현재 평일 낮 시간대로 모든 도메인에서 활발한 활동이 관측되고 있습니다. 오후 13-18시에 교통량, 인파, 카라반 이용률이 동시에 최고치를 기록할 것으로 예측되어 통합적인 관리가 필요합니다. 태양광 발전량이 충분하여 전력 공급은 안정적이며, 야간에는 전반적인 활동이 감소할 전망입니다."
   },
   "center": {
     "lat": 36.763,
