@@ -1,29 +1,29 @@
 {
-  "updated": "2026-04-29T20:17:51",
+  "updated": "2026-04-29T20:47:50",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 433,
+  "dataPoints": 434,
   "dataRange": {
-    "from": "2026-04-26T20:19:13",
-    "to": "2026-04-29T20:09:13"
+    "from": "2026-04-26T20:39:14",
+    "to": "2026-04-29T20:39:13"
   },
   "current": {
     "sensors": {
-      "pm25": 17,
-      "pm10": 31,
+      "pm25": 10,
+      "pm10": 20,
       "temperature": 12,
       "humidity": 66,
-      "noise": 51.2,
+      "noise": 49.9,
       "windSpeed": 0.4,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8.5,
-      "o3": 0.062,
+      "waterPH": 7.1,
+      "waterDO": 8.7,
+      "o3": 0.059,
       "no2": 0.008,
       "co": 0.3,
       "so2": 0.005,
-      "airGrade": "2",
-      "airDataTime": "2026-04-29 19:00",
+      "airGrade": "1",
+      "airDataTime": "2026-04-29 20:00",
       "sky": 4,
       "pty": 0,
       "lgt": 0,
@@ -33,24 +33,24 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 271,
+      "ess_current": 270,
       "solar_output": 0,
-      "grid_import": 42,
-      "total_consumption": 42,
+      "grid_import": 44,
+      "total_consumption": 44,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 39,
-      "speed": 39,
+      "volume": 34,
+      "speed": 42,
       "congestion": "보통",
-      "drt_passengers": 7
+      "drt_passengers": 10
     },
     "crowd": {
       "wifi_total": 28,
       "wifi_ap1": 9,
-      "wifi_ap2": 11,
-      "wifi_ap3": 8,
+      "wifi_ap2": 12,
+      "wifi_ap3": 7,
       "density_level": "보통",
       "estimated_people": 70
     },
@@ -68,7 +68,7 @@
       "forecast_6h": {
         "ess_kwh": 195,
         "solar_kw": 0,
-        "consumption_kw": 36.8,
+        "consumption_kw": 37.8,
         "re100_pct": 0,
         "trend": "방전"
       },
@@ -85,7 +85,7 @@
     "traffic": {
       "forecast_6h": {
         "volume": 18,
-        "speed_kmh": 45,
+        "speed_kmh": 48,
         "congestion": "원활"
       },
       "forecast_24h": {
@@ -128,26 +128,26 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 14,
-        "temperature": 9,
-        "noise": 48.5,
+        "pm25": 13.5,
+        "temperature": 8,
+        "noise": 47.2,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 17,
-        "temperature": 16,
-        "noise": 52.8,
-        "water_ph": 7.3
+        "pm25": 16.8,
+        "temperature": 18,
+        "noise": 52.5,
+        "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
         "model": "power",
-        "message": "ESS 잔량이 6시간 후 39% 수준으로 감소 예상"
+        "message": "야간 시간대 ESS 방전으로 새벽 시간 전력부족 위험"
       }
     ],
-    "analysis": "현재 야간시간대로 전력소비와 교통량이 감소하고 있으며, ESS는 야간 방전 후 내일 오전 태양광 발전으로 회복될 전망입니다. 카라반 점유율은 53%로 안정적이며 주말 대비 평일 특성상 군집밀도는 낮은 수준을 유지하고 있습니다."
+    "analysis": "평일 야간시간대로 전력소비는 감소하지만 태양광 발전이 없어 ESS 방전이 지속됩니다. 교통량과 인구밀도는 야간 패턴에 따라 크게 감소하여 안정적인 상태를 유지할 것으로 예상됩니다."
   },
   "center": {
     "lat": 36.763,
