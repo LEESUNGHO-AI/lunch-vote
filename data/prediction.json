@@ -1,11 +1,11 @@
 {
-  "updated": "2026-04-29T21:17:51",
+  "updated": "2026-04-29T21:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 433,
   "dataRange": {
-    "from": "2026-04-26T21:19:12",
-    "to": "2026-04-29T21:09:13"
+    "from": "2026-04-26T21:49:13",
+    "to": "2026-04-29T21:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 26,
       "temperature": 11.2,
       "humidity": 70,
-      "noise": 44.4,
+      "noise": 38.9,
       "windSpeed": 0.5,
       "rainfall": 0,
       "waterPH": 7,
-      "waterDO": 8.3,
+      "waterDO": 8.1,
       "o3": 0.046,
       "no2": 0.008,
       "co": 0.3,
@@ -33,64 +33,64 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 277,
+      "ess_current": 266,
       "solar_output": 0,
-      "grid_import": 42,
-      "total_consumption": 42,
+      "grid_import": 38,
+      "total_consumption": 38,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 24,
-      "speed": 40,
+      "volume": 27,
+      "speed": 43,
       "congestion": "원활",
-      "drt_passengers": 9
+      "drt_passengers": 7
     },
     "crowd": {
       "wifi_total": 12,
       "wifi_ap1": 5,
-      "wifi_ap2": 4,
-      "wifi_ap3": 3,
+      "wifi_ap2": 6,
+      "wifi_ap3": 1,
       "density_level": "여유",
       "estimated_people": 30
     },
     "caravan": {
       "total": 30,
-      "occupied": 20,
+      "occupied": 16,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 67,
-      "revenue_today": 2400000
+      "occupancy_rate": 53,
+      "revenue_today": 1920000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 245,
-        "solar_kw": 0,
-        "consumption_kw": 35.8,
-        "re100_pct": 0,
+        "ess_kwh": 180,
+        "solar_kw": 45,
+        "consumption_kw": 41,
+        "re100_pct": 35,
         "trend": "방전"
       },
       "forecast_24h": {
         "ess_kwh": 320,
         "solar_kw": 85,
-        "consumption_kw": 44.2,
-        "re100_pct": 35,
+        "consumption_kw": 44,
+        "re100_pct": 68,
         "trend": "충전"
       },
       "peak_time": "11:00",
-      "risk": "없음"
+      "risk": "주의"
     },
     "traffic": {
       "forecast_6h": {
         "volume": 15,
-        "speed_kmh": 42,
+        "speed_kmh": 48,
         "congestion": "원활"
       },
       "forecast_24h": {
         "volume": 35,
-        "speed_kmh": 38,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -100,43 +100,43 @@
       "forecast_6h": {
         "wifi_users": 5,
         "density": "여유",
-        "estimated_people": 15
+        "estimated_people": 12
       },
       "forecast_24h": {
-        "wifi_users": 25,
+        "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 75
+        "estimated_people": 70
       },
       "peak_time": "12:00",
       "hotspot": "AP1"
     },
     "caravan": {
       "forecast_6h": {
-        "occupancy": 18,
-        "occupancy_rate": 60,
+        "occupancy": 17,
+        "occupancy_rate": 57,
         "checkins": 2
       },
       "forecast_24h": {
-        "occupancy": 17,
-        "occupancy_rate": 57,
-        "checkins": 5
+        "occupancy": 18,
+        "occupancy_rate": 60,
+        "checkins": 8
       },
       "weekend_prediction": {
         "occupancy_rate": 75
       },
-      "revenue_trend": "유지"
+      "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 14.2,
+        "pm25": 13,
         "temperature": 8.5,
-        "noise": 42.8,
+        "noise": 35,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 17.8,
-        "temperature": 15.2,
-        "noise": 46.5,
+        "pm25": 17,
+        "temperature": 15.8,
+        "noise": 42,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "power",
-        "message": "야간시간대 ESS 방전으로 저장용량 감소 예상"
+        "message": "야간시간대 ESS 방전으로 인한 전력 효율성 저하 예상"
       }
     ],
-    "analysis": "현재 야간시간대로 전력소비와 교통량이 안정적인 수준을 유지하고 있습니다. 카라반 점유율 67%로 양호하며, 내일 주간시간대에 태양광 발전과 함께 활동량 증가가 예상됩니다."
+    "analysis": "현재 평일 야간시간대로 전반적인 활동량이 낮은 상태입니다. 내일 오전부터 교통량과 인구밀도가 급증하여 전력 소비량도 크게 증가할 전망입니다. 카라반 점유율은 안정적으로 유지되고 있어 수익성은 양호한 상황입니다."
   },
   "center": {
     "lat": 36.763,
