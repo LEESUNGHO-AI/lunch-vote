@@ -1,29 +1,29 @@
 {
-  "updated": "2026-04-30T08:47:51",
+  "updated": "2026-04-30T09:17:50",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 434,
+  "dataPoints": 433,
   "dataRange": {
-    "from": "2026-04-27T08:39:13",
-    "to": "2026-04-30T08:39:12"
+    "from": "2026-04-27T09:19:12",
+    "to": "2026-04-30T09:09:13"
   },
   "current": {
     "sensors": {
-      "pm25": 13,
-      "pm10": 21,
-      "temperature": 10.1,
-      "humidity": 77,
-      "noise": 65.5,
-      "windSpeed": 0.1,
+      "pm25": 18,
+      "pm10": 33,
+      "temperature": 14.7,
+      "humidity": 55,
+      "noise": 66.9,
+      "windSpeed": 0.5,
       "rainfall": 0,
-      "waterPH": 7.2,
-      "waterDO": 8.2,
-      "o3": 0.027,
-      "no2": 0.009,
-      "co": 0.3,
-      "so2": 0.004,
-      "airGrade": "1",
-      "airDataTime": "2026-04-30 08:00",
+      "waterPH": 7.1,
+      "waterDO": 8.3,
+      "o3": 0.04,
+      "no2": 0.008,
+      "co": 0.4,
+      "so2": 0.005,
+      "airGrade": "2",
+      "airDataTime": "2026-04-30 09:00",
       "sky": 1,
       "pty": 0,
       "lgt": 0,
@@ -33,26 +33,26 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 342,
-      "solar_output": 119,
+      "ess_current": 358,
+      "solar_output": 145,
       "grid_import": 0,
-      "total_consumption": 47,
+      "total_consumption": 50,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 56,
-      "speed": 31,
-      "congestion": "혼잡",
+      "volume": 51,
+      "speed": 33,
+      "congestion": "보통",
       "drt_passengers": 5
     },
     "crowd": {
-      "wifi_total": 18,
-      "wifi_ap1": 7,
-      "wifi_ap2": 8,
-      "wifi_ap3": 3,
-      "density_level": "여유",
-      "estimated_people": 45
+      "wifi_total": 32,
+      "wifi_ap1": 13,
+      "wifi_ap2": 14,
+      "wifi_ap3": 5,
+      "density_level": "보통",
+      "estimated_people": 80
     },
     "caravan": {
       "total": 30,
@@ -66,17 +66,17 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 450,
+        "ess_kwh": 420,
         "solar_kw": 180,
-        "consumption_kw": 52,
+        "consumption_kw": 48,
         "re100_pct": 100,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
-        "solar_kw": 95,
+        "ess_kwh": 385,
+        "solar_kw": 85,
         "consumption_kw": 42,
-        "re100_pct": 98,
+        "re100_pct": 95,
         "trend": "방전"
       },
       "peak_time": "12:00",
@@ -89,8 +89,8 @@
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 35,
-        "speed_kmh": 38,
+        "volume": 38,
+        "speed_kmh": 32,
         "congestion": "보통"
       },
       "peak_time": "17:00",
@@ -100,12 +100,12 @@
       "forecast_6h": {
         "wifi_users": 38,
         "density": "보통",
-        "estimated_people": 152
+        "estimated_people": 95
       },
       "forecast_24h": {
-        "wifi_users": 24,
+        "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 96
+        "estimated_people": 70
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -124,30 +124,30 @@
       "weekend_prediction": {
         "occupancy_rate": 85
       },
-      "revenue_trend": "상승"
+      "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 18,
-        "temperature": 14.2,
-        "noise": 68.2,
+        "temperature": 16.2,
+        "noise": 68,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 15,
+        "pm25": 16,
         "temperature": 12.8,
-        "noise": 62.5,
+        "noise": 65,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "environment",
-        "message": "오후 시간대 PM2.5 농도 상승 예상, 실외 활동 주의 필요"
+        "model": "traffic",
+        "message": "17시경 교통량 증가로 혼잡 예상"
       }
     ],
-    "analysis": "도고 스마트시티는 현재 안정적인 운영 상태를 보이고 있습니다. 태양광 발전량이 풍부하여 ESS 충전이 원활하며, 카라반 점유율과 매출이 양호한 수준입니다. 다만 오후 시간대 미세먼지 농도 상승과 교통량 증가에 대한 모니터링이 필요합니다."
+    "analysis": "현재 도고 OASIS는 안정적인 운영 상태를 보이고 있습니다. 태양광 발전이 활발하여 ESS 충전이 원활하며, 카라반 점유율 67%로 양호한 수익성을 유지하고 있습니다. 오후 시간대 교통량과 인구 밀집도가 증가할 것으로 예측됩니다."
   },
   "center": {
     "lat": 36.763,
