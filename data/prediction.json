@@ -1,29 +1,29 @@
 {
-  "updated": "2026-05-01T02:17:51",
+  "updated": "2026-05-01T02:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 433,
   "dataRange": {
-    "from": "2026-04-28T02:19:13",
-    "to": "2026-05-01T02:09:13"
+    "from": "2026-04-28T02:49:13",
+    "to": "2026-05-01T02:39:13"
   },
   "current": {
     "sensors": {
-      "pm25": 9,
-      "pm10": 17,
+      "pm25": 10,
+      "pm10": 23,
       "temperature": 9.3,
       "humidity": 91,
-      "noise": 28.1,
+      "noise": 28.3,
       "windSpeed": 0.4,
       "rainfall": 0,
-      "waterPH": 7.2,
-      "waterDO": 8,
-      "o3": 0.057,
+      "waterPH": 7.1,
+      "waterDO": 7.9,
+      "o3": 0.059,
       "no2": 0.007,
       "co": 0.3,
-      "so2": 0.005,
+      "so2": 0.006,
       "airGrade": "1",
-      "airDataTime": "2026-05-01 01:00",
+      "airDataTime": "2026-05-01 02:00",
       "sky": 4,
       "pty": 1,
       "lgt": 0,
@@ -33,7 +33,7 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 281,
+      "ess_current": 274,
       "solar_output": 0,
       "grid_import": 29,
       "total_consumption": 29,
@@ -41,42 +41,42 @@
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 10,
-      "speed": 46,
+      "volume": 5,
+      "speed": 49,
       "congestion": "원활",
-      "drt_passengers": 3
+      "drt_passengers": 5
     },
     "crowd": {
-      "wifi_total": 5,
-      "wifi_ap1": 2,
-      "wifi_ap2": 1,
-      "wifi_ap3": 2,
+      "wifi_total": 4,
+      "wifi_ap1": 1,
+      "wifi_ap2": 2,
+      "wifi_ap3": 1,
       "density_level": "여유",
-      "estimated_people": 13
+      "estimated_people": 10
     },
     "caravan": {
       "total": 30,
-      "occupied": 24,
+      "occupied": 26,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 80,
-      "revenue_today": 2880000
+      "occupancy_rate": 87,
+      "revenue_today": 3120000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 195,
+        "ess_kwh": 245,
         "solar_kw": 0,
-        "consumption_kw": 35.2,
+        "consumption_kw": 32.5,
         "re100_pct": 0,
         "trend": "방전"
       },
       "forecast_24h": {
-        "ess_kwh": 285,
-        "solar_kw": 45,
-        "consumption_kw": 44.8,
-        "re100_pct": 28,
+        "ess_kwh": 320,
+        "solar_kw": 85,
+        "consumption_kw": 44.2,
+        "re100_pct": 42,
         "trend": "충전"
       },
       "peak_time": "11:00",
@@ -84,8 +84,8 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 15,
-        "speed_kmh": 52,
+        "volume": 8,
+        "speed_kmh": 48,
         "congestion": "원활"
       },
       "forecast_24h": {
@@ -94,26 +94,26 @@
         "congestion": "보통"
       },
       "peak_time": "08:00",
-      "drt_demand": "보통"
+      "drt_demand": "낮음"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 8,
+        "wifi_users": 3,
         "density": "여유",
-        "estimated_people": 16
+        "estimated_people": 8
       },
       "forecast_24h": {
         "wifi_users": 25,
         "density": "보통",
-        "estimated_people": 50
+        "estimated_people": 65
       },
       "peak_time": "12:00",
-      "hotspot": "AP3"
+      "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
-        "occupancy": 20,
-        "occupancy_rate": 67,
+        "occupancy": 21,
+        "occupancy_rate": 70,
         "checkins": 2
       },
       "forecast_24h": {
@@ -128,31 +128,31 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 13.5,
-        "temperature": 8.2,
-        "noise": 32.5,
-        "water_ph": 7.1
+        "pm25": 14,
+        "temperature": 8.5,
+        "noise": 29,
+        "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 16.8,
-        "temperature": 12.5,
-        "noise": 45.2,
-        "water_ph": 7.2
+        "pm25": 16,
+        "temperature": 12.8,
+        "noise": 35,
+        "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
         "model": "power",
-        "message": "ESS 용량이 6시간 내 40% 이하로 감소 예상"
+        "message": "비로 인한 태양광 발전량 저하로 ESS 방전 지속, 저녁까지 전력 수급 주의 필요"
       },
       {
         "level": "warning",
-        "model": "environment",
-        "message": "오후 시간대 PM2.5 농도 '나쁨' 수준 예상"
+        "model": "caravan",
+        "message": "평일 새벽 체크아웃 증가로 점유율 하락, 주말 대비 마케팅 강화 권장"
       }
     ],
-    "analysis": "현재 비가 내리는 새벽 시간대로 전력 소비는 낮으나 태양광 발전 부재로 ESS 방전이 지속되고 있습니다. 오전부터 교통량과 인구밀도가 크게 증가하여 전력 수요 급증이 예상되며, 카라반 점유율은 평일 특성상 다소 낮은 수준을 유지할 전망입니다."
+    "analysis": "현재 비로 인해 태양광 발전이 중단되어 ESS가 지속 방전 중이며, 평일 새벽 시간대로 교통량과 인구밀도는 여유로운 상태입니다. 카라반 점유율이 평소보다 낮아 매출 감소가 예상되므로 주말 예약 유치에 집중할 필요가 있습니다."
   },
   "center": {
     "lat": 36.763,
