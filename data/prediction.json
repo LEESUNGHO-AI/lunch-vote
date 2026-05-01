@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-02T05:17:50",
+  "updated": "2026-05-02T05:47:50",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 433,
   "dataRange": {
-    "from": "2026-04-29T05:09:14",
-    "to": "2026-05-02T05:09:13"
+    "from": "2026-04-29T05:39:13",
+    "to": "2026-05-02T05:39:12"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 47,
       "temperature": 7.3,
       "humidity": 89,
-      "noise": 39.6,
+      "noise": 32.3,
       "windSpeed": 0.1,
       "rainfall": 0,
       "waterPH": 7.1,
-      "waterDO": 8.2,
+      "waterDO": 7.9,
       "o3": 0.047,
       "no2": 0.007,
       "co": 0.4,
@@ -33,51 +33,51 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 292,
+      "ess_current": 287,
       "solar_output": 0,
-      "grid_import": 41,
-      "total_consumption": 41,
+      "grid_import": 42,
+      "total_consumption": 42,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
       "volume": 4,
-      "speed": 51,
+      "speed": 46,
       "congestion": "원활",
-      "drt_passengers": 10
+      "drt_passengers": 4
     },
     "crowd": {
-      "wifi_total": 1,
-      "wifi_ap1": -1,
-      "wifi_ap2": 2,
+      "wifi_total": 2,
+      "wifi_ap1": 2,
+      "wifi_ap2": 0,
       "wifi_ap3": 0,
       "density_level": "여유",
-      "estimated_people": 3
+      "estimated_people": 5
     },
     "caravan": {
       "total": 30,
-      "occupied": 25,
+      "occupied": 27,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 83,
-      "revenue_today": 3750000
+      "occupancy_rate": 90,
+      "revenue_today": 4050000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 425,
+        "ess_kwh": 420,
         "solar_kw": 85,
         "consumption_kw": 48,
         "re100_pct": 65,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
+        "ess_kwh": 385,
         "solar_kw": 120,
         "consumption_kw": 46,
-        "re100_pct": 58,
-        "trend": "방전"
+        "re100_pct": 72,
+        "trend": "유지"
       },
       "peak_time": "11:00",
       "risk": "없음"
@@ -93,22 +93,22 @@
         "speed_kmh": 45,
         "congestion": "보통"
       },
-      "peak_time": "17:00",
+      "peak_time": "08:00",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
         "wifi_users": 22,
         "density": "보통",
-        "estimated_people": 88
+        "estimated_people": 35
       },
       "forecast_24h": {
         "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 112
+        "estimated_people": 45
       },
       "peak_time": "12:00",
-      "hotspot": "AP2"
+      "hotspot": "AP1"
     },
     "caravan": {
       "forecast_6h": {
@@ -117,26 +117,26 @@
         "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 25,
-        "occupancy_rate": 83,
+        "occupancy": 24,
+        "occupancy_rate": 80,
         "checkins": 8
       },
       "weekend_prediction": {
         "occupancy_rate": 85
       },
-      "revenue_trend": "상승"
+      "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 25,
-        "temperature": 12.5,
-        "noise": 45.2,
+        "temperature": 12,
+        "noise": 38,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 18,
-        "temperature": 15.8,
-        "noise": 42.8,
+        "pm25": 22,
+        "temperature": 16,
+        "noise": 35,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "environment",
-        "message": "현재 PM2.5 농도가 34㎍/㎥로 다소 높은 수준입니다"
+        "message": "PM2.5 농도가 34㎍/㎥로 보통 수준, 오후 이후 개선 예상"
       }
     ],
-    "analysis": "주말 새벽 시간대로 전반적인 활동량이 낮지만, 일출 후 태양광 발전으로 에너지 자급률이 크게 개선될 전망입니다. 카라반 점유율이 83%로 양호하며, 오후 시간대 방문객 증가로 매출 상승이 예상됩니다."
+    "analysis": "주말 새벽 시간대로 전체적으로 안정적인 상황입니다. 태양광 발전 시작과 함께 ESS 충전이 원활해지고, 오후부터 관광객 증가로 활성화될 것으로 예상됩니다. 미세먼지는 현재 보통 수준이나 오후 이후 개선될 전망입니다."
   },
   "center": {
     "lat": 36.763,
