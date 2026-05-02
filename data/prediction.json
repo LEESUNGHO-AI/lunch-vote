@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-02T16:17:50",
+  "updated": "2026-05-02T16:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-04-29T16:19:13",
-    "to": "2026-05-02T16:09:13"
+    "from": "2026-04-29T16:49:13",
+    "to": "2026-05-02T16:39:13"
   },
   "current": {
     "sensors": {
@@ -13,7 +13,7 @@
       "pm10": 71,
       "temperature": 22.6,
       "humidity": 50,
-      "noise": 63.1,
+      "noise": 63.2,
       "windSpeed": 1.8,
       "rainfall": 0,
       "waterPH": 7,
@@ -33,31 +33,31 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 321,
-      "solar_output": 116,
+      "ess_current": 346,
+      "solar_output": 124,
       "grid_import": 0,
-      "total_consumption": 55,
+      "total_consumption": 54,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 53,
-      "speed": 32,
+      "volume": 55,
+      "speed": 35,
       "congestion": "보통",
       "drt_passengers": 4
     },
     "crowd": {
-      "wifi_total": 47,
-      "wifi_ap1": 17,
-      "wifi_ap2": 19,
-      "wifi_ap3": 11,
+      "wifi_total": 46,
+      "wifi_ap1": 16,
+      "wifi_ap2": 18,
+      "wifi_ap3": 12,
       "density_level": "혼잡",
-      "estimated_people": 118
+      "estimated_people": 115
     },
     "caravan": {
       "total": 30,
       "occupied": 24,
-      "checkin_today": 3,
+      "checkin_today": 4,
       "checkout_today": 0,
       "occupancy_rate": 80,
       "revenue_today": 3600000
@@ -67,30 +67,30 @@
     "power": {
       "forecast_6h": {
         "ess_kwh": 285,
-        "solar_kw": 45,
-        "consumption_kw": 48,
-        "re100_pct": 95,
+        "solar_kw": 0,
+        "consumption_kw": 47,
+        "re100_pct": 85,
         "trend": "방전"
       },
       "forecast_24h": {
         "ess_kwh": 420,
         "solar_kw": 85,
         "consumption_kw": 52,
-        "re100_pct": 98,
+        "re100_pct": 95,
         "trend": "충전"
       },
-      "peak_time": "12:00",
+      "peak_time": "11:00",
       "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 45,
-        "speed_kmh": 35,
+        "volume": 48,
+        "speed_kmh": 38,
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 52,
-        "speed_kmh": 33,
+        "volume": 42,
+        "speed_kmh": 40,
         "congestion": "보통"
       },
       "peak_time": "12:00",
@@ -98,14 +98,14 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 32,
+        "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 85
+        "estimated_people": 42
       },
       "forecast_24h": {
-        "wifi_users": 48,
-        "density": "혼잡",
-        "estimated_people": 125
+        "wifi_users": 35,
+        "density": "보통",
+        "estimated_people": 52
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -122,21 +122,21 @@
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 85
+        "occupancy_rate": 90
       },
-      "revenue_trend": "유지"
+      "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 18,
-        "temperature": 20.5,
+        "pm25": 15,
+        "temperature": 18.5,
         "noise": 58.2,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 38,
-        "temperature": 23.8,
-        "noise": 61.5,
+        "temperature": 24.8,
+        "noise": 62.5,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "crowd",
-        "message": "WiFi 접속자 수가 평소보다 높아 혼잡도 증가 예상"
+        "message": "현재 WiFi 접속자 46명으로 혼잡 상태, 6시간 후 감소 예상"
       }
     ],
-    "analysis": "주말 오후 시간대로 관광객 유입이 활발하여 WiFi 접속자와 카라반 이용률이 높은 상황입니다. 저녁 시간대 이후 점진적으로 혼잡도가 완화될 것으로 예측됩니다."
+    "analysis": "주말 오후 시간대로 카라반 80% 점유율과 WiFi 이용자 46명으로 활발한 관광 활동이 관측됩니다. 저녁 시간대 접어들면서 교통량과 인파는 점차 감소할 전망이며, ESS는 야간 동안 방전 후 내일 오전 태양광 발전으로 재충전될 예정입니다."
   },
   "center": {
     "lat": 36.763,
