@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-04T23:17:51",
+  "updated": "2026-05-04T23:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-01T23:19:13",
-    "to": "2026-05-04T23:09:13"
+    "from": "2026-05-01T23:49:13",
+    "to": "2026-05-04T23:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 29,
       "temperature": 6.9,
       "humidity": 89,
-      "noise": 34.3,
+      "noise": 37.3,
       "windSpeed": 0.3,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8.3,
+      "waterPH": 7.2,
+      "waterDO": 8.1,
       "o3": 0.037,
       "no2": 0.007,
       "co": 0.3,
@@ -33,7 +33,7 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 289,
+      "ess_current": 284,
       "solar_output": 0,
       "grid_import": 37,
       "total_consumption": 37,
@@ -41,26 +41,26 @@
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 7,
-      "speed": 50,
+      "volume": 9,
+      "speed": 49,
       "congestion": "원활",
-      "drt_passengers": 3
+      "drt_passengers": 9
     },
     "crowd": {
-      "wifi_total": 3,
-      "wifi_ap1": 2,
-      "wifi_ap2": 1,
+      "wifi_total": 2,
+      "wifi_ap1": 1,
+      "wifi_ap2": 2,
       "wifi_ap3": 0,
       "density_level": "여유",
-      "estimated_people": 8
+      "estimated_people": 5
     },
     "caravan": {
       "total": 30,
-      "occupied": 16,
+      "occupied": 17,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 53,
-      "revenue_today": 1920000
+      "occupancy_rate": 57,
+      "revenue_today": 2040000
     }
   },
   "prediction": {
@@ -68,29 +68,29 @@
       "forecast_6h": {
         "ess_kwh": 195,
         "solar_kw": 85,
-        "consumption_kw": 41,
-        "re100_pct": 68,
+        "consumption_kw": 48,
+        "re100_pct": 75,
         "trend": "충전"
       },
       "forecast_24h": {
         "ess_kwh": 320,
         "solar_kw": 120,
-        "consumption_kw": 46,
-        "re100_pct": 75,
+        "consumption_kw": 42,
+        "re100_pct": 85,
         "trend": "충전"
       },
-      "peak_time": "11:00",
+      "peak_time": "12:00",
       "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 25,
-        "speed_kmh": 48,
+        "volume": 28,
+        "speed_kmh": 52,
         "congestion": "원활"
       },
       "forecast_24h": {
-        "volume": 42,
-        "speed_kmh": 45,
+        "volume": 35,
+        "speed_kmh": 48,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -108,18 +108,18 @@
         "estimated_people": 70
       },
       "peak_time": "12:00",
-      "hotspot": "AP1"
+      "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
         "occupancy": 18,
         "occupancy_rate": 60,
-        "checkins": 3
+        "checkins": 2
       },
       "forecast_24h": {
         "occupancy": 19,
         "occupancy_rate": 63,
-        "checkins": 8
+        "checkins": 4
       },
       "weekend_prediction": {
         "occupancy_rate": 78
@@ -129,25 +129,25 @@
     "environment": {
       "forecast_6h": {
         "pm25": 8,
-        "temperature": 12.5,
-        "noise": 38.2,
-        "water_ph": 7.1
+        "temperature": 12,
+        "noise": 45,
+        "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 11,
-        "temperature": 18.3,
-        "noise": 42.5,
-        "water_ph": 7
+        "pm25": 12,
+        "temperature": 18,
+        "preference": 48,
+        "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
         "model": "traffic",
-        "message": "출근시간대(07-09시) 교통량 급증 예상으로 속도 저하 우려"
+        "message": "오전 출근시간대 교통량 증가 예상"
       }
     ],
-    "analysis": "야간 시간대로 전력소비가 안정적이며 ESS 충전이 양호한 상태입니다. 내일 오전 태양광 발전 개시와 함께 RE100 달성률이 크게 개선될 전망입니다. 카라반 점유율과 매출이 평균 대비 양호하여 스마트시티 운영 효율성이 높은 수준을 유지하고 있습니다."
+    "analysis": "도고 디지털 오아시스는 현재 안정적인 운영 상태를 보이고 있습니다. 태양광 발전으로 인한 ESS 충전과 카라반 이용률 증가가 예상되며, 전반적으로 양호한 스마트시티 서비스 환경을 유지할 것으로 전망됩니다."
   },
   "center": {
     "lat": 36.763,
