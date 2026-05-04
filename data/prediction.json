@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-04T21:17:50",
+  "updated": "2026-05-04T21:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-01T21:19:13",
-    "to": "2026-05-04T21:09:43"
+    "from": "2026-05-01T21:49:13",
+    "to": "2026-05-04T21:39:13"
   },
   "current": {
     "sensors": {
@@ -13,10 +13,10 @@
       "pm10": 29,
       "temperature": 10.3,
       "humidity": 69,
-      "noise": 41.9,
+      "noise": 39.1,
       "windSpeed": 0.5,
       "rainfall": 0,
-      "waterPH": 7,
+      "waterPH": 7.1,
       "waterDO": 8,
       "o3": 0.045,
       "no2": 0.007,
@@ -33,50 +33,50 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 276,
+      "ess_current": 271,
       "solar_output": 0,
-      "grid_import": 40,
-      "total_consumption": 40,
+      "grid_import": 42,
+      "total_consumption": 42,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 21,
+      "volume": 23,
       "speed": 43,
       "congestion": "원활",
-      "drt_passengers": 6
+      "drt_passengers": 10
     },
     "crowd": {
-      "wifi_total": 19,
+      "wifi_total": 14,
       "wifi_ap1": 5,
-      "wifi_ap2": 6,
-      "wifi_ap3": 8,
+      "wifi_ap2": 7,
+      "wifi_ap3": 2,
       "density_level": "여유",
-      "estimated_people": 48
+      "estimated_people": 35
     },
     "caravan": {
       "total": 30,
-      "occupied": 19,
+      "occupied": 18,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 63,
-      "revenue_today": 2280000
+      "occupancy_rate": 60,
+      "revenue_today": 2160000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 195,
-        "solar_kw": 0,
-        "consumption_kw": 36.2,
-        "re100_pct": 0,
-        "trend": "방전"
+        "ess_kwh": 185,
+        "solar_kw": 45,
+        "consumption_kw": 38,
+        "re100_pct": 118,
+        "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
-        "solar_kw": 85,
-        "consumption_kw": 45.8,
-        "re100_pct": 65,
+        "ess_kwh": 320,
+        "solar_kw": 120,
+        "consumption_kw": 45,
+        "re100_pct": 267,
         "trend": "충전"
       },
       "peak_time": "11:00",
@@ -84,7 +84,7 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 8,
+        "volume": 15,
         "speed_kmh": 48,
         "congestion": "원활"
       },
@@ -98,9 +98,9 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 6,
+        "wifi_users": 8,
         "density": "여유",
-        "estimated_people": 18
+        "estimated_people": 24
       },
       "forecast_24h": {
         "wifi_users": 28,
@@ -108,7 +108,7 @@
         "estimated_people": 84
       },
       "peak_time": "12:00",
-      "hotspot": "AP3"
+      "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
@@ -117,8 +117,8 @@
         "checkins": 4
       },
       "forecast_24h": {
-        "occupancy": 18,
-        "occupancy_rate": 60,
+        "occupancy": 19,
+        "occupancy_rate": 63,
         "checkins": 8
       },
       "weekend_prediction": {
@@ -129,25 +129,25 @@
     "environment": {
       "forecast_6h": {
         "pm25": 8,
-        "temperature": 8.5,
-        "noise": 38.2,
+        "temperature": 12,
+        "noise": 35,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 12,
-        "temperature": 18.3,
-        "noise": 45.8,
+        "temperature": 18,
+        "noise": 42,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "power",
-        "message": "야간 시간대 ESS 방전으로 인한 저장량 감소 예상"
+        "model": "traffic",
+        "message": "내일 오전 출근시간대 교통량 증가 예상"
       }
     ],
-    "analysis": "현재 평일 야간으로 전반적인 활동량이 감소하고 있으며, 카라반 점유율이 높아 관광객 유입이 활발한 상태입니다. 내일 주간에는 태양광 발전과 함께 교통량 및 인구밀도가 증가할 것으로 예상됩니다."
+    "analysis": "현재 야간시간대로 전력소비와 교통량이 안정적인 수준을 유지하고 있습니다. 카라반 점유율이 60%로 양호하며, 내일 오전 태양광 발전으로 ESS 충전과 RE100 달성이 예상됩니다."
   },
   "center": {
     "lat": 36.763,
