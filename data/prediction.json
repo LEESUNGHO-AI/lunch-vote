@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-06T08:17:51",
+  "updated": "2026-05-06T08:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-03T08:19:13",
-    "to": "2026-05-06T08:09:13"
+    "from": "2026-05-03T08:49:13",
+    "to": "2026-05-06T08:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 24,
       "temperature": 9.6,
       "humidity": 87,
-      "noise": 61.3,
+      "noise": 62.4,
       "windSpeed": 0.2,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 8.6,
+      "waterPH": 7,
+      "waterDO": 7.8,
       "o3": 0.035,
       "no2": 0.008,
       "co": 0.3,
@@ -33,8 +33,8 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 336,
-      "solar_output": 114,
+      "ess_current": 333,
+      "solar_output": 125,
       "grid_import": 0,
       "total_consumption": 49,
       "re100_ratio": 100,
@@ -42,25 +42,25 @@
     },
     "traffic": {
       "volume": 57,
-      "speed": 34,
+      "speed": 35,
       "congestion": "혼잡",
-      "drt_passengers": 6
+      "drt_passengers": 5
     },
     "crowd": {
-      "wifi_total": 20,
-      "wifi_ap1": 7,
+      "wifi_total": 22,
+      "wifi_ap1": 8,
       "wifi_ap2": 9,
-      "wifi_ap3": 4,
-      "density_level": "여유",
-      "estimated_people": 50
+      "wifi_ap3": 5,
+      "density_level": "보통",
+      "estimated_people": 55
     },
     "caravan": {
       "total": 30,
-      "occupied": 18,
+      "occupied": 16,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 60,
-      "revenue_today": 2160000
+      "occupancy_rate": 53,
+      "revenue_today": 1920000
     }
   },
   "prediction": {
@@ -75,11 +75,11 @@
       "forecast_24h": {
         "ess_kwh": 380,
         "solar_kw": 95,
-        "consumption_kw": 45,
-        "re100_pct": 98,
+        "consumption_kw": 42,
+        "re100_pct": 100,
         "trend": "방전"
       },
-      "peak_time": "11:30",
+      "peak_time": "11:00",
       "risk": "없음"
     },
     "traffic": {
@@ -90,64 +90,64 @@
       },
       "forecast_24h": {
         "volume": 35,
-        "speed_kmh": 41,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
-      "peak_time": "17:30",
+      "peak_time": "17:00",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
         "wifi_users": 38,
         "density": "보통",
-        "estimated_people": 95
+        "estimated_people": 152
       },
       "forecast_24h": {
         "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 70
+        "estimated_people": 112
       },
-      "peak_time": "12:30",
+      "peak_time": "12:00",
       "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
         "occupancy": 18,
         "occupancy_rate": 60,
-        "checkins": 2
+        "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 19,
-        "occupancy_rate": 63,
+        "occupancy": 18,
+        "occupancy_rate": 60,
         "checkins": 5
       },
       "weekend_prediction": {
         "occupancy_rate": 85
       },
-      "revenue_trend": "상승"
+      "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 13,
         "temperature": 15.2,
         "noise": 58.5,
-        "water_ph": 7.2
+        "water_ph": 7.1
       },
       "forecast_24h": {
-        "pm25": 8,
+        "pm25": 9,
         "temperature": 12.8,
-        "noise": 52.3,
-        "water_ph": 7.1
+        "noise": 55.2,
+        "water_ph": 7.2
       }
     },
     "alerts": [
       {
         "level": "warning",
         "model": "traffic",
-        "message": "오후 5시경 교통량 증가로 혼잡 예상"
+        "message": "17시경 교통량 60대/h 예상으로 혼잡 발생 가능"
       }
     ],
-    "analysis": "현재 도고 디지털 OASIS는 전력 자급률 100%를 유지하며 안정적으로 운영되고 있습니다. 오전 시간대 교통량과 WiFi 이용자가 증가하는 추세이며, 카라반 이용률도 60%로 양호한 상태입니다."
+    "analysis": "현재 스마트시티 운영이 안정적으로 유지되고 있으며, 태양광 발전으로 RE100 달성 중입니다. 오후 시간대 교통량과 군집 밀도 증가에 대비한 모니터링이 필요합니다."
   },
   "center": {
     "lat": 36.763,
