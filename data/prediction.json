@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-05T11:17:51",
+  "updated": "2026-05-05T11:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 432,
+  "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-02T11:09:14",
-    "to": "2026-05-05T11:09:13"
+    "from": "2026-05-02T11:49:13",
+    "to": "2026-05-05T11:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 27,
       "temperature": 18,
       "humidity": 32,
-      "noise": 61,
+      "noise": 60.2,
       "windSpeed": 1.5,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8.1,
+      "waterPH": 7.2,
+      "waterDO": 7.8,
       "o3": 0.062,
       "no2": 0.006,
       "co": 0.4,
@@ -33,81 +33,81 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 365,
-      "solar_output": 188,
+      "ess_current": 378,
+      "solar_output": 197,
       "grid_import": 0,
-      "total_consumption": 53,
+      "total_consumption": 55,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 38,
-      "speed": 41,
+      "volume": 33,
+      "speed": 38,
       "congestion": "보통",
-      "drt_passengers": 11
+      "drt_passengers": 4
     },
     "crowd": {
-      "wifi_total": 43,
-      "wifi_ap1": 16,
+      "wifi_total": 39,
+      "wifi_ap1": 15,
       "wifi_ap2": 16,
-      "wifi_ap3": 11,
-      "density_level": "혼잡",
-      "estimated_people": 108
+      "wifi_ap3": 8,
+      "density_level": "보통",
+      "estimated_people": 98
     },
     "caravan": {
       "total": 30,
-      "occupied": 20,
+      "occupied": 17,
       "checkin_today": 0,
-      "checkout_today": 4,
-      "occupancy_rate": 67,
-      "revenue_today": 2400000
+      "checkout_today": 3,
+      "occupancy_rate": 57,
+      "revenue_today": 2040000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
         "ess_kwh": 420,
-        "solar_kw": 165,
-        "consumption_kw": 47,
+        "solar_kw": 180,
+        "consumption_kw": 48,
         "re100_pct": 100,
         "trend": "충전"
       },
       "forecast_24h": {
         "ess_kwh": 385,
-        "solar_kw": 85,
-        "consumption_kw": 41,
-        "re100_pct": 98,
-        "trend": "방전"
+        "solar_kw": 95,
+        "consumption_kw": 42,
+        "re100_pct": 100,
+        "trend": "유지"
       },
-      "peak_time": "12:30",
+      "peak_time": "18:00",
       "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 42,
-        "speed_kmh": 38,
+        "volume": 45,
+        "speed_kmh": 35,
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 35,
-        "speed_kmh": 42,
+        "volume": 38,
+        "speed_kmh": 37,
         "congestion": "보통"
       },
-      "peak_time": "17:30",
+      "peak_time": "17:00",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 39,
-        "density": "혼잡",
-        "estimated_people": 156
+        "wifi_users": 42,
+        "density": "보통",
+        "estimated_people": 126
       },
       "forecast_24h": {
-        "wifi_users": 25,
+        "wifi_users": 35,
         "density": "보통",
-        "estimated_people": 100
+        "estimated_people": 105
       },
-      "peak_time": "12:15",
+      "peak_time": "12:00",
       "hotspot": "AP1"
     },
     "caravan": {
@@ -128,26 +128,20 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 12,
+        "pm25": 10,
         "temperature": 22,
-        "noise": 58,
+        "noise": 62.5,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 11,
-        "temperature": 16,
-        "noise": 55,
+        "pm25": 12,
+        "temperature": 19,
+        "noise": 58.8,
         "water_ph": 7.1
       }
     },
-    "alerts": [
-      {
-        "level": "warning",
-        "model": "crowd",
-        "message": "WiFi 사용자 수가 평균 대비 높아 혼잡상황 예상됩니다"
-      }
-    ],
-    "analysis": "현재 도고 디지털 OASIS는 전력 자립률 100%를 유지하며 안정적으로 운영되고 있습니다. WiFi 사용자가 43명으로 다소 혼잡하나 카라반 점유율 67%로 양호한 수준을 보이고 있습니다."
+    "alerts": [],
+    "analysis": "현재 도고 디지털 OASIS는 모든 시스템이 안정적으로 운영되고 있습니다. 태양광 발전량이 풍부하여 ESS 충전이 원활하고, 오후 시간대 교통량과 인구 밀도 증가가 예상되지만 관리 범위 내입니다. 카라반 점유율은 평일 기준 적정 수준을 유지하고 있어 전반적으로 양호한 상태입니다."
   },
   "center": {
     "lat": 36.763,
