@@ -1,29 +1,29 @@
 {
-  "updated": "2026-05-05T16:47:51",
+  "updated": "2026-05-05T17:17:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-02T16:49:12",
-    "to": "2026-05-05T16:39:13"
+    "from": "2026-05-02T17:19:13",
+    "to": "2026-05-05T17:09:13"
   },
   "current": {
     "sensors": {
-      "pm25": 9,
-      "pm10": 27,
-      "temperature": 22.3,
-      "humidity": 30,
-      "noise": 67.3,
-      "windSpeed": 2,
+      "pm25": 6,
+      "pm10": 23,
+      "temperature": 22,
+      "humidity": 28,
+      "noise": 61.8,
+      "windSpeed": 2.2,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8.1,
+      "waterPH": 7.1,
+      "waterDO": 8.5,
       "o3": 0.059,
       "no2": 0.006,
       "co": 0.3,
       "so2": 0.005,
       "airGrade": "1",
-      "airDataTime": "2026-05-05 16:00",
+      "airDataTime": "2026-05-05 17:00",
       "sky": 1,
       "pty": 0,
       "lgt": 0,
@@ -33,40 +33,40 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 347,
-      "solar_output": 126,
+      "ess_current": 325,
+      "solar_output": 76,
       "grid_import": 0,
-      "total_consumption": 41,
+      "total_consumption": 43,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 45,
-      "speed": 39,
-      "congestion": "보통",
-      "drt_passengers": 5
+      "volume": 64,
+      "speed": 30,
+      "congestion": "혼잡",
+      "drt_passengers": 9
     },
     "crowd": {
-      "wifi_total": 32,
-      "wifi_ap1": 10,
-      "wifi_ap2": 14,
+      "wifi_total": 37,
+      "wifi_ap1": 13,
+      "wifi_ap2": 16,
       "wifi_ap3": 8,
       "density_level": "보통",
-      "estimated_people": 80
+      "estimated_people": 93
     },
     "caravan": {
       "total": 30,
-      "occupied": 19,
-      "checkin_today": 3,
+      "occupied": 18,
+      "checkin_today": 4,
       "checkout_today": 0,
-      "occupancy_rate": 63,
-      "revenue_today": 2280000
+      "occupancy_rate": 60,
+      "revenue_today": 2160000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 285,
+        "ess_kwh": 280,
         "solar_kw": 0,
         "consumption_kw": 47,
         "re100_pct": 85,
@@ -74,38 +74,38 @@
       },
       "forecast_24h": {
         "ess_kwh": 420,
-        "solar_kw": 85,
-        "consumption_kw": 35,
-        "re100_pct": 95,
+        "solar_kw": 145,
+        "consumption_kw": 38,
+        "re100_pct": 100,
         "trend": "충전"
       },
-      "peak_time": "18:00",
+      "peak_time": "11:00",
       "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 48,
-        "speed_kmh": 37,
+        "volume": 35,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 35,
-        "speed_kmh": 42,
-        "congestion": "원활"
+        "volume": 31,
+        "speed_kmh": 38,
+        "congestion": "보통"
       },
-      "peak_time": "17:00",
+      "peak_time": "08:00",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 28,
+        "wifi_users": 21,
         "density": "보통",
-        "estimated_people": 84
+        "estimated_people": 63
       },
       "forecast_24h": {
-        "wifi_users": 22,
+        "wifi_users": 19,
         "density": "보통",
-        "estimated_people": 66
+        "estimated_people": 57
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -128,15 +128,15 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 7.5,
-        "temperature": 19.8,
-        "noise": 65.2,
+        "pm25": 8,
+        "temperature": 16,
+        "noise": 58,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 11.2,
-        "temperature": 16.5,
-        "noise": 58.8,
+        "pm25": 12,
+        "temperature": 18,
+        "noise": 55,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "power",
-        "message": "저녁 시간대 전력 소비 증가로 ESS 방전량 증가 예상"
+        "message": "저녁 시간대 ESS 방전으로 RE100 달성율 85%까지 하락 예상"
       }
     ],
-    "analysis": "현재 도고 디지털 OASIS는 안정적인 운영 상태를 보이고 있으며, 카라반 점유율 63%로 양호한 수준입니다. 저녁 시간대 교통량과 전력 소비 증가가 예상되지만 전체적으로 정상 범위 내에서 관리되고 있습니다."
+    "analysis": "현재 평일 저녁 시간대로 교통량과 인구 밀집도가 높은 상황입니다. 태양광 발전이 중단되면서 ESS 의존도가 증가하여 야간 시간대 전력 효율성 관리가 필요합니다. 전반적으로 안정적인 운영 상태를 유지하고 있습니다."
   },
   "center": {
     "lat": 36.763,
