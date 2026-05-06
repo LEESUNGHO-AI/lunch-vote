@@ -1,29 +1,29 @@
 {
-  "updated": "2026-05-07T00:17:51",
+  "updated": "2026-05-07T00:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-04T00:19:12",
-    "to": "2026-05-07T00:09:13"
+    "from": "2026-05-04T00:49:13",
+    "to": "2026-05-07T00:39:13"
   },
   "current": {
     "sensors": {
-      "pm25": 11,
-      "pm10": 23,
+      "pm25": 12,
+      "pm10": 20,
       "temperature": 10.2,
       "humidity": 83,
-      "noise": 35.1,
+      "noise": 39.5,
       "windSpeed": 0.4,
       "rainfall": 0,
       "waterPH": 7.2,
       "waterDO": 7.7,
-      "o3": 0.033,
+      "o3": 0.03,
       "no2": 0.008,
       "co": 0.3,
       "so2": 0.004,
       "airGrade": "1",
-      "airDataTime": "2026-05-06 23:00",
+      "airDataTime": "2026-05-06 24:00",
       "sky": 1,
       "pty": 0,
       "lgt": 0,
@@ -33,7 +33,7 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 282,
+      "ess_current": 276,
       "solar_output": 0,
       "grid_import": 35,
       "total_consumption": 35,
@@ -42,15 +42,15 @@
     },
     "traffic": {
       "volume": 5,
-      "speed": 48,
+      "speed": 47,
       "congestion": "원활",
-      "drt_passengers": 9
+      "drt_passengers": 8
     },
     "crowd": {
       "wifi_total": 6,
-      "wifi_ap1": 1,
-      "wifi_ap2": 1,
-      "wifi_ap3": 4,
+      "wifi_ap1": 4,
+      "wifi_ap2": 4,
+      "wifi_ap3": 0,
       "density_level": "여유",
       "estimated_people": 15
     },
@@ -66,17 +66,17 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 420,
-        "solar_kw": 45,
+        "ess_kwh": 320,
+        "solar_kw": 85,
         "consumption_kw": 42,
-        "re100_pct": 78,
+        "re100_pct": 65,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
-        "solar_kw": 85,
+        "ess_kwh": 285,
+        "solar_kw": 120,
         "consumption_kw": 48,
-        "re100_pct": 65,
+        "re100_pct": 78,
         "trend": "방전"
       },
       "peak_time": "11:00",
@@ -84,13 +84,13 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 28,
-        "speed_kmh": 52,
+        "volume": 24,
+        "speed_kmh": 45,
         "congestion": "원활"
       },
       "forecast_24h": {
         "volume": 38,
-        "speed_kmh": 48,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -100,15 +100,15 @@
       "forecast_6h": {
         "wifi_users": 18,
         "density": "보통",
-        "estimated_people": 54
+        "estimated_people": 45
       },
       "forecast_24h": {
         "wifi_users": 32,
         "density": "보통",
-        "estimated_people": 96
+        "estimated_people": 80
       },
       "peak_time": "12:00",
-      "hotspot": "AP3"
+      "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
@@ -117,9 +117,9 @@
         "checkins": 2
       },
       "forecast_24h": {
-        "occupancy": 19,
-        "occupancy_rate": 63,
-        "checkins": 5
+        "occupancy": 22,
+        "occupancy_rate": 73,
+        "checkins": 8
       },
       "weekend_prediction": {
         "occupancy_rate": 85
@@ -129,14 +129,14 @@
     "environment": {
       "forecast_6h": {
         "pm25": 8.5,
-        "temperature": 12.8,
+        "temperature": 18.5,
         "noise": 42.3,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 11.2,
-        "temperature": 18.5,
-        "noise": 48.7,
+        "pm25": 11.8,
+        "temperature": 22.1,
+        "noise": 45.8,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "traffic",
-        "message": "08:00-09:00 출근시간대 교통량 급증 예상, 주변 도로 혼잡 가능성"
+        "message": "오전 출근시간대(07:00-09:00) 교통량 급증 예상, 혼잡도 증가 대비 필요"
       }
     ],
-    "analysis": "현재 야간 시간대로 전력 소비와 인구 밀집도가 낮은 안정적인 상태입니다. 오전 6시 이후 태양광 발전 시작과 함께 출근 교통량 증가가 예상되며, 낮 시간대 관광객 유입으로 카라반 이용률과 매출 상승이 기대됩니다."
+    "analysis": "현재 야간시간으로 전력소비와 교통량이 낮은 상태이며, 태양광 발전 개시와 함께 오전부터 활동량이 급격히 증가할 것으로 예측됩니다. ESS 충전량이 양호하여 주간 피크시간 전력 공급에는 문제없을 것으로 분석됩니다."
   },
   "center": {
     "lat": 36.763,
