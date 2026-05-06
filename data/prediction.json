@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-06T11:17:51",
+  "updated": "2026-05-06T11:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-03T11:19:13",
-    "to": "2026-05-06T11:09:13"
+    "from": "2026-05-03T11:49:12",
+    "to": "2026-05-06T11:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 19,
       "temperature": 20.5,
       "humidity": 46,
-      "noise": 61.7,
+      "noise": 62.4,
       "windSpeed": 2.3,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8,
+      "waterPH": 7.2,
+      "waterDO": 8.1,
       "o3": 0.063,
       "no2": 0.006,
       "co": 0.3,
@@ -33,41 +33,41 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 377,
-      "solar_output": 201,
+      "ess_current": 365,
+      "solar_output": 191,
       "grid_import": 0,
-      "total_consumption": 57,
+      "total_consumption": 56,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 36,
+      "volume": 39,
       "speed": 41,
       "congestion": "보통",
       "drt_passengers": 5
     },
     "crowd": {
-      "wifi_total": 40,
-      "wifi_ap1": 15,
-      "wifi_ap2": 17,
+      "wifi_total": 38,
+      "wifi_ap1": 14,
+      "wifi_ap2": 16,
       "wifi_ap3": 8,
       "density_level": "보통",
-      "estimated_people": 100
+      "estimated_people": 95
     },
     "caravan": {
       "total": 30,
-      "occupied": 19,
+      "occupied": 17,
       "checkin_today": 0,
-      "checkout_today": 1,
-      "occupancy_rate": 63,
-      "revenue_today": 2280000
+      "checkout_today": 2,
+      "occupancy_rate": 57,
+      "revenue_today": 2040000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
         "ess_kwh": 420,
-        "solar_kw": 185,
+        "solar_kw": 165,
         "consumption_kw": 48,
         "re100_pct": 100,
         "trend": "충전"
@@ -76,10 +76,10 @@
         "ess_kwh": 385,
         "solar_kw": 95,
         "consumption_kw": 42,
-        "re100_pct": 95,
-        "trend": "방전"
+        "re100_pct": 98,
+        "trend": "유지"
       },
-      "peak_time": "10:00",
+      "peak_time": "13:00",
       "risk": "없음"
     },
     "traffic": {
@@ -89,7 +89,7 @@
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 35,
+        "volume": 38,
         "speed_kmh": 40,
         "congestion": "보통"
       },
@@ -98,14 +98,14 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 38,
+        "wifi_users": 41,
         "density": "보통",
-        "estimated_people": 95
+        "estimated_people": 82
       },
       "forecast_24h": {
-        "wifi_users": 25,
+        "wifi_users": 35,
         "density": "보통",
-        "estimated_people": 63
+        "estimated_people": 70
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -114,7 +114,7 @@
       "forecast_6h": {
         "occupancy": 18,
         "occupancy_rate": 60,
-        "checkins": 2
+        "checkins": 3
       },
       "forecast_24h": {
         "occupancy": 18,
@@ -128,26 +128,26 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 12,
+        "pm25": 11,
         "temperature": 24,
-        "noise": 63,
+        "noise": 58,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 8,
         "temperature": 18,
-        "noise": 58,
+        "noise": 55,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "environment",
-        "message": "오후 시간대 PM2.5 농도 상승 예상"
+        "model": "crowd",
+        "message": "점심시간 WiFi 이용자 집중으로 네트워크 부하 예상"
       }
     ],
-    "analysis": "현재 도고 스마트시티는 안정적인 운영 상태를 보이고 있습니다. 태양광 발전량이 우수하여 ESS 충전이 원활하며, 평일 낮 시간대 특성상 적정 수준의 교통량과 인구밀도를 유지하고 있습니다. 카라반 점유율 63%로 양호한 수준이며, 환경 지표도 대체로 양호한 상태입니다."
+    "analysis": "현재 도고 디지털 OASIS는 안정적인 운영 상태입니다. 태양광 발전이 활발하여 ESS 충전률이 양호하며, 평일 오후 교통량과 인구밀도가 적정 수준을 유지하고 있습니다. 카라반 점유율 57%로 양호한 수익성을 보이고 있으나, 주말 대비 추가 마케팅이 필요할 것으로 예상됩니다."
   },
   "center": {
     "lat": 36.763,
