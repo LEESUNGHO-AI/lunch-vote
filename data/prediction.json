@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-09T06:17:51",
+  "updated": "2026-05-09T06:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-06T06:19:13",
-    "to": "2026-05-09T06:09:13"
+    "from": "2026-05-06T06:49:13",
+    "to": "2026-05-09T06:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 16,
       "temperature": 3.9,
       "humidity": 97,
-      "noise": 43.7,
+      "noise": 47.4,
       "windSpeed": 0.1,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 7.8,
+      "waterPH": 7.2,
+      "waterDO": 8.1,
       "o3": 0.02,
       "no2": 0.007,
       "co": 0.3,
@@ -33,24 +33,24 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 287,
+      "ess_current": 274,
       "solar_output": 0,
-      "grid_import": 45,
-      "total_consumption": 45,
+      "grid_import": 49,
+      "total_consumption": 49,
       "re100_ratio": 0,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 19,
-      "speed": 42,
+      "volume": 15,
+      "speed": 46,
       "congestion": "원활",
-      "drt_passengers": 7
+      "drt_passengers": 4
     },
     "crowd": {
       "wifi_total": 11,
       "wifi_ap1": 3,
-      "wifi_ap2": 6,
-      "wifi_ap3": 2,
+      "wifi_ap2": 5,
+      "wifi_ap3": 3,
       "density_level": "여유",
       "estimated_people": 28
     },
@@ -66,17 +66,17 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 420,
-        "solar_kw": 85,
-        "consumption_kw": 48,
-        "re100_pct": 65,
+        "ess_kwh": 385,
+        "solar_kw": 95,
+        "consumption_kw": 52,
+        "re100_pct": 75,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 385,
-        "solar_kw": 120,
-        "consumption_kw": 46,
-        "re100_pct": 72,
+        "ess_kwh": 420,
+        "solar_kw": 145,
+        "consumption_kw": 47,
+        "re100_pct": 85,
         "trend": "충전"
       },
       "peak_time": "12:00",
@@ -85,12 +85,12 @@
     "traffic": {
       "forecast_6h": {
         "volume": 38,
-        "speed_kmh": 45,
-        "congestion": "보통"
+        "speed_kmh": 48,
+        "congestion": "원활"
       },
       "forecast_24h": {
-        "volume": 35,
-        "speed_kmh": 46,
+        "volume": 42,
+        "speed_kmh": 45,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -100,12 +100,12 @@
       "forecast_6h": {
         "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 84
+        "estimated_people": 85
       },
       "forecast_24h": {
-        "wifi_users": 32,
+        "wifi_users": 35,
         "density": "보통",
-        "estimated_people": 96
+        "estimated_people": 105
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -117,37 +117,37 @@
         "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 25,
-        "occupancy_rate": 83,
+        "occupancy": 26,
+        "occupancy_rate": 87,
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 87
+        "occupancy_rate": 90
       },
       "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 8.5,
-        "temperature": 12.5,
-        "noise": 48.2,
+        "pm25": 8,
+        "temperature": 12,
+        "noise": 52,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 11.8,
-        "temperature": 16.8,
-        "noise": 52.1,
+        "pm25": 15,
+        "temperature": 18,
+        "noise": 48,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "traffic",
-        "message": "오전 8시경 교통량 증가로 일시적 혼잡 예상"
+        "model": "crowd",
+        "message": "주말 오후 시간대 WiFi 사용자 급증으로 네트워크 부하 예상"
       }
     ],
-    "analysis": "주말 새벽 시간대로 전반적으로 안정적인 상황입니다. 태양광 발전 시작과 함께 ESS 충전이 원활하게 진행되고, 카라반 높은 점유율로 매출 증대가 기대됩니다."
+    "analysis": "주말 오전 시간대로 태양광 발전 증가와 함께 ESS 충전 상태가 개선될 예정입니다. 카라반 점유율이 높아 매출 상승이 예상되며, 오후 시간대 방문객 증가로 WiFi 사용량이 크게 늘어날 것으로 전망됩니다."
   },
   "center": {
     "lat": 36.763,
