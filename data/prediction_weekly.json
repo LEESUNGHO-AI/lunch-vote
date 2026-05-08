@@ -1,64 +1,64 @@
 {
-  "updated": "2026-05-08T03:01:32",
+  "updated": "2026-05-09T03:01:32",
   "model": "claude-sonnet-4-20250514",
   "period": "weekly",
   "range": {
-    "from": "2026-05-05T03:09:13",
-    "to": "2026-05-08T02:59:32",
+    "from": "2026-05-06T03:09:13",
+    "to": "2026-05-09T02:59:13",
     "points": 432
   },
-  "summary": "아산 스마트시티 야간시간대(18:49-02:59) 모니터링 결과, 전반적으로 안정적인 운영상태를 보이고 있습니다. 교통량과 WiFi 접속자는 야간시간에 따라 자연스럽게 감소하였으며, 카라반 이용률은 73-87%로 높은 수준을 유지했습니다. PM2.5 농도가 17→24로 소폭 상승했으나 양호한 수준이며, 매출과 메타버스 활동은 야간특성상 미미한 상태입니다. 전체적으로 스마트시티 인프라가 원활하게 작동하고 있어 긍정적인 평가가 가능합니다.",
+  "summary": "5월 8일 저녁부터 9일 새벽까지 야간 데이터 분석 결과, 기온이 17.3도에서 5도까지 급격히 하강하며 교통량과 WiFi 사용량이 시간대별로 자연스럽게 감소했습니다. PM2.5는 저녁시간 30μg/m³에서 새벽 9μg/m³로 개선되었고, 카라반 점유율은 73-93% 범위에서 안정적으로 유지되었습니다. 무인매장과 메타버스 플랫폼은 야간시간대 특성상 활동이 없었으나, 전반적인 인프라 운영은 정상적으로 작동하고 있습니다.",
   "forecast": {
     "traffic": {
-      "current": 10,
-      "forecast": 45,
-      "change_pct": 350,
+      "current": 8,
+      "forecast": 25,
+      "change_pct": 212.5,
       "confidence": 85
     },
     "crowd": {
-      "current": 3,
-      "forecast": 25,
-      "change_pct": 733,
+      "current": 5,
+      "forecast": 15,
+      "change_pct": 200,
       "confidence": 80
     },
     "caravan": {
-      "current": 83,
-      "forecast": 70,
-      "change_pct": -16,
+      "current": 93,
+      "forecast": 85,
+      "change_pct": -8.6,
       "confidence": 90
     },
     "power": {
       "current": 75,
-      "forecast": 85,
-      "change_pct": 13,
-      "confidence": 75
+      "forecast": 80,
+      "change_pct": 6.7,
+      "confidence": 85
     },
     "store": {
       "current": 0,
-      "forecast": 15,
-      "change_pct": 100,
-      "confidence": 60
+      "forecast": 3,
+      "change_pct": 300,
+      "confidence": 70
     },
     "metaverse": {
       "current": 0,
-      "forecast": 5,
+      "forecast": 1,
       "change_pct": 100,
-      "confidence": 50
+      "confidence": 60
     }
   },
   "kpi": {
-    "budget_execution": 78,
-    "project_progress": 82,
-    "regional_economy": 75,
+    "budget_execution": 72,
+    "project_progress": 78,
+    "regional_economy": 65,
     "digital_transformation": 80,
-    "citizen_satisfaction": 83,
-    "esg_re100": 85
+    "citizen_satisfaction": 75,
+    "esg_re100": 82
   },
   "insights": {
-    "positive": "카라반 이용률이 지속적으로 70% 이상 유지되어 숙박인프라 활용도가 높으며, 야간시간대에도 안정적인 데이터 수집이 이루어지고 있습니다.",
-    "warning": "PM2.5 농도가 야간에 상승하는 경향을 보이고 있어 대기질 관리 강화가 필요하며, WiFi 접속 불안정 현상이 일부 확인됩니다.",
-    "strategy": "주간시간대 교통량과 인구밀도 급증에 대비한 인프라 용량 확대와 무인매장 운영시간 최적화를 통한 매출 증대 방안을 검토해야 합니다.",
-    "key_metric": "카라반 이용률 83%와 교통량 야간 최저치 1대는 스마트시티 24시간 운영 패턴의 핵심 지표로 활용 가능합니다."
+    "positive": "야간시간대에도 IoT 센서들이 안정적으로 데이터를 수집하고 있으며, 카라반 시설의 높은 점유율(93%)은 도고 지역 활성화에 기여하고 있습니다.",
+    "warning": "무인매장과 메타버스 플랫폼의 야간 활용도가 제로 상태이므로, 24시간 서비스 활성화 방안이 필요합니다.",
+    "strategy": "야간 저온 환경에서도 안정적인 시스템 운영이 확인된 만큼, 새벽시간대 특화 콘텐츠 개발과 자동화 서비스 확대를 추진해야 합니다.",
+    "key_metric": "카라반 점유율 93%와 양호한 대기질(PM2.5 9μg/m³)은 도고 OASIS SPOT의 성공적인 운영을 보여주는 핵심지표입니다."
   },
   "units": [
     {
@@ -82,19 +82,19 @@
     {
       "id": "#4",
       "name": "공공WiFi 3기",
-      "progress": 85,
-      "status": "진행"
-    },
-    {
-      "id": "#5",
-      "name": "ESS·RE100 태양광",
       "progress": 92,
       "status": "완료"
     },
     {
+      "id": "#5",
+      "name": "ESS·RE100 태양광",
+      "progress": 80,
+      "status": "진행"
+    },
+    {
       "id": "#6",
       "name": "지능형 CCTV",
-      "progress": 80,
+      "progress": 85,
       "status": "진행"
     },
     {
@@ -106,43 +106,43 @@
     {
       "id": "#8",
       "name": "OASIS SPOT 30동",
-      "progress": 85,
+      "progress": 90,
       "status": "진행"
     },
     {
       "id": "#9",
       "name": "무인매장 2개소",
-      "progress": 78,
+      "progress": 85,
       "status": "진행"
     },
     {
       "id": "#10",
       "name": "이노베이션 스퀘어",
-      "progress": 82,
+      "progress": 65,
       "status": "진행"
     },
     {
       "id": "#11",
       "name": "순찰 로봇",
-      "progress": 65,
+      "progress": 60,
       "status": "진행"
     },
     {
       "id": "#12",
       "name": "디지털 노마드 NOP",
-      "progress": 73,
+      "progress": 55,
       "status": "진행"
     },
     {
       "id": "#13",
       "name": "AI 융복합 서비스",
-      "progress": 77,
+      "progress": 78,
       "status": "진행"
     },
     {
       "id": "#14",
       "name": "디지털링크 플랫폼",
-      "progress": 90,
+      "progress": 82,
       "status": "진행"
     }
   ],
@@ -157,22 +157,22 @@
       "일"
     ],
     "traffic": [
-      7,
-      4,
-      1,
-      9,
-      0,
+      10,
       6,
-      10
+      10,
+      6,
+      11,
+      6,
+      8
     ],
     "crowd": [
       2,
-      1,
-      1,
+      2,
       0,
       1,
-      1,
-      -1
+      0,
+      0,
+      0
     ],
     "store": [
       0,
