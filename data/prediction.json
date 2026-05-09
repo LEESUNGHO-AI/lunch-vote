@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-09T13:17:51",
+  "updated": "2026-05-09T13:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-06T13:19:13",
-    "to": "2026-05-09T13:09:13"
+    "from": "2026-05-06T13:49:13",
+    "to": "2026-05-09T13:39:12"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 19,
       "temperature": 20.6,
       "humidity": 26,
-      "noise": 59.7,
+      "noise": 58.9,
       "windSpeed": 1.4,
       "rainfall": 0,
       "waterPH": 7,
-      "waterDO": 8.3,
+      "waterDO": 8.6,
       "o3": 0.063,
       "no2": 0.005,
       "co": 0.3,
@@ -33,51 +33,51 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 380,
-      "solar_output": 199,
+      "ess_current": 369,
+      "solar_output": 200,
       "grid_import": 0,
-      "total_consumption": 62,
+      "total_consumption": 59,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 60,
-      "speed": 30,
+      "volume": 65,
+      "speed": 29,
       "congestion": "혼잡",
-      "drt_passengers": 4
+      "drt_passengers": 8
     },
     "crowd": {
-      "wifi_total": 72,
-      "wifi_ap1": 25,
-      "wifi_ap2": 28,
-      "wifi_ap3": 19,
+      "wifi_total": 64,
+      "wifi_ap1": 23,
+      "wifi_ap2": 25,
+      "wifi_ap3": 16,
       "density_level": "과밀",
-      "estimated_people": 180
+      "estimated_people": 160
     },
     "caravan": {
       "total": 30,
-      "occupied": 25,
+      "occupied": 27,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 83,
-      "revenue_today": 3750000
+      "occupancy_rate": 90,
+      "revenue_today": 4050000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 420,
-        "solar_kw": 185,
-        "consumption_kw": 48,
+        "ess_kwh": 425,
+        "solar_kw": 180,
+        "consumption_kw": 45,
         "re100_pct": 100,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 385,
-        "solar_kw": 95,
-        "consumption_kw": 45,
-        "re100_pct": 98,
-        "trend": "유지"
+        "ess_kwh": 380,
+        "solar_kw": 0,
+        "consumption_kw": 42,
+        "re100_pct": 95,
+        "trend": "방전"
       },
       "peak_time": "11:00",
       "risk": "없음"
@@ -89,23 +89,23 @@
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 38,
-        "speed_kmh": 32,
-        "congestion": "보통"
+        "volume": 18,
+        "speed_kmh": 45,
+        "congestion": "원활"
       },
       "peak_time": "12:00",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 38,
+        "wifi_users": 32,
         "density": "보통",
-        "estimated_people": 152
+        "estimated_people": 96
       },
       "forecast_24h": {
-        "wifi_users": 28,
-        "density": "보통",
-        "estimated_people": 112
+        "wifi_users": 8,
+        "density": "여유",
+        "estimated_people": 24
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -128,15 +128,15 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 5,
-        "temperature": 22.3,
-        "noise": 52.5,
+        "pm25": 6,
+        "temperature": 22,
+        "noise": 52,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 8,
-        "temperature": 18.7,
-        "noise": 48.2,
+        "pm25": 9,
+        "temperature": 18,
+        "noise": 48,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "crowd",
-        "message": "현재 WiFi 접속자 과밀 상태로 네트워크 성능 저하 우려"
+        "message": "현재 WiFi 접속자 64명으로 과밀 상태, 6시간 후 완화 예상"
       }
     ],
-    "analysis": "주말 오후 시간대로 현재 교통 혼잡과 WiFi 과밀 상태가 지속되고 있으나 6시간 후에는 점진적으로 완화될 전망입니다. ESS는 충분한 용량을 유지하며 태양광 발전으로 안정적인 에너지 공급이 가능하고, 카라반 점유율도 양호한 수준을 보이고 있습니다."
+    "analysis": "주말 오후 시간대로 관광객 유입이 많아 군집밀도가 높은 상황입니다. 태양광 발전으로 ESS 충전이 원활하며, 저녁 시간대부터 교통량과 인파가 점진적으로 감소할 것으로 예상됩니다."
   },
   "center": {
     "lat": 36.763,
