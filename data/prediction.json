@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-10T08:17:51",
+  "updated": "2026-05-10T08:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 433,
   "dataRange": {
-    "from": "2026-05-07T08:09:13",
-    "to": "2026-05-10T08:09:12"
+    "from": "2026-05-07T08:39:13",
+    "to": "2026-05-10T08:39:12"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 20,
       "temperature": 11,
       "humidity": 81,
-      "noise": 62.9,
+      "noise": 60.6,
       "windSpeed": 0.4,
       "rainfall": 0,
       "waterPH": 7.2,
-      "waterDO": 8.2,
+      "waterDO": 8.5,
       "o3": 0.031,
       "no2": 0.006,
       "co": 0.3,
@@ -33,26 +33,26 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 325,
-      "solar_output": 108,
+      "ess_current": 346,
+      "solar_output": 122,
       "grid_import": 0,
       "total_consumption": 58,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 35,
-      "speed": 37,
+      "volume": 42,
+      "speed": 36,
       "congestion": "보통",
-      "drt_passengers": 6
+      "drt_passengers": 8
     },
     "crowd": {
-      "wifi_total": 29,
-      "wifi_ap1": 10,
+      "wifi_total": 27,
+      "wifi_ap1": 9,
       "wifi_ap2": 11,
-      "wifi_ap3": 8,
+      "wifi_ap3": 7,
       "density_level": "보통",
-      "estimated_people": 73
+      "estimated_people": 68
     },
     "caravan": {
       "total": 30,
@@ -66,16 +66,16 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 420,
+        "ess_kwh": 425,
         "solar_kw": 145,
-        "consumption_kw": 61,
+        "consumption_kw": 65,
         "re100_pct": 100,
         "trend": "충전"
       },
       "forecast_24h": {
         "ess_kwh": 380,
-        "solar_kw": 85,
-        "consumption_kw": 54,
+        "solar_kw": 95,
+        "consumption_kw": 58,
         "re100_pct": 98,
         "trend": "방전"
       },
@@ -85,30 +85,30 @@
     "traffic": {
       "forecast_6h": {
         "volume": 48,
-        "speed_kmh": 35,
+        "speed_kmh": 34,
         "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 42,
-        "speed_kmh": 36,
+        "volume": 52,
+        "speed_kmh": 32,
         "congestion": "보통"
       },
-      "peak_time": "12:00",
+      "peak_time": "12:30",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
         "wifi_users": 52,
         "density": "보통",
-        "estimated_people": 78
+        "estimated_people": 165
       },
       "forecast_24h": {
-        "wifi_users": 38,
+        "wifi_users": 48,
         "density": "보통",
-        "estimated_people": 57
+        "estimated_people": 152
       },
-      "peak_time": "12:00",
-      "hotspot": "AP1"
+      "peak_time": "12:15",
+      "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
@@ -117,26 +117,26 @@
         "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 26,
-        "occupancy_rate": 87,
+        "occupancy": 25,
+        "occupancy_rate": 83,
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 89
+        "occupancy_rate": 85
       },
       "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 8,
-        "temperature": 16,
+        "temperature": 18,
         "noise": 65,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 9,
-        "temperature": 14,
-        "noise": 63,
+        "temperature": 16,
+        "noise": 62,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "crowd",
-        "message": "오후 시간대 WiFi 사용자 집중으로 네트워크 부하 예상"
+        "message": "점심시간대 WiFi 사용자 급증으로 네트워크 부하 예상"
       }
     ],
-    "analysis": "주말 오전 시간대로 관광객 유입이 점진적으로 증가하고 있으며, 태양광 발전량 증가로 에너지 자립도가 높은 상태입니다. 카라반 높은 점유율과 함께 오후 시간대 교통량과 인파 집중이 예상되어 적절한 대응이 필요합니다."
+    "analysis": "주말 아침 시간대로 현재 전력 자립률 100% 유지 중이며 ESS 충전량도 양호합니다. 점심시간을 중심으로 관광객 유입이 증가하여 교통량과 군집밀도가 높아질 것으로 예측되며, 카라반 점유율은 안정적인 수준을 유지할 전망입니다."
   },
   "center": {
     "lat": 36.763,
