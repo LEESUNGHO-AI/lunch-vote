@@ -1,48 +1,48 @@
 {
-  "updated": "2026-05-10T03:01:32",
+  "updated": "2026-05-11T03:01:32",
   "model": "claude-sonnet-4-20250514",
   "period": "weekly",
   "range": {
-    "from": "2026-05-07T03:09:13",
-    "to": "2026-05-10T02:59:13",
-    "points": 432
+    "from": "2026-05-08T02:59:32",
+    "to": "2026-05-11T02:59:13",
+    "points": 433
   },
-  "summary": "아산시 스마트시티 사업이 안정적으로 운영되고 있으며, 야간시간대 기온 하강(19.6→6.1°C)에도 불구하고 교통량과 WiFi 이용률이 시간대별로 적절히 감소하는 패턴을 보이고 있습니다. 카라반 시설 가동률은 80-93%로 양호하나, 매출과 메타버스 활용도가 0으로 개선이 필요한 상황입니다. 미세먼지 수치는 8-15㎍/㎥로 양호한 수준을 유지하고 있어 환경 측면에서 긍정적입니다.",
+  "summary": "5월 10일 저녁부터 11일 새벽까지 모니터링 결과, 기온이 21.7도에서 8도까지 급격히 하강하며 야간시간대 진입을 보여줍니다. 교통량은 저녁 시간대 63에서 새벽 1로 감소하고, WiFi 이용자도 60에서 2로 급감했으나 카라반 운영률은 80-93%로 안정적입니다. PM2.5 농도가 야간 12까지 상승하여 공기질 관리가 필요한 상황입니다. 무인매장과 메타버스 플랫폼의 매출이 0으로 집계되어 운영 최적화 방안 검토가 시급합니다.",
   "forecast": {
     "traffic": {
-      "current": 20,
+      "current": 1,
       "forecast": 45,
-      "change_pct": 125,
+      "change_pct": 4400,
       "confidence": 85
     },
     "crowd": {
-      "current": 6,
+      "current": 2,
       "forecast": 35,
-      "change_pct": 483,
+      "change_pct": 1650,
       "confidence": 80
     },
     "caravan": {
-      "current": 87,
+      "current": 53,
       "forecast": 85,
-      "change_pct": -2,
+      "change_pct": 60,
       "confidence": 90
     },
     "power": {
       "current": 75,
-      "forecast": 80,
-      "change_pct": 7,
-      "confidence": 75
+      "forecast": 82,
+      "change_pct": 9,
+      "confidence": 85
     },
     "store": {
       "current": 0,
       "forecast": 15,
-      "change_pct": 0,
+      "change_pct": 1500,
       "confidence": 60
     },
     "metaverse": {
       "current": 0,
-      "forecast": 5,
-      "change_pct": 0,
+      "forecast": 8,
+      "change_pct": 800,
       "confidence": 55
     }
   },
@@ -50,22 +50,22 @@
     "budget_execution": 78,
     "project_progress": 82,
     "regional_economy": 65,
-    "digital_transformation": 73,
-    "citizen_satisfaction": 76,
-    "esg_re100": 84
+    "digital_transformation": 70,
+    "citizen_satisfaction": 75,
+    "esg_re100": 88
   },
   "insights": {
-    "positive": "카라반 시설의 안정적인 가동률(80-93%)과 양호한 대기질 유지로 기반시설 운영이 원활합니다.",
-    "warning": "무인매장과 메타버스 플랫폼의 활용도가 전무한 상태로 디지털 서비스 활성화 방안이 시급합니다.",
-    "strategy": "주간 시간대 무인매장 프로모션과 메타버스 콘텐츠 개발을 통해 시민 참여도를 높이는 것이 필요합니다.",
-    "key_metric": "WiFi 이용률이 교통량과 연동되어 감소하는 패턴으로 시민 활동 예측 지표로 활용 가능합니다."
+    "positive": "카라반 운영률이 지속적으로 50-93% 범위에서 안정적으로 유지되고 있으며, PM2.5가 새벽시간 일시적 상승을 제외하고는 대부분 양호한 수준을 보입니다.",
+    "warning": "무인매장과 메타버스 플랫폼의 매출이 지속적으로 0으로 집계되어 서비스 활성화 대책이 시급하며, 야간 WiFi 이용률 급감에 따른 네트워크 최적화가 필요합니다.",
+    "strategy": "시간대별 맞춤형 서비스 운영으로 야간시간대에도 일정 수준의 디지털 서비스 이용을 유도하고, 무인매장 운영 시간 조정 및 메타버스 콘텐츠 개선을 통한 매출 증대 방안을 마련해야 합니다.",
+    "key_metric": "카라반 운영률(53-93%)과 PM2.5 농도 변화(3-12㎍/㎥)가 핵심 모니터링 지표로, 특히 야간 공기질 관리와 카라반 최적 운영률 유지가 중요합니다."
   },
   "units": [
     {
       "id": "#1",
       "name": "스마트가로등 15기",
       "progress": 95,
-      "status": "진행"
+      "status": "완료"
     },
     {
       "id": "#2",
@@ -83,7 +83,7 @@
       "id": "#4",
       "name": "공공WiFi 3기",
       "progress": 92,
-      "status": "진행"
+      "status": "완료"
     },
     {
       "id": "#5",
@@ -106,19 +106,19 @@
     {
       "id": "#8",
       "name": "OASIS SPOT 30동",
-      "progress": 87,
-      "status": "진행"
+      "progress": 95,
+      "status": "완료"
     },
     {
       "id": "#9",
       "name": "무인매장 2개소",
-      "progress": 70,
+      "progress": 85,
       "status": "진행"
     },
     {
       "id": "#10",
       "name": "이노베이션 스퀘어",
-      "progress": 83,
+      "progress": 78,
       "status": "진행"
     },
     {
@@ -130,19 +130,19 @@
     {
       "id": "#12",
       "name": "디지털 노마드 NOP",
-      "progress": 72,
+      "progress": 70,
       "status": "진행"
     },
     {
       "id": "#13",
       "name": "AI 융복합 서비스",
-      "progress": 78,
+      "progress": 82,
       "status": "진행"
     },
     {
       "id": "#14",
       "name": "디지털링크 플랫폼",
-      "progress": 68,
+      "progress": 88,
       "status": "진행"
     }
   ],
@@ -157,22 +157,22 @@
       "일"
     ],
     "traffic": [
-      8,
-      5,
+      11,
+      10,
+      2,
+      9,
+      9,
       6,
-      9,
-      9,
-      7,
-      9
+      1
     ],
     "crowd": [
-      0,
-      0,
-      2,
       1,
+      0,
       2,
       0,
-      0
+      2,
+      2,
+      1
     ],
     "store": [
       0,
