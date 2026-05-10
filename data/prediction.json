@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-11T01:17:51",
+  "updated": "2026-05-11T01:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-08T01:19:13",
-    "to": "2026-05-11T01:09:14"
+    "from": "2026-05-08T01:49:13",
+    "to": "2026-05-11T01:39:14"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 17,
       "temperature": 9.9,
       "humidity": 89,
-      "noise": 29.1,
+      "noise": 26.3,
       "windSpeed": 0.5,
       "rainfall": 0,
       "waterPH": 7.2,
-      "waterDO": 8.5,
+      "waterDO": 8.2,
       "o3": 0.032,
       "no2": 0.007,
       "co": 0.3,
@@ -33,7 +33,7 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 291,
+      "ess_current": 278,
       "solar_output": 0,
       "grid_import": 31,
       "total_consumption": 31,
@@ -41,56 +41,56 @@
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 5,
-      "speed": 46,
+      "volume": 12,
+      "speed": 48,
       "congestion": "원활",
-      "drt_passengers": 9
+      "drt_passengers": 6
     },
     "crowd": {
-      "wifi_total": 0,
-      "wifi_ap1": 0,
-      "wifi_ap2": 1,
+      "wifi_total": 4,
+      "wifi_ap1": 2,
+      "wifi_ap2": 3,
       "wifi_ap3": 0,
       "density_level": "여유",
-      "estimated_people": 0
+      "estimated_people": 10
     },
     "caravan": {
       "total": 30,
-      "occupied": 20,
+      "occupied": 17,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 67,
-      "revenue_today": 2400000
+      "occupancy_rate": 57,
+      "revenue_today": 2040000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 180,
+        "ess_kwh": 195,
         "solar_kw": 45,
         "consumption_kw": 48,
-        "re100_pct": 75,
+        "re100_pct": 94,
         "trend": "방전"
       },
       "forecast_24h": {
         "ess_kwh": 320,
-        "solar_kw": 85,
+        "solar_kw": 120,
         "consumption_kw": 55,
-        "re100_pct": 68,
+        "re100_pct": 78,
         "trend": "충전"
       },
       "peak_time": "12:00",
-      "risk": "주의"
+      "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 15,
-        "speed_kmh": 48,
+        "volume": 35,
+        "speed_kmh": 46,
         "congestion": "원활"
       },
       "forecast_24h": {
         "volume": 42,
-        "speed_kmh": 38,
+        "speed_kmh": 44,
         "congestion": "보통"
       },
       "peak_time": "12:00",
@@ -98,22 +98,22 @@
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 18,
-        "density": "여유",
-        "estimated_people": 25
+        "wifi_users": 28,
+        "density": "보통",
+        "estimated_people": 42
       },
       "forecast_24h": {
         "wifi_users": 45,
         "density": "보통",
-        "estimated_people": 63
+        "estimated_people": 68
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
-        "occupancy": 26,
-        "occupancy_rate": 87,
+        "occupancy": 25,
+        "occupancy_rate": 83,
         "checkins": 3
       },
       "forecast_24h": {
@@ -128,15 +128,15 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 8,
-        "temperature": 14.5,
-        "noise": 35.2,
+        "pm25": 9,
+        "temperature": 15.2,
+        "noise": 32.5,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 10,
-        "temperature": 18.3,
-        "noise": 42.8,
+        "pm25": 11,
+        "temperature": 18.8,
+        "noise": 38.7,
         "water_ph": 7.1
       }
     },
@@ -144,10 +144,10 @@
       {
         "level": "warning",
         "model": "power",
-        "message": "오전 시간대 전력 소비 증가로 ESS 방전 예상, 태양광 발전량 모니터링 필요"
+        "message": "오전 시간대 전력 소비 증가로 ESS 방전량 급증 예상"
       }
     ],
-    "analysis": "현재 새벽 시간대로 전력 소비와 교통량이 낮은 수준을 유지하고 있습니다. 오전 6시 이후부터 모든 지표가 상승하여 정오경 피크를 기록할 것으로 예측되며, 카라반 이용률이 높아 양호한 수익성을 보이고 있습니다."
+    "analysis": "현재 새벽 시간대로 전력 소비와 교통량이 최저 수준을 유지하고 있습니다. 오전 7시부터 점진적으로 모든 지표가 상승하여 정오경 피크를 기록할 것으로 예측됩니다."
   },
   "center": {
     "lat": 36.763,
