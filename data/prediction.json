@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-14T23:17:51",
+  "updated": "2026-05-14T23:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-11T23:19:13",
-    "to": "2026-05-14T23:09:16"
+    "from": "2026-05-11T23:49:13",
+    "to": "2026-05-14T23:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 65,
       "temperature": 19.6,
       "humidity": 63,
-      "noise": 35.2,
+      "noise": 35.3,
       "windSpeed": 1.8,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 7.8,
+      "waterPH": 7.2,
+      "waterDO": 8.4,
       "o3": 0.056,
       "no2": 0.009,
       "co": 0.5,
@@ -33,54 +33,54 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 287,
+      "ess_current": 278,
       "solar_output": 0,
-      "grid_import": 33,
-      "total_consumption": 33,
+      "grid_import": 34,
+      "total_consumption": 34,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 10,
+      "volume": 12,
       "speed": 48,
       "congestion": "원활",
       "drt_passengers": 5
     },
     "crowd": {
       "wifi_total": 8,
-      "wifi_ap1": 1,
-      "wifi_ap2": 2,
-      "wifi_ap3": 5,
+      "wifi_ap1": 2,
+      "wifi_ap2": 4,
+      "wifi_ap3": 2,
       "density_level": "여유",
       "estimated_people": 20
     },
     "caravan": {
       "total": 30,
-      "occupied": 21,
+      "occupied": 20,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 70,
-      "revenue_today": 2520000
+      "occupancy_rate": 67,
+      "revenue_today": 2400000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
         "ess_kwh": 195,
-        "solar_kw": 45,
+        "solar_kw": 145,
         "consumption_kw": 42,
         "re100_pct": 85,
-        "trend": "방전"
+        "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 320,
-        "solar_kw": 120,
+        "ess_kwh": 380,
+        "solar_kw": 160,
         "consumption_kw": 48,
         "re100_pct": 75,
         "trend": "충전"
       },
-      "peak_time": "10:30",
-      "risk": "주의"
+      "peak_time": "12:00",
+      "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
@@ -93,7 +93,7 @@
         "speed_kmh": 45,
         "congestion": "보통"
       },
-      "peak_time": "08:15",
+      "peak_time": "08:00",
       "drt_demand": "보통"
     },
     "crowd": {
@@ -107,18 +107,18 @@
         "density": "보통",
         "estimated_people": 80
       },
-      "peak_time": "12:30",
-      "hotspot": "AP3"
+      "peak_time": "12:00",
+      "hotspot": "AP2"
     },
     "caravan": {
       "forecast_6h": {
-        "occupancy": 19,
-        "occupancy_rate": 63,
+        "occupancy": 20,
+        "occupancy_rate": 67,
         "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 22,
-        "occupancy_rate": 73,
+        "occupancy": 21,
+        "occupancy_rate": 70,
         "checkins": 8
       },
       "weekend_prediction": {
@@ -128,31 +128,26 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 35,
-        "temperature": 16.2,
-        "noise": 42.5,
+        "pm25": 28,
+        "temperature": 22,
+        "noise": 42,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 28,
-        "temperature": 22.8,
-        "noise": 38.7,
+        "pm25": 35,
+        "temperature": 25,
+        "noise": 45,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "power",
-        "message": "ESS 잔량이 6시간 후 39% 수준으로 하락 예상, 충전 필요"
-      },
-      {
-        "level": "warning",
         "model": "environment",
-        "message": "PM2.5 농도가 현재 나쁨 수준(48㎍/㎥)으로 측정됨"
+        "message": "현재 PM2.5 농도가 48㎍/㎥로 나쁨 수준, 야외활동 자제 권고"
       }
     ],
-    "analysis": "현재 야간 시간대로 전력 소비와 교통량이 안정적인 상태입니다. 내일 오전 출근시간대에 교통량과 WiFi 이용자 급증이 예상되며, ESS 전력 관리와 PM2.5 농도 개선이 필요합니다."
+    "analysis": "현재 야간 시간대로 전반적으로 안정적인 상태를 보이고 있으며, 태양광 발전이 시작되는 오전부터 ESS 충전과 함께 RE100 달성률이 크게 향상될 예정입니다. 다만 현재 PM2.5 농도가 나쁨 수준으로 측정되어 환경 모니터링이 필요한 상황입니다."
   },
   "center": {
     "lat": 36.763,
