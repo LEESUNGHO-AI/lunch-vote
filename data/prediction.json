@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-14T20:17:51",
+  "updated": "2026-05-14T20:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 432,
+  "dataPoints": 433,
   "dataRange": {
-    "from": "2026-05-11T20:19:13",
-    "to": "2026-05-14T20:09:13"
+    "from": "2026-05-11T20:39:15",
+    "to": "2026-05-14T20:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 74,
       "temperature": 19.4,
       "humidity": 73,
-      "noise": 44.6,
+      "noise": 45.8,
       "windSpeed": 0.7,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 8.4,
+      "waterPH": 7.2,
+      "waterDO": 8.7,
       "o3": 0.106,
       "no2": 0.01,
       "co": 0.6,
@@ -33,50 +33,50 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 292,
+      "ess_current": 268,
       "solar_output": 0,
-      "grid_import": 45,
-      "total_consumption": 45,
+      "grid_import": 43,
+      "total_consumption": 43,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 38,
-      "speed": 40,
+      "volume": 40,
+      "speed": 36,
       "congestion": "보통",
-      "drt_passengers": 7
+      "drt_passengers": 5
     },
     "crowd": {
-      "wifi_total": 28,
-      "wifi_ap1": 10,
-      "wifi_ap2": 11,
-      "wifi_ap3": 7,
+      "wifi_total": 24,
+      "wifi_ap1": 9,
+      "wifi_ap2": 9,
+      "wifi_ap3": 6,
       "density_level": "보통",
-      "estimated_people": 70
+      "estimated_people": 60
     },
     "caravan": {
       "total": 30,
-      "occupied": 19,
+      "occupied": 18,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 63,
-      "revenue_today": 2280000
+      "occupancy_rate": 60,
+      "revenue_today": 2160000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 210,
+        "ess_kwh": 185,
         "solar_kw": 0,
-        "consumption_kw": 38.2,
+        "consumption_kw": 36,
         "re100_pct": 0,
         "trend": "방전"
       },
       "forecast_24h": {
-        "ess_kwh": 385,
-        "solar_kw": 145,
-        "consumption_kw": 42.1,
-        "re100_pct": 78,
+        "ess_kwh": 320,
+        "solar_kw": 95,
+        "consumption_kw": 45,
+        "re100_pct": 68,
         "trend": "충전"
       },
       "peak_time": "11:00",
@@ -84,13 +84,13 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 15,
-        "speed_kmh": 45,
+        "volume": 18,
+        "speed_kmh": 42,
         "congestion": "원활"
       },
       "forecast_24h": {
         "volume": 35,
-        "speed_kmh": 42,
+        "speed_kmh": 38,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -100,15 +100,15 @@
       "forecast_6h": {
         "wifi_users": 8,
         "density": "여유",
-        "estimated_people": 24
+        "estimated_people": 16
       },
       "forecast_24h": {
         "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 84
+        "estimated_people": 56
       },
       "peak_time": "12:00",
-      "hotspot": "AP2"
+      "hotspot": "AP1"
     },
     "caravan": {
       "forecast_6h": {
@@ -130,24 +130,24 @@
       "forecast_6h": {
         "pm25": 28,
         "temperature": 16.2,
-        "noise": 42.1,
-        "water_ph": 7.2
+        "noise": 42.5,
+        "water_ph": 7.1
       },
       "forecast_24h": {
-        "pm25": 32,
-        "temperature": 21.8,
-        "noise": 45.3,
-        "water_ph": 7.1
+        "pm25": 35,
+        "temperature": 22.8,
+        "noise": 48.2,
+        "water_ph": 7
       }
     },
     "alerts": [
       {
         "level": "warning",
         "model": "power",
-        "message": "야간시간 ESS 방전으로 6시간 후 잔량 42% 예상, 충전 모니터링 필요"
+        "message": "ESS 저장량이 야간시간 지속 방전으로 37% 수준까지 감소 예상"
       }
     ],
-    "analysis": "현재 평일 야간시간대로 전력소비와 교통량이 감소하고 있으며, ESS는 방전 중입니다. 내일 오전 태양광 발전 시작과 함께 RE100 달성이 예상되며, 카라반 점유율은 안정적인 60%대를 유지할 전망입니다."
+    "analysis": "현재 야간시간대로 교통량과 인구밀도가 낮은 상태이며, ESS가 지속적으로 방전되고 있어 주의가 필요합니다. 내일 오전 태양광 발전 시작과 함께 에너지 자립도가 크게 개선될 것으로 예상됩니다."
   },
   "center": {
     "lat": 36.763,
