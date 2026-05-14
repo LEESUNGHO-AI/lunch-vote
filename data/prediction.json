@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-15T04:17:51",
+  "updated": "2026-05-15T04:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-12T04:19:12",
-    "to": "2026-05-15T04:09:13"
+    "from": "2026-05-12T04:49:13",
+    "to": "2026-05-15T04:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 34,
       "temperature": 13,
       "humidity": 92,
-      "noise": 32.1,
+      "noise": 32.3,
       "windSpeed": 0.5,
       "rainfall": 0,
-      "waterPH": 7.2,
-      "waterDO": 7.8,
+      "waterPH": 7,
+      "waterDO": 8.3,
       "o3": 0.025,
       "no2": 0.007,
       "co": 0.4,
@@ -33,64 +33,64 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 289,
+      "ess_current": 281,
       "solar_output": 0,
-      "grid_import": 31,
-      "total_consumption": 31,
+      "grid_import": 30,
+      "total_consumption": 30,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 7,
-      "speed": 49,
+      "volume": 0,
+      "speed": 48,
       "congestion": "원활",
-      "drt_passengers": 3
+      "drt_passengers": 7
     },
     "crowd": {
-      "wifi_total": 1,
-      "wifi_ap1": -1,
-      "wifi_ap2": 1,
-      "wifi_ap3": 1,
+      "wifi_total": 2,
+      "wifi_ap1": 0,
+      "wifi_ap2": 2,
+      "wifi_ap3": 0,
       "density_level": "여유",
-      "estimated_people": 3
+      "estimated_people": 5
     },
     "caravan": {
       "total": 30,
-      "occupied": 24,
+      "occupied": 23,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 80,
-      "revenue_today": 2880000
+      "occupancy_rate": 77,
+      "revenue_today": 2760000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 420,
-        "solar_kw": 85,
-        "consumption_kw": 42,
-        "re100_pct": 65,
+        "ess_kwh": 320,
+        "solar_kw": 45,
+        "consumption_kw": 38,
+        "re100_pct": 25,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 385,
+        "ess_kwh": 380,
         "solar_kw": 120,
-        "consumption_kw": 46,
-        "re100_pct": 78,
-        "trend": "유지"
+        "consumption_kw": 47,
+        "re100_pct": 65,
+        "trend": "충전"
       },
-      "peak_time": "11:00",
+      "peak_time": "12:00",
       "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 28,
-        "speed_kmh": 52,
+        "volume": 22,
+        "speed_kmh": 46,
         "congestion": "원활"
       },
       "forecast_24h": {
-        "volume": 35,
-        "speed_kmh": 48,
+        "volume": 38,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -100,12 +100,12 @@
       "forecast_6h": {
         "wifi_users": 18,
         "density": "보통",
-        "estimated_people": 36
+        "estimated_people": 54
       },
       "forecast_24h": {
-        "wifi_users": 28,
+        "wifi_users": 32,
         "density": "보통",
-        "estimated_people": 56
+        "estimated_people": 96
       },
       "peak_time": "12:00",
       "hotspot": "AP2"
@@ -117,19 +117,19 @@
         "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 20,
-        "occupancy_rate": 67,
+        "occupancy": 21,
+        "occupancy_rate": 70,
         "checkins": 8
       },
       "weekend_prediction": {
         "occupancy_rate": 85
       },
-      "revenue_trend": "유지"
+      "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 28,
-        "temperature": 16,
+        "temperature": 18,
         "noise": 38,
         "water_ph": 7.2
       },
@@ -143,11 +143,11 @@
     "alerts": [
       {
         "level": "warning",
-        "model": "crowd",
-        "message": "오전 시간대 WiFi 사용자 급증 예상으로 네트워크 부하 주의 필요"
+        "model": "environment",
+        "message": "오후 시간대 미세먼지 농도 상승 예상"
       }
     ],
-    "analysis": "현재 새벽 시간대로 전력 소비와 교통량이 최저 수준이며, ESS 저장량도 중간 수준입니다. 오전 출근 시간대부터 전력 수요와 교통량이 급증할 예정이며, 특히 8-12시 구간에서 피크를 형성할 것으로 예측됩니다."
+    "analysis": "현재 새벽 시간대로 모든 지표가 안정적인 상태를 보이고 있습니다. 오전 출근시간대부터 교통량과 인구 밀집도가 증가하여 오후 12시경 피크를 형성할 것으로 예측되며, 태양광 발전량 증가로 전력 자립도가 크게 개선될 전망입니다."
   },
   "center": {
     "lat": 36.763,
