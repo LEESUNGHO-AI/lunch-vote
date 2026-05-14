@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-14T16:17:51",
+  "updated": "2026-05-14T16:47:52",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-11T16:19:13",
-    "to": "2026-05-14T16:09:52"
+    "from": "2026-05-11T16:49:13",
+    "to": "2026-05-14T16:39:15"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 28,
       "temperature": 29.4,
       "humidity": 31,
-      "noise": 68.1,
+      "noise": 63.4,
       "windSpeed": 2.5,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 8.6,
+      "waterPH": 7.2,
+      "waterDO": 8.5,
       "o3": 0.069,
       "no2": 0.007,
       "co": 0.3,
@@ -33,18 +33,18 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 331,
+      "ess_current": 326,
       "solar_output": 113,
       "grid_import": 0,
-      "total_consumption": 44,
+      "total_consumption": 41,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 48,
-      "speed": 35,
+      "volume": 42,
+      "speed": 38,
       "congestion": "보통",
-      "drt_passengers": 5
+      "drt_passengers": 10
     },
     "crowd": {
       "wifi_total": 30,
@@ -67,34 +67,34 @@
     "power": {
       "forecast_6h": {
         "ess_kwh": 285,
-        "solar_kw": 45,
+        "solar_kw": 8,
         "consumption_kw": 48,
-        "re100_pct": 92,
+        "re100_pct": 85,
         "trend": "방전"
       },
       "forecast_24h": {
         "ess_kwh": 420,
-        "solar_kw": 0,
+        "solar_kw": 145,
         "consumption_kw": 35,
-        "re100_pct": 100,
+        "re100_pct": 95,
         "trend": "충전"
       },
       "peak_time": "18:00",
-      "risk": "없음"
+      "risk": "주의"
     },
     "traffic": {
       "forecast_6h": {
         "volume": 52,
-        "speed_kmh": 32,
-        "congestion": "보통"
+        "speed_kmh": 35,
+        "congestion": "혼잡"
       },
       "forecast_24h": {
-        "volume": 18,
-        "speed_kmh": 45,
-        "congestion": "원활"
+        "volume": 28,
+        "speed_kmh": 42,
+        "congestion": "보통"
       },
       "peak_time": "17:00",
-      "drt_demand": "보통"
+      "drt_demand": "높음"
     },
     "crowd": {
       "forecast_6h": {
@@ -103,51 +103,56 @@
         "estimated_people": 42
       },
       "forecast_24h": {
-        "wifi_users": 8,
+        "wifi_users": 18,
         "density": "여유",
-        "estimated_people": 12
+        "estimated_people": 27
       },
-      "peak_time": "18:00",
-      "hotspot": "AP2"
+      "peak_time": "12:00",
+      "hotspot": "AP1"
     },
     "caravan": {
       "forecast_6h": {
         "occupancy": 18,
         "occupancy_rate": 60,
-        "checkins": 2
+        "checkins": 3
       },
       "forecast_24h": {
         "occupancy": 19,
         "occupancy_rate": 63,
-        "checkins": 4
+        "checkins": 8
       },
       "weekend_prediction": {
         "occupancy_rate": 85
       },
-      "revenue_trend": "유지"
+      "revenue_trend": "하강"
     },
     "environment": {
       "forecast_6h": {
         "pm25": 26,
-        "temperature": 25.8,
-        "noise": 71.2,
+        "temperature": 26.8,
+        "noise": 68.2,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 28,
-        "temperature": 18.5,
-        "noise": 45.3,
-        "water_ph": 7.3
+        "pm25": 32,
+        "temperature": 22.5,
+        "noise": 58.5,
+        "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
+        "model": "traffic",
+        "message": "17-18시 출퇴근 시간대 교통량 급증 예상 (60대/h)"
+      },
+      {
+        "level": "warning",
         "model": "power",
-        "message": "오후 시간대 전력 소비 증가로 ESS 방전 예상"
+        "message": "저녁 시간대 전력 수요 증가로 ESS 방전량 증가"
       }
     ],
-    "analysis": "현재 스마트시티는 안정적인 운영 상태를 보이고 있으며, 태양광 발전량이 양호하여 RE100 달성 중입니다. 오후 퇴근시간대 교통량과 전력 소비 증가가 예상되나 전반적으로 정상 범위 내에서 운영될 것으로 전망됩니다."
+    "analysis": "현재 도고 디지털 OASIS는 평일 오후 시간대로 전력 소비가 증가하고 있으며, 저녁 출퇴근 시간대 교통 혼잡이 예상됩니다. 카라반 점유율은 평일 특성상 주말 대비 낮은 수준이지만 안정적인 운영을 보이고 있습니다."
   },
   "center": {
     "lat": 36.763,
