@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-17T06:17:51",
+  "updated": "2026-05-17T06:47:50",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
-  "dataPoints": 432,
+  "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-14T06:09:13",
-    "to": "2026-05-17T06:09:12"
+    "from": "2026-05-14T06:49:13",
+    "to": "2026-05-17T06:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 21,
       "temperature": 11,
       "humidity": 98,
-      "noise": 46.3,
+      "noise": 47.2,
       "windSpeed": 0.1,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 8.1,
+      "waterPH": 7.2,
+      "waterDO": 8.2,
       "o3": 0.018,
       "no2": 0.007,
       "co": 0.4,
@@ -33,24 +33,24 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 262,
+      "ess_current": 274,
       "solar_output": 0,
-      "grid_import": 49,
-      "total_consumption": 49,
+      "grid_import": 46,
+      "total_consumption": 46,
       "re100_ratio": 0,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 14,
-      "speed": 44,
+      "volume": 11,
+      "speed": 49,
       "congestion": "원활",
-      "drt_passengers": 5
+      "drt_passengers": 4
     },
     "crowd": {
       "wifi_total": 11,
-      "wifi_ap1": 4,
+      "wifi_ap1": 3,
       "wifi_ap2": 3,
-      "wifi_ap3": 4,
+      "wifi_ap3": 5,
       "density_level": "여유",
       "estimated_people": 28
     },
@@ -67,16 +67,16 @@
     "power": {
       "forecast_6h": {
         "ess_kwh": 380,
-        "solar_kw": 45,
+        "solar_kw": 145,
         "consumption_kw": 58,
         "re100_pct": 78,
         "trend": "충전"
       },
       "forecast_24h": {
         "ess_kwh": 420,
-        "solar_kw": 85,
-        "consumption_kw": 54,
-        "re100_pct": 82,
+        "solar_kw": 160,
+        "consumption_kw": 52,
+        "re100_pct": 85,
         "trend": "충전"
       },
       "peak_time": "12:00",
@@ -84,31 +84,31 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 42,
-        "speed_kmh": 38,
-        "congestion": "보통"
+        "volume": 45,
+        "speed_kmh": 52,
+        "congestion": "원활"
       },
       "forecast_24h": {
-        "volume": 48,
-        "speed_kmh": 41,
-        "congestion": "보통"
+        "volume": 38,
+        "speed_kmh": 48,
+        "congestion": "원활"
       },
       "peak_time": "12:00",
       "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 45,
-        "density": "보통",
-        "estimated_people": 135
-      },
-      "forecast_24h": {
         "wifi_users": 52,
         "density": "보통",
         "estimated_people": 156
       },
+      "forecast_24h": {
+        "wifi_users": 35,
+        "density": "보통",
+        "estimated_people": 105
+      },
       "peak_time": "12:00",
-      "hotspot": "AP2"
+      "hotspot": "AP3"
     },
     "caravan": {
       "forecast_6h": {
@@ -117,37 +117,37 @@
         "checkins": 3
       },
       "forecast_24h": {
-        "occupancy": 28,
-        "occupancy_rate": 93,
+        "occupancy": 26,
+        "occupancy_rate": 87,
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 95
+        "occupancy_rate": 90
       },
       "revenue_trend": "상승"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 18,
-        "temperature": 16,
+        "pm25": 19,
+        "temperature": 18,
         "noise": 52,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 20,
+        "pm25": 21,
         "temperature": 22,
-        "noise": 49,
+        "noise": 48,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "caravan",
-        "message": "주말 카라반 점유율 95% 예상으로 만실 임박"
+        "model": "crowd",
+        "message": "주말 오후 시간대 WiFi 사용자 집중으로 네트워크 부하 예상"
       }
     ],
-    "analysis": "도고 디지털 오아시스는 주말 아침 시간대로 관광객 유입이 본격화되고 있습니다. 태양광 발전량 증가와 함께 ESS 충전이 원활하게 진행되어 에너지 자립도가 향상될 전망입니다. 카라반 점유율이 높아 추가 예약 관리가 필요한 상황입니다."
+    "analysis": "주말 맑은 날씨로 인해 도고온천 방문객이 증가하면서 카라반 점유율과 WiFi 사용량이 높아질 전망입니다. 태양광 발전량 증가로 ESS 충전이 원활하며 전력 자급률이 크게 개선될 것으로 예측됩니다."
   },
   "center": {
     "lat": 36.763,
