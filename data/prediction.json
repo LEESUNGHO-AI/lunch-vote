@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-17T22:17:51",
+  "updated": "2026-05-17T22:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-14T22:19:13",
-    "to": "2026-05-17T22:09:13"
+    "from": "2026-05-14T22:49:14",
+    "to": "2026-05-17T22:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 56,
       "temperature": 16.7,
       "humidity": 81,
-      "noise": 40.6,
+      "noise": 42.9,
       "windSpeed": 0.2,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8.5,
+      "waterPH": 7.2,
+      "waterDO": 8.2,
       "o3": 0.026,
       "no2": 0.011,
       "co": 0.4,
@@ -33,53 +33,53 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 267,
+      "ess_current": 282,
       "solar_output": 0,
-      "grid_import": 46,
-      "total_consumption": 46,
+      "grid_import": 49,
+      "total_consumption": 49,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 29,
+      "volume": 26,
       "speed": 44,
       "congestion": "원활",
       "drt_passengers": 4
     },
     "crowd": {
       "wifi_total": 11,
-      "wifi_ap1": 3,
+      "wifi_ap1": 5,
       "wifi_ap2": 5,
-      "wifi_ap3": 3,
+      "wifi_ap3": 1,
       "density_level": "여유",
       "estimated_people": 28
     },
     "caravan": {
       "total": 30,
-      "occupied": 25,
+      "occupied": 26,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 83,
-      "revenue_today": 3750000
+      "occupancy_rate": 87,
+      "revenue_today": 3900000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 195,
+        "ess_kwh": 245,
         "solar_kw": 0,
-        "consumption_kw": 42.8,
+        "consumption_kw": 42.5,
         "re100_pct": 0,
         "trend": "방전"
       },
       "forecast_24h": {
-        "ess_kwh": 285,
-        "solar_kw": 120,
+        "ess_kwh": 320,
+        "solar_kw": 85,
         "consumption_kw": 55.2,
-        "re100_pct": 75,
+        "re100_pct": 45,
         "trend": "충전"
       },
-      "peak_time": "12:00",
+      "peak_time": "12:30",
       "risk": "없음"
     },
     "traffic": {
@@ -94,21 +94,21 @@
         "congestion": "보통"
       },
       "peak_time": "12:00",
-      "drt_demand": "낮음"
+      "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 6,
+        "wifi_users": 3,
         "density": "여유",
-        "estimated_people": 18
+        "estimated_people": 8
       },
       "forecast_24h": {
-        "wifi_users": 38,
+        "wifi_users": 42,
         "density": "보통",
-        "estimated_people": 114
+        "estimated_people": 105
       },
-      "peak_time": "12:00",
-      "hotspot": "AP2"
+      "peak_time": "12:30",
+      "hotspot": "AP1"
     },
     "caravan": {
       "forecast_6h": {
@@ -117,12 +117,12 @@
         "checkins": 2
       },
       "forecast_24h": {
-        "occupancy": 26,
-        "occupancy_rate": 87,
+        "occupancy": 25,
+        "occupancy_rate": 83,
         "checkins": 8
       },
       "weekend_prediction": {
-        "occupancy_rate": 90
+        "occupancy_rate": 85
       },
       "revenue_trend": "유지"
     },
@@ -131,17 +131,23 @@
         "pm25": 18,
         "temperature": 14.2,
         "noise": 38.5,
-        "water_ph": 7.2
+        "water_ph": 7.1
       },
       "forecast_24h": {
-        "pm25": 22,
-        "temperature": 19.8,
+        "pm25": 24,
+        "temperature": 21.8,
         "noise": 45.2,
-        "water_ph": 7.1
+        "water_ph": 7.2
       }
     },
-    "alerts": [],
-    "analysis": "현재 주말 야간 시간대로 전반적으로 안정된 상태를 보이고 있습니다. 카라반 점유율이 83%로 높아 주말 관광객 유입이 활발하며, 내일 낮 시간대에는 교통량과 인구밀도 증가가 예상됩니다."
+    "alerts": [
+      {
+        "level": "warning",
+        "model": "power",
+        "message": "야간시간 ESS 방전 지속으로 오전 에너지 부족 가능성"
+      }
+    ],
+    "analysis": "현재 주말 야간시간으로 모든 지표가 안정적인 수준을 보이고 있습니다. 카라반 점유율 87%로 양호한 매출을 유지하고 있으며, 내일 오후 시간대에 교통량과 군집 밀도가 증가할 것으로 예상됩니다."
   },
   "center": {
     "lat": 36.763,
