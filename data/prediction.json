@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-17T16:17:51",
+  "updated": "2026-05-17T16:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-14T16:09:52",
-    "to": "2026-05-17T16:09:12"
+    "from": "2026-05-14T16:39:15",
+    "to": "2026-05-17T16:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 22,
       "temperature": 29.3,
       "humidity": 34,
-      "noise": 64.3,
+      "noise": 64.6,
       "windSpeed": 2,
       "rainfall": 0,
       "waterPH": 7,
-      "waterDO": 7.8,
+      "waterDO": 8.2,
       "o3": 0.078,
       "no2": 0.006,
       "co": 0.5,
@@ -33,26 +33,26 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 328,
-      "solar_output": 119,
+      "ess_current": 327,
+      "solar_output": 124,
       "grid_import": 0,
-      "total_consumption": 51,
+      "total_consumption": 53,
       "re100_ratio": 100,
       "smartlight_power": 0.3
     },
     "traffic": {
-      "volume": 47,
-      "speed": 34,
+      "volume": 52,
+      "speed": 36,
       "congestion": "보통",
-      "drt_passengers": 3
+      "drt_passengers": 7
     },
     "crowd": {
-      "wifi_total": 46,
-      "wifi_ap1": 17,
+      "wifi_total": 51,
+      "wifi_ap1": 18,
       "wifi_ap2": 19,
-      "wifi_ap3": 10,
+      "wifi_ap3": 14,
       "density_level": "혼잡",
-      "estimated_people": 115
+      "estimated_people": 128
     },
     "caravan": {
       "total": 30,
@@ -73,38 +73,38 @@
         "trend": "방전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
-        "solar_kw": 85,
+        "ess_kwh": 420,
+        "solar_kw": 150,
         "consumption_kw": 48,
         "re100_pct": 95,
         "trend": "충전"
       },
-      "peak_time": "12:00",
+      "peak_time": "18:00",
       "risk": "주의"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 52,
-        "speed_kmh": 32,
-        "congestion": "혼잡"
+        "volume": 48,
+        "speed_kmh": 38,
+        "congestion": "보통"
       },
       "forecast_24h": {
-        "volume": 45,
-        "speed_kmh": 35,
+        "volume": 42,
+        "speed_kmh": 40,
         "congestion": "보통"
       },
       "peak_time": "12:00",
-      "drt_demand": "높음"
+      "drt_demand": "보통"
     },
     "crowd": {
       "forecast_6h": {
-        "wifi_users": 42,
-        "density": "혼잡",
-        "estimated_people": 126
+        "wifi_users": 45,
+        "density": "보통",
+        "estimated_people": 135
       },
       "forecast_24h": {
         "wifi_users": 38,
-        "density": "혼잡",
+        "density": "보통",
         "estimated_people": 114
       },
       "peak_time": "12:00",
@@ -114,12 +114,12 @@
       "forecast_6h": {
         "occupancy": 26,
         "occupancy_rate": 87,
-        "checkins": 3
+        "checkins": 2
       },
       "forecast_24h": {
         "occupancy": 26,
         "occupancy_rate": 87,
-        "checkins": 8
+        "checkins": 5
       },
       "weekend_prediction": {
         "occupancy_rate": 88
@@ -128,15 +128,15 @@
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 19,
+        "pm25": 18,
         "temperature": 26.5,
-        "noise": 66.2,
+        "noise": 62.3,
         "water_ph": 7.2
       },
       "forecast_24h": {
-        "pm25": 21,
+        "pm25": 20,
         "temperature": 24.8,
-        "noise": 62.5,
+        "noise": 58.5,
         "water_ph": 7.1
       }
     },
@@ -144,15 +144,15 @@
       {
         "level": "warning",
         "model": "power",
-        "message": "저녁시간대 태양광 발전량 감소로 ESS 방전 가속화 예상"
+        "message": "저녁 시간대 전력 수요 증가로 ESS 방전 가속화 예상"
       },
       {
         "level": "warning",
         "model": "crowd",
-        "message": "주말 저녁 시간대 WiFi 이용자 집중으로 네트워크 과부하 우려"
+        "message": "현재 WiFi 접속자 수 과밀 상태, 네트워크 성능 저하 우려"
       }
     ],
-    "analysis": "현재 주말 저녁시간으로 모든 도메인에서 높은 활동량을 보이고 있습니다. 태양광 발전량 감소로 ESS 방전이 가속화되고 있으며, 교통량과 인구밀도가 높아 전반적인 시설 부하가 증가하고 있습니다. 카라반 점유율은 90%로 매우 높은 수준을 유지하고 있어 안정적인 수익 창출이 예상됩니다."
+    "analysis": "주말 저녁 시간대로 카라반 및 관광 수요가 높아 전반적인 시설 이용률이 증가하고 있습니다. 태양광 발전량 감소와 전력 소비 증가로 ESS 방전이 가속화될 것으로 예상되며, 야간 이후 안정화될 전망입니다."
   },
   "center": {
     "lat": 36.763,
