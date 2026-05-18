@@ -1,11 +1,11 @@
 {
-  "updated": "2026-05-19T04:17:51",
+  "updated": "2026-05-19T04:47:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 431,
   "dataRange": {
-    "from": "2026-05-16T04:19:13",
-    "to": "2026-05-19T04:09:13"
+    "from": "2026-05-16T04:49:14",
+    "to": "2026-05-19T04:39:13"
   },
   "current": {
     "sensors": {
@@ -13,11 +13,11 @@
       "pm10": 23,
       "temperature": 12.2,
       "humidity": 90,
-      "noise": 26.2,
+      "noise": 31.6,
       "windSpeed": 0.2,
       "rainfall": 0,
-      "waterPH": 7,
-      "waterDO": 8,
+      "waterPH": 7.2,
+      "waterDO": 8.1,
       "o3": 0.03,
       "no2": 0.007,
       "co": 0.4,
@@ -33,24 +33,24 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 278,
+      "ess_current": 270,
       "solar_output": 0,
-      "grid_import": 28,
-      "total_consumption": 28,
+      "grid_import": 32,
+      "total_consumption": 32,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 2,
-      "speed": 50,
+      "volume": 9,
+      "speed": 49,
       "congestion": "원활",
-      "drt_passengers": 4
+      "drt_passengers": 6
     },
     "crowd": {
       "wifi_total": 4,
-      "wifi_ap1": 2,
+      "wifi_ap1": 1,
       "wifi_ap2": 1,
-      "wifi_ap3": 1,
+      "wifi_ap3": 2,
       "density_level": "여유",
       "estimated_people": 10
     },
@@ -66,34 +66,34 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 420,
+        "ess_kwh": 320,
         "solar_kw": 85,
-        "consumption_kw": 42,
+        "consumption_kw": 38,
         "re100_pct": 65,
         "trend": "충전"
       },
       "forecast_24h": {
-        "ess_kwh": 385,
+        "ess_kwh": 280,
         "solar_kw": 120,
-        "consumption_kw": 47,
-        "re100_pct": 58,
+        "consumption_kw": 45,
+        "re100_pct": 72,
         "trend": "방전"
       },
-      "peak_time": "18:00",
+      "peak_time": "12:00",
       "risk": "없음"
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 28,
-        "speed_kmh": 48,
+        "volume": 25,
+        "speed_kmh": 47,
         "congestion": "원활"
       },
       "forecast_24h": {
         "volume": 38,
-        "speed_kmh": 45,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
-      "peak_time": "17:00",
+      "peak_time": "08:00",
       "drt_demand": "보통"
     },
     "crowd": {
@@ -103,12 +103,12 @@
         "estimated_people": 72
       },
       "forecast_24h": {
-        "wifi_users": 32,
+        "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 128
+        "estimated_people": 112
       },
       "peak_time": "12:00",
-      "hotspot": "AP1"
+      "hotspot": "AP3"
     },
     "caravan": {
       "forecast_6h": {
@@ -119,7 +119,7 @@
       "forecast_24h": {
         "occupancy": 19,
         "occupancy_rate": 63,
-        "checkins": 5
+        "checkins": 4
       },
       "weekend_prediction": {
         "occupancy_rate": 78
@@ -130,24 +130,24 @@
       "forecast_6h": {
         "pm25": 19,
         "temperature": 16.5,
-        "noise": 32.8,
+        "noise": 35,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 17,
-        "temperature": 22.3,
-        "noise": 35.5,
+        "temperature": 19.8,
+        "noise": 42,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "power",
-        "message": "오후 피크시간 전력소비 급증으로 ESS 방전 가속화 예상"
+        "model": "environment",
+        "message": "오전 중 PM2.5 농도 상승 예상, 환기 주의 필요"
       }
     ],
-    "analysis": "현재 새벽시간으로 모든 지표가 안정적인 상태입니다. 오전부터 태양광 발전이 시작되어 ESS 충전이 진행되고, 오후 피크시간에는 전력소비와 교통량이 크게 증가할 것으로 예측됩니다."
+    "analysis": "현재 새벽 시간대로 모든 지표가 안정적인 상태입니다. 오전 6시 이후 출근 시간대부터 교통량과 인구 밀집도가 점진적으로 증가할 것으로 예측되며, 태양광 발전 시작으로 에너지 자립도도 크게 개선될 전망입니다."
   },
   "center": {
     "lat": 36.763,
