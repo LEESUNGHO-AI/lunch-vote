@@ -1,23 +1,23 @@
 {
-  "updated": "2026-05-20T00:47:53",
+  "updated": "2026-05-20T01:17:52",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-17T00:49:13",
-    "to": "2026-05-20T00:39:13"
+    "from": "2026-05-17T01:19:12",
+    "to": "2026-05-20T01:09:14"
   },
   "current": {
     "sensors": {
       "pm25": 38,
       "pm10": 54,
-      "temperature": 19.1,
-      "humidity": 67,
-      "noise": 32.7,
-      "windSpeed": 1,
+      "temperature": 19.8,
+      "humidity": 64,
+      "noise": 27.9,
+      "windSpeed": 1.6,
       "rainfall": 0,
       "waterPH": 7,
-      "waterDO": 8.1,
+      "waterDO": 8.3,
       "o3": 0.031,
       "no2": 0.012,
       "co": 0.4,
@@ -33,7 +33,7 @@
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 288,
+      "ess_current": 275,
       "solar_output": 0,
       "grid_import": 31,
       "total_consumption": 31,
@@ -42,41 +42,41 @@
     },
     "traffic": {
       "volume": 10,
-      "speed": 45,
+      "speed": 48,
       "congestion": "원활",
-      "drt_passengers": 10
+      "drt_passengers": 5
     },
     "crowd": {
-      "wifi_total": 5,
+      "wifi_total": 2,
       "wifi_ap1": 2,
-      "wifi_ap2": 1,
-      "wifi_ap3": 2,
+      "wifi_ap2": 0,
+      "wifi_ap3": 0,
       "density_level": "여유",
-      "estimated_people": 13
+      "estimated_people": 5
     },
     "caravan": {
       "total": 30,
-      "occupied": 20,
+      "occupied": 17,
       "checkin_today": 0,
       "checkout_today": 0,
-      "occupancy_rate": 67,
-      "revenue_today": 2400000
+      "occupancy_rate": 57,
+      "revenue_today": 2040000
     }
   },
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 320,
+        "ess_kwh": 195,
         "solar_kw": 45,
         "consumption_kw": 42,
-        "re100_pct": 35,
-        "trend": "충전"
+        "re100_pct": 65,
+        "trend": "방전"
       },
       "forecast_24h": {
-        "ess_kwh": 380,
-        "solar_kw": 85,
-        "consumption_kw": 48,
-        "re100_pct": 55,
+        "ess_kwh": 320,
+        "solar_kw": 120,
+        "consumption_kw": 45,
+        "re100_pct": 85,
         "trend": "충전"
       },
       "peak_time": "12:00",
@@ -84,22 +84,22 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 25,
-        "speed_kmh": 42,
+        "volume": 22,
+        "speed_kmh": 46,
         "congestion": "원활"
       },
       "forecast_24h": {
         "volume": 38,
-        "speed_kmh": 38,
+        "speed_kmh": 42,
         "congestion": "보통"
       },
       "peak_time": "08:00",
-      "drt_demand": "보통"
+      "drt_demand": "낮음"
     },
     "crowd": {
       "forecast_6h": {
         "wifi_users": 18,
-        "density": "보통",
+        "density": "여유",
         "estimated_people": 45
       },
       "forecast_24h": {
@@ -117,37 +117,37 @@
         "checkins": 2
       },
       "forecast_24h": {
-        "occupancy": 22,
-        "occupancy_rate": 73,
-        "checkins": 8
+        "occupancy": 19,
+        "occupancy_rate": 63,
+        "checkins": 4
       },
       "weekend_prediction": {
-        "occupancy_rate": 85
+        "occupancy_rate": 78
       },
-      "revenue_trend": "상승"
+      "revenue_trend": "유지"
     },
     "environment": {
       "forecast_6h": {
-        "pm25": 24,
-        "temperature": 21.5,
-        "noise": 35.2,
+        "pm25": 25,
+        "temperature": 22.5,
+        "noise": 32,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 27,
         "temperature": 24.8,
-        "noise": 38.5,
+        "noise": 35,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "environment",
-        "message": "PM2.5 농도가 38㎍/㎥로 나쁨 수준, 오후까지 지속 예상"
+        "model": "power",
+        "message": "오전 시간대 ESS 방전량 증가로 전력 공급 모니터링 필요"
       }
     ],
-    "analysis": "현재 야간시간대로 전체적으로 안정적인 상태를 유지하고 있습니다. 오전 7-8시 출근시간과 오후 5-6시 퇴근시간에 교통량과 인구밀집도가 증가할 것으로 예측되며, 태양광 발전으로 인한 RE100 달성률 상승이 기대됩니다."
+    "analysis": "평일 새벽 시간대로 전반적인 활동량이 낮은 상태입니다. 오전부터 태양광 발전과 함께 인구 유입이 증가하여 정상적인 일일 패턴을 보일 것으로 예상됩니다."
   },
   "center": {
     "lat": 36.763,
