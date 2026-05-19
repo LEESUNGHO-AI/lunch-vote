@@ -1,54 +1,54 @@
 {
-  "updated": "2026-05-20T01:47:51",
+  "updated": "2026-05-20T02:17:51",
   "model": "claude-sonnet-4-20250514",
   "version": "4-model-v2",
   "dataPoints": 432,
   "dataRange": {
-    "from": "2026-05-17T01:49:14",
-    "to": "2026-05-20T01:39:13"
+    "from": "2026-05-17T02:19:12",
+    "to": "2026-05-20T02:09:13"
   },
   "current": {
     "sensors": {
-      "pm25": 45,
-      "pm10": 60,
-      "temperature": 19.8,
-      "humidity": 64,
-      "noise": 31.5,
-      "windSpeed": 1.6,
+      "pm25": 41,
+      "pm10": 55,
+      "temperature": 18.5,
+      "humidity": 75,
+      "noise": 33.7,
+      "windSpeed": 1,
       "rainfall": 0,
-      "waterPH": 7.1,
-      "waterDO": 8.7,
-      "o3": 0.03,
-      "no2": 0.011,
+      "waterPH": 7,
+      "waterDO": 8.6,
+      "o3": 0.028,
+      "no2": 0.01,
       "co": 0.4,
       "so2": 0.005,
       "airGrade": "3",
-      "airDataTime": "2026-05-20 01:00",
-      "sky": 3,
+      "airDataTime": "2026-05-20 02:00",
+      "sky": 4,
       "pty": 0,
       "lgt": 0,
-      "weatherText": "구름많음",
-      "skyText": "구름많음",
+      "weatherText": "흐림",
+      "skyText": "흐림",
       "ptyText": ""
     },
     "power": {
       "ess_capacity": 500,
-      "ess_current": 274,
+      "ess_current": 284,
       "solar_output": 0,
-      "grid_import": 33,
-      "total_consumption": 33,
+      "grid_import": 32,
+      "total_consumption": 32,
       "re100_ratio": 0,
       "smartlight_power": 1.8
     },
     "traffic": {
-      "volume": 5,
-      "speed": 49,
+      "volume": 9,
+      "speed": 46,
       "congestion": "원활",
-      "drt_passengers": 7
+      "drt_passengers": 4
     },
     "crowd": {
       "wifi_total": 1,
-      "wifi_ap1": 2,
+      "wifi_ap1": 1,
       "wifi_ap2": 0,
       "wifi_ap3": 0,
       "density_level": "여유",
@@ -66,17 +66,17 @@
   "prediction": {
     "power": {
       "forecast_6h": {
-        "ess_kwh": 295,
-        "solar_kw": 45,
-        "consumption_kw": 41,
-        "re100_pct": 78,
-        "trend": "충전"
+        "ess_kwh": 195,
+        "solar_kw": 85,
+        "consumption_kw": 42,
+        "re100_pct": 65,
+        "trend": "방전"
       },
       "forecast_24h": {
         "ess_kwh": 320,
-        "solar_kw": 85,
-        "consumption_kw": 44,
-        "re100_pct": 85,
+        "solar_kw": 120,
+        "consumption_kw": 45,
+        "re100_pct": 78,
         "trend": "충전"
       },
       "peak_time": "12:00",
@@ -84,13 +84,13 @@
     },
     "traffic": {
       "forecast_6h": {
-        "volume": 28,
-        "speed_kmh": 47,
+        "volume": 24,
+        "speed_kmh": 42,
         "congestion": "원활"
       },
       "forecast_24h": {
-        "volume": 35,
-        "speed_kmh": 45,
+        "volume": 38,
+        "speed_kmh": 38,
         "congestion": "보통"
       },
       "peak_time": "08:00",
@@ -103,9 +103,9 @@
         "estimated_people": 54
       },
       "forecast_24h": {
-        "wifi_users": 32,
+        "wifi_users": 28,
         "density": "보통",
-        "estimated_people": 96
+        "estimated_people": 84
       },
       "peak_time": "12:00",
       "hotspot": "AP1"
@@ -129,25 +129,25 @@
     "environment": {
       "forecast_6h": {
         "pm25": 25,
-        "temperature": 22.5,
-        "noise": 35.2,
+        "temperature": 22,
+        "noise": 38,
         "water_ph": 7.2
       },
       "forecast_24h": {
         "pm25": 28,
-        "temperature": 24.8,
-        "noise": 38.5,
+        "temperature": 25,
+        "noise": 42,
         "water_ph": 7.1
       }
     },
     "alerts": [
       {
         "level": "warning",
-        "model": "environment",
-        "message": "현재 PM2.5 농도가 45㎍/㎥로 나쁨 수준입니다"
+        "model": "power",
+        "message": "오전 시간대 ESS 방전량 증가로 전력 수급 주의 필요"
       }
     ],
-    "analysis": "현재 새벽시간대로 전반적인 활동량이 낮은 상태이며, 태양광 발전 시작과 함께 오전부터 전력 자립도가 크게 개선될 예정입니다. PM2.5 농도가 높아 대기질 주의가 필요하나, 오후부터는 점진적으로 개선될 것으로 예측됩니다."
+    "analysis": "현재 새벽시간으로 모든 시설이 안정적인 상태를 유지하고 있습니다. 오전 6시 이후 교통량과 인구밀도가 증가하며 전력 소비가 늘어날 것으로 예상되나, 태양광 발전으로 RE100 달성률이 크게 개선될 전망입니다."
   },
   "center": {
     "lat": 36.763,
