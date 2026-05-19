@@ -1,24 +1,24 @@
 {
-  "updated": "2026-05-19T03:01:32",
+  "updated": "2026-05-20T03:01:34",
   "model": "claude-sonnet-4-20250514",
   "period": "weekly",
   "range": {
-    "from": "2026-05-16T03:09:13",
-    "to": "2026-05-19T02:59:13",
-    "points": 431
+    "from": "2026-05-17T03:09:13",
+    "to": "2026-05-20T02:59:15",
+    "points": 432
   },
-  "summary": "아산시 스마트시티 사업이 야간 안정화 단계에 접어들며 기온 하강(-8.8°C)과 함께 교통량과 WiFi 이용이 감소했습니다. 카라반 이용률은 53-67% 범위에서 안정적으로 유지되고 있으나, 무인매장과 메타버스 활용도는 여전히 저조합니다. 전반적으로 인프라 구축은 순조로우나 시민 체감형 서비스 활성화가 필요한 시점입니다.",
+  "summary": "아산시 스마트시티 프로젝트가 17개월차에 접어들며 인프라 구축은 순조롭게 진행되고 있으나, 실질적 활용도는 아직 미흡한 상황입니다. 야간시간대 교통량과 WiFi 이용률이 크게 감소하는 패턴을 보이며, 무인매장과 메타버스 플랫폼의 매출 실적이 전무한 점이 우려됩니다. 카라반 점유율은 60% 내외로 안정적이나, 전반적인 시민체감도 향상을 위한 서비스 활성화 전략이 필요합니다.",
   "forecast": {
     "traffic": {
-      "current": 15,
-      "forecast": 18,
-      "change_pct": 20,
+      "current": 13,
+      "forecast": 45,
+      "change_pct": 246.2,
       "confidence": 75
     },
     "crowd": {
-      "current": 2,
-      "forecast": 5,
-      "change_pct": 150,
+      "current": 1,
+      "forecast": 35,
+      "change_pct": 3400,
       "confidence": 70
     },
     "caravan": {
@@ -28,37 +28,37 @@
       "confidence": 85
     },
     "power": {
-      "current": 75,
-      "forecast": 78,
-      "change_pct": 4,
+      "current": 65,
+      "forecast": 68,
+      "change_pct": 4.6,
       "confidence": 80
     },
     "store": {
       "current": 0,
-      "forecast": 15,
-      "change_pct": 1500,
-      "confidence": 60
+      "forecast": 0,
+      "change_pct": 0,
+      "confidence": 30
     },
     "metaverse": {
       "current": 0,
-      "forecast": 8,
-      "change_pct": 800,
-      "confidence": 55
+      "forecast": 0,
+      "change_pct": 0,
+      "confidence": 25
     }
   },
   "kpi": {
     "budget_execution": 65,
-    "project_progress": 72,
-    "regional_economy": 58,
+    "project_progress": 70,
+    "regional_economy": 35,
     "digital_transformation": 45,
-    "citizen_satisfaction": 62,
-    "esg_re100": 78
+    "citizen_satisfaction": 40,
+    "esg_re100": 60
   },
   "insights": {
-    "positive": "카라반 시설과 RE100 태양광 시스템이 안정적으로 운영되며 친환경 에너지 전환이 순조롭게 진행되고 있습니다.",
-    "warning": "무인매장과 메타버스 플랫폼의 이용률이 0%로 시민 접근성과 활용도 개선이 시급합니다.",
-    "strategy": "야간 시간대 디지털 서비스 활성화를 위한 인센티브 도입과 시민 대상 스마트시티 체험 프로그램을 확대해야 합니다.",
-    "key_metric": "카라반 이용률 60% 유지는 긍정적이나 디지털 전환 지표인 무인매장·메타버스 활용도 제고가 핵심 과제입니다."
+    "positive": "OASIS SPOT 카라반 시설 이용률이 안정적으로 유지되고 있으며, 대기질도 양호한 수준을 보이고 있습니다.",
+    "warning": "무인매장과 메타버스 플랫폼의 매출이 전무하여 디지털 서비스 활용도 제고가 시급합니다.",
+    "strategy": "야간 시간대 WiFi 이용률 저하 개선과 무인매장 홍보 마케팅 강화를 통해 실질적 서비스 이용률 향상에 집중해야 합니다.",
+    "key_metric": "교통량과 WiFi 연결 수는 시간대별 상관관계가 높아 통합 모니터링 지표로 활용 가능합니다."
   },
   "units": [
     {
@@ -70,7 +70,7 @@
     {
       "id": "#2",
       "name": "모바일 전자시민증 ECC",
-      "progress": 70,
+      "progress": 75,
       "status": "진행"
     },
     {
@@ -88,7 +88,7 @@
     {
       "id": "#5",
       "name": "ESS·RE100 태양광",
-      "progress": 95,
+      "progress": 70,
       "status": "진행"
     },
     {
@@ -100,49 +100,49 @@
     {
       "id": "#7",
       "name": "스마트 주차",
-      "progress": 75,
+      "progress": 65,
       "status": "진행"
     },
     {
       "id": "#8",
       "name": "OASIS SPOT 30동",
-      "progress": 88,
+      "progress": 95,
       "status": "진행"
     },
     {
       "id": "#9",
       "name": "무인매장 2개소",
-      "progress": 45,
+      "progress": 85,
       "status": "진행"
     },
     {
       "id": "#10",
       "name": "이노베이션 스퀘어",
-      "progress": 65,
+      "progress": 75,
       "status": "진행"
     },
     {
       "id": "#11",
       "name": "순찰 로봇",
-      "progress": 55,
+      "progress": 50,
       "status": "진행"
     },
     {
       "id": "#12",
       "name": "디지털 노마드 NOP",
-      "progress": 50,
+      "progress": 40,
       "status": "진행"
     },
     {
       "id": "#13",
       "name": "AI 융복합 서비스",
-      "progress": 40,
+      "progress": 55,
       "status": "진행"
     },
     {
       "id": "#14",
       "name": "디지털링크 플랫폼",
-      "progress": 35,
+      "progress": 45,
       "status": "진행"
     }
   ],
@@ -157,19 +157,19 @@
       "일"
     ],
     "traffic": [
-      13,
-      8,
+      10,
+      9,
+      7,
       6,
-      4,
       7,
-      7,
+      0,
       1
     ],
     "crowd": [
       -1,
-      1,
-      1,
       0,
+      1,
+      1,
       1,
       0,
       0
