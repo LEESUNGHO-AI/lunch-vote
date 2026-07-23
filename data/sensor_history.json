@@ -1,79 +1,14 @@
 {
-  "updated": "2026-07-24T08:15:12",
+  "updated": "2026-07-24T08:25:12",
   "totalPoints": 420,
-  "oldestPoint": "2026-07-21T08:25:12",
-  "newestPoint": "2026-07-24T08:15:12",
+  "oldestPoint": "2026-07-21T08:35:12",
+  "newestPoint": "2026-07-24T08:25:12",
   "center": {
     "lat": 36.763,
     "lng": 126.887,
     "name": "도고 디지털 OASIS"
   },
   "data": [
-    {
-      "timestamp": "2026-07-21T08:25:12",
-      "time": "08:25",
-      "dayOfWeek": 2,
-      "isWeekend": false,
-      "dataSources": [
-        "기상청",
-        "기상청예보",
-        "에어코리아"
-      ],
-      "sensors": {
-        "pm25": 11,
-        "pm10": 9,
-        "temperature": 26.4,
-        "humidity": 93,
-        "noise": 60.8,
-        "windSpeed": 0.5,
-        "rainfall": 0,
-        "waterPH": 7.1,
-        "waterDO": 8.4,
-        "o3": 0.019,
-        "no2": 0.006,
-        "co": 0.3,
-        "so2": 0.004,
-        "airGrade": "1",
-        "airDataTime": "2026-07-21 08:00",
-        "sky": 4,
-        "pty": 0,
-        "lgt": 0,
-        "weatherText": "흐림",
-        "skyText": "흐림",
-        "ptyText": ""
-      },
-      "power": {
-        "ess_capacity": 500,
-        "ess_current": 336,
-        "solar_output": 125,
-        "grid_import": 0,
-        "total_consumption": 46,
-        "re100_ratio": 100,
-        "smartlight_power": 0.3
-      },
-      "traffic": {
-        "volume": 58,
-        "speed": 35,
-        "congestion": "혼잡",
-        "drt_passengers": 10
-      },
-      "crowd": {
-        "wifi_total": 18,
-        "wifi_ap1": 7,
-        "wifi_ap2": 6,
-        "wifi_ap3": 5,
-        "density_level": "여유",
-        "estimated_people": 45
-      },
-      "caravan": {
-        "total": 30,
-        "occupied": 19,
-        "checkin_today": 0,
-        "checkout_today": 0,
-        "occupancy_rate": 63,
-        "revenue_today": 2280000
-      }
-    },
     {
       "timestamp": "2026-07-21T08:35:12",
       "time": "08:35",
@@ -27253,6 +27188,71 @@
         "checkout_today": 0,
         "occupancy_rate": 73,
         "revenue_today": 2640000
+      }
+    },
+    {
+      "timestamp": "2026-07-24T08:25:12",
+      "time": "08:25",
+      "dayOfWeek": 5,
+      "isWeekend": false,
+      "dataSources": [
+        "기상청",
+        "기상청예보",
+        "에어코리아"
+      ],
+      "sensors": {
+        "pm25": 14,
+        "pm10": 21,
+        "temperature": 26.1,
+        "humidity": 95,
+        "noise": 61.2,
+        "windSpeed": 0.7,
+        "rainfall": 0,
+        "waterPH": 7.1,
+        "waterDO": 8.3,
+        "o3": 0.021,
+        "no2": 0.006,
+        "co": 0.3,
+        "so2": 0.004,
+        "airGrade": "1",
+        "airDataTime": "2026-07-24 08:00",
+        "sky": 4,
+        "pty": 0,
+        "lgt": 0,
+        "weatherText": "흐림",
+        "skyText": "흐림",
+        "ptyText": ""
+      },
+      "power": {
+        "ess_capacity": 500,
+        "ess_current": 329,
+        "solar_output": 119,
+        "grid_import": 0,
+        "total_consumption": 48,
+        "re100_ratio": 100,
+        "smartlight_power": 0.3
+      },
+      "traffic": {
+        "volume": 59,
+        "speed": 30,
+        "congestion": "혼잡",
+        "drt_passengers": 9
+      },
+      "crowd": {
+        "wifi_total": 22,
+        "wifi_ap1": 8,
+        "wifi_ap2": 8,
+        "wifi_ap3": 6,
+        "density_level": "보통",
+        "estimated_people": 55
+      },
+      "caravan": {
+        "total": 30,
+        "occupied": 24,
+        "checkin_today": 0,
+        "checkout_today": 0,
+        "occupancy_rate": 80,
+        "revenue_today": 2880000
       }
     }
   ],
